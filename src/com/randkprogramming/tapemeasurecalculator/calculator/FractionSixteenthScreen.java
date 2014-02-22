@@ -1,6 +1,5 @@
 package com.randkprogramming.tapemeasurecalculator.calculator;
 
-import android.graphics.Color;
 import com.randkprogramming.tapemeasurecalculator.Calculator;
 import com.randkprogramming.tapemeasurecalculator.Graphics;
 import com.randkprogramming.tapemeasurecalculator.Screen;
@@ -24,7 +23,6 @@ public class FractionSixteenthScreen extends Screen{
     @Override
     public void present(float deltaTime) {
         Graphics g = calculator.getGraphics();
-        // Just adding some comments to see if the commit and push are working!!!!!
     }
 
     @Override

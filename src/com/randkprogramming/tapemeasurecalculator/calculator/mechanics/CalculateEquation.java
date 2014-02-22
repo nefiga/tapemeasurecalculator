@@ -4,8 +4,8 @@ public class CalculateEquation {
 
     ButtonActions buttonActions;
 
-    private double[] numbers = new double[8];
-    private int[] operators = new int[7];
+    private double[] numbers = new double[2];
+    private int[] operators = new int[1];
     private int operatorPosition = 0, numberPosition = 0;
     private String number = "";
     private String total = "";
@@ -47,7 +47,7 @@ public class CalculateEquation {
      * @param button (int) Button that was pressed.
      */
     public void addOperator(int button) {
-        if (isOperatorNext() && operatorPosition < operators.length) {
+        if (isOperatorNext() && operators[operatorPosition] == CalculatorButtons.NONE) {
             //Takes all the numbers that have been add put them in the corresponding numbers[] position.
             //Resets the number(String), adds 1 to numberPosition
             number = "";
@@ -115,7 +115,8 @@ public class CalculateEquation {
     }
 
     /**
-     * Sets all numbers[] starting at "start" to default. Also sets numberPosition to "start" - 1, unless start is zero then numberPosition = 0.
+     * Sets all numbers in the numbers array to default, starting at the position of the parameter that was passed in.
+     * Also sets numberPosition to the parameter - 1, unless the parameter is zero then numberPosition = 0.
      *
      * @param start (int) What position to start resetting numbers[] at.
      */
@@ -149,6 +150,7 @@ public class CalculateEquation {
             number = "";
         } else {
             decreesOperatorPosition();
+            decreesNumberPosition();
         }
         updateEquation();
     }
