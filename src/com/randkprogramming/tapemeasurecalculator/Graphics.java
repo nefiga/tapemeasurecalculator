@@ -1,5 +1,7 @@
 package com.randkprogramming.tapemeasurecalculator;
 
+import android.graphics.Paint;
+
 public interface Graphics {
 
     public static enum PixmapFormat {
@@ -21,6 +23,8 @@ public interface Graphics {
     public void drawPixmap(Pixmap pixmap, int x, int y, int srcX, int srcY, int srcWidth, int srcHeight);
 
     public void drawPixmap(Pixmap pixmap, int x, int y);
+
+    public void drawString(String string, float x, float y, Paint paint);
 
     public int getWidth();
 

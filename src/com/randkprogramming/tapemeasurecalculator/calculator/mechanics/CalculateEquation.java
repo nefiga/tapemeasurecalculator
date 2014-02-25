@@ -260,24 +260,25 @@ public class CalculateEquation {
                 }
             }
 
-            numbers[0] = roundAnswer(numbers[numberPosition],fractionButton);
+            numbers[0] = numbers[numberPosition];
+            //numbers[0] = roundAnswer(numbers[numberPosition],fractionButton);
 
-            resetNumbers(1);
-            resetOperators(0);
-            number = Double.toString(numbers[0]);
-            equation = Double.toString(numbers[0]);
+    resetNumbers(1);
+    resetOperators(0);
+    number = Double.toString(numbers[0]);
+    equation = Double.toString(numbers[0]);
 
 
-        }
-    }
+}
+}
 
-    /**
-     * Rounds the answer according to the selected fraction button
-     * @param unrounded_answer The answer that needs to be rounded
-     * @param fractionButton The selected fraction button that the user currently has selected
-     * @return The rounded answer
-     */
-    public double roundAnswer(double unrounded_answer, int fractionButton) {
+/**
+ * Rounds the answer according to the selected fraction button
+ * @param unrounded_answer The answer that needs to be rounded
+ * @param fractionButton The selected fraction button that the user currently has selected
+ * @return The rounded answer
+ */
+public double roundAnswer(double unrounded_answer, int fractionButton) {
 
         // TODO: Finish this method
 
@@ -294,7 +295,5 @@ public class CalculateEquation {
         }
 
         return 0;
-    }
-
-
+        }
 }

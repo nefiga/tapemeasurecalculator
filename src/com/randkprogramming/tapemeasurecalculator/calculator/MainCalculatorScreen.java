@@ -1,5 +1,7 @@
 package com.randkprogramming.tapemeasurecalculator.calculator;
 
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import com.randkprogramming.tapemeasurecalculator.Calculator;
 import com.randkprogramming.tapemeasurecalculator.Graphics;
 import com.randkprogramming.tapemeasurecalculator.Input.TouchEvent;
@@ -14,6 +16,8 @@ public class MainCalculatorScreen extends Screen {
     CalculateEquation equation;
     ButtonActions buttonActions;
     FractionActions fractionActions;
+    Paint paint;
+    Typeface tf;
 
     public MainCalculatorScreen(Calculator calculator) {
         super(calculator);
@@ -21,6 +25,10 @@ public class MainCalculatorScreen extends Screen {
         equation = new CalculateEquation(buttonActions);
         fractionActions = new FractionActions();
         manager = new CalculatorInputManager(equation, buttonActions, fractionActions);
+        tf = Typeface.create("DEFAULT_BOLD", Typeface.BOLD);
+        paint = new Paint();
+        paint.setTypeface(tf);
+        paint.setTextSize(50);
     }
 
     float justabit = 0;
@@ -176,6 +184,7 @@ public class MainCalculatorScreen extends Screen {
         Graphics g = calculator.getGraphics();
 
         g.drawPixmap(Assets.main_calculator, 0, 0);
+        g.drawString(equation.getEquation(), 10, 50, paint);
     }
 
     // Checks to see if your finger is within an area
