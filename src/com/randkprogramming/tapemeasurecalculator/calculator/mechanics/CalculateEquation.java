@@ -106,11 +106,9 @@ public class CalculateEquation {
      * Sets operators[] int, at position, to default. Also subtracts one from operatorPosition.
      */
     public void decreesOperatorPosition() {
+        operators[operatorPosition] = CalculatorButtons.NONE;
         if (operatorPosition > 0) {
-            operators[operatorPosition] = CalculatorButtons.NONE;
             operatorPosition--;
-        } else {
-            operators[operatorPosition] = CalculatorButtons.NONE;
         }
     }
 
@@ -262,21 +260,41 @@ public class CalculateEquation {
                 }
             }
 
-            numbers[0] = numbers[numberPosition];
+            numbers[0] = roundAnswer(numbers[numberPosition],fractionButton);
+
             resetNumbers(1);
             resetOperators(0);
             number = Double.toString(numbers[0]);
-            if (fractionButton == CalculatorButtons.SIXTEENTH) {
-                equation = Double.toString(numbers[0]);
-            } else if (fractionButton == CalculatorButtons.THIRTYSECOND) {
+            equation = Double.toString(numbers[0]);
 
-            } else if (fractionButton == CalculatorButtons.SIXTYFOURTH) {
 
-            } else if (fractionButton == CalculatorButtons.DECIMAL) {
-
-            } else {
-
-            }
         }
     }
+
+    /**
+     * Rounds the answer according to the selected fraction button
+     * @param unrounded_answer The answer that needs to be rounded
+     * @param fractionButton The selected fraction button that the user currently has selected
+     * @return The rounded answer
+     */
+    public double roundAnswer(double unrounded_answer, int fractionButton) {
+
+        // TODO: Finish this method
+
+        if (fractionButton == CalculatorButtons.SIXTEENTH) {
+
+        } else if (fractionButton == CalculatorButtons.THIRTYSECOND) {
+
+        } else if (fractionButton == CalculatorButtons.SIXTYFOURTH) {
+
+        } else if (fractionButton == CalculatorButtons.DECIMAL) {
+
+        } else {
+
+        }
+
+        return 0;
+    }
+
+
 }
