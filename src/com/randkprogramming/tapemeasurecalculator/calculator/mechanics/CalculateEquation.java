@@ -1,5 +1,7 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
+import com.randkprogramming.tapemeasurecalculator.calculator.Fraction;
+
 import java.text.DecimalFormat;
 
 public class CalculateEquation {
@@ -14,6 +16,7 @@ public class CalculateEquation {
     private String number = "";
     private String total = "";
     private String equation = "";
+    private String fractionEquation = "";
     private DecimalFormat df = new DecimalFormat();
 
     public CalculateEquation(ButtonActions buttonActions) {
@@ -176,7 +179,7 @@ public class CalculateEquation {
 
         for (int i = 0; i <= numberPosition; i++) {
 
-            if (numbers[i] != CalculatorButtons.NONE) equation += formatNumber(numbers[i]);
+            if (numbers[i] != CalculatorButtons.NONE) equation += numbers[i];
 
             //Offsets operator by one because operators[] will always be one less than numbers[]
             if (i <= operatorPosition) {
@@ -193,23 +196,56 @@ public class CalculateEquation {
         }
     }
 
-    public String formatNumber(double number) {
+    public String formatAnswer(double number) {
 
-        // TODO: Finish this method
+        equation = "";
 
         int displayMode = buttonActions.getCurrentDisplayButton();
         if(displayMode == CalculatorButtons.DISPLAY_INCHES_ONLY) {
 
+            int inches = (int) number;
+            number -= inches;
+            equation += inches;
+            equation = df.format(number);
+            setFractionEquation(number);
         }
         else if(displayMode == CalculatorButtons.DISPLAY_FEET_AND_INCHES) {
 
+            int feet = (int) number / 12;
+            number -= feet * 12;
+            equation += feet;
+            equation += "\' ";
+
+            int inches = (int) number;
+            number -= inches;
+            equation += inches;
+            setFractionEquation(number);
+
         }
         else if(displayMode == CalculatorButtons.DISPLAY_DECIMAL) {
-
+            equation = df.format(number);
         }
-        return "";
+        return equation;
     }
 
+    /**
+     * This method sets the text of the fraction part of the equation. By the time this method gets
+     * called, the number should only be a decimal, (all whole numbers for inches will have been taken out of it)
+     * @param decimal The remaining decimal value that needs to be converted to a fraction.
+     */
+    public void setFractionEquation(double decimal) {
+        try {
+            Fraction f = Fraction.getFractionFromDecimal(decimal, getPrecision());
+            if(f.getNumerator() > 0) {
+                equation += "  ";
+                fractionEquation += f.getNumerator();
+                fractionEquation += "/";
+                fractionEquation += f.getDenominator();
+            }
+        } catch(Fraction.ZeroDenominatorException e) {
+            e.printStackTrace();
+    }
+}
 
     /**
      * Checks to see if a number was the last thing entered.
@@ -286,39 +322,29 @@ public class CalculateEquation {
             }
 
             numbers[0] = numbers[numberPosition];
-            //numbers[0] = roundAnswer(numbers[numberPosition],fractionButton);
 
-    resetNumbers(1);
-    resetOperators(0);
-    number = Double.toString(numbers[0]);
-    equation = Double.toString(numbers[0]);
-
-
-}
+            resetNumbers(1);
+            resetOperators(0);
+            number = Double.toString(numbers[0]);
+            equation = formatAnswer(numbers[0]);
+        }
 }
 
-/**
- * Rounds the answer according to the selected fraction button
- * @param unrounded_answer The answer that needs to be rounded
- * @param fractionButton The selected fraction button that the user currently has selected
- * @return The rounded answer
- */
-public double roundAnswer(double unrounded_answer, int fractionButton) {
+    /**
+     * Returns a fraction object according to the currently selected precision button.
+     * @return The corresponding precision in the form of a Fraction object.
+     */
+    public Fraction getPrecision() {
 
-        // TODO: Finish this method
+        int fractionButton = buttonActions.getCurrentFractionButton();
 
-        if (fractionButton == CalculatorButtons.SIXTEENTH) {
-
-        } else if (fractionButton == CalculatorButtons.THIRTYSECOND) {
-
-        } else if (fractionButton == CalculatorButtons.SIXTYFOURTH) {
-
-        } else if (fractionButton == CalculatorButtons.DECIMAL) {
-
-        } else {
-
-        }
-
-        return 0;
-        }
+        try {
+            switch (fractionButton) {
+                case CalculatorButtons.SIXTEENTH: return new Fraction(1, 16);
+                case CalculatorButtons.THIRTYSECOND: return new Fraction(1, 32);
+                case CalculatorButtons.SIXTYFOURTH: return new Fraction(1, 64);
+            }
+        } catch (Fraction.ZeroDenominatorException e) { e.printStackTrace(); }
+        return null;
+    }
 }
