@@ -115,16 +115,16 @@ public class MainCalculatorScreen extends Screen {
                     manager.setButtonPressed(CalculatorButtons.INCHES);
                 }
 
-                if (touchIsInBounds(event, 650, 865, 140, 190)) {
+                if (touchIsInBounds(event, 10, 1075, 180, 190)) {
                     manager.setButtonPressed(CalculatorButtons.FRACTION_BUTTONS);
                 }
-                if (touchIsInBounds(event, 650, 865, 140, 190)) {
+                if (touchIsInBounds(event, 210, 1075, 180, 190)) {
                     manager.setButtonPressed(CalculatorButtons.FRACTION_CHANGE_BUTTON);
                 }
-                if (touchIsInBounds(event, 650, 865, 140, 190)) {
+                if (touchIsInBounds(event, 410, 1075, 180, 190)) {
                     manager.setButtonPressed(CalculatorButtons.DISPLAY_CHANGE_BUTTON);
                 }
-                if (touchIsInBounds(event, 650, 865, 140, 190)) {
+                if (touchIsInBounds(event, 610, 1075, 180, 190)) {
                     manager.setButtonPressed(CalculatorButtons.INFO);
                 }
             }
@@ -196,16 +196,16 @@ public class MainCalculatorScreen extends Screen {
                         manager.setButtonReleased(CalculatorButtons.INCHES);
                     }
 
-                    if (touchIsInBounds(event, 650, 865, 140, 190)) {
+                    if (touchIsInBounds(event, 10, 1075, 180, 190)) {
                         manager.setButtonReleased(CalculatorButtons.FRACTION_BUTTONS);
                     }
-                    if (touchIsInBounds(event, 650, 865, 140, 190)) {
+                    if (touchIsInBounds(event, 210, 1075, 180, 190)) {
                         manager.setButtonReleased(CalculatorButtons.FRACTION_CHANGE_BUTTON);
                     }
-                    if (touchIsInBounds(event, 650, 865, 140, 190)) {
+                    if (touchIsInBounds(event, 410, 1075, 180, 190)) {
                         manager.setButtonReleased(CalculatorButtons.DISPLAY_CHANGE_BUTTON);
                     }
-                    if (touchIsInBounds(event, 650, 865, 140, 190)) {
+                    if (touchIsInBounds(event, 610, 1075, 180, 190)) {
                         manager.setButtonReleased(CalculatorButtons.INFO);
                     }
                 }

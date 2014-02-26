@@ -66,9 +66,14 @@ public class CalculatorInputManager {
         else if (button == CalculatorButtons.FRACTION_CHANGE_BUTTON) {
             buttonActions.sortButton(button, CalculatorButtons.BUTTON_PRESSED);
         }
+        else if (button == 36) {
+            buttonActions.sortButton(button, CalculatorButtons.BUTTON_PRESSED);
+            equation.formatAnswer();
+        }
         else if (button < CalculatorButtons.FRACTION_BUTTONS && button > CalculatorButtons.FRACTION_CHANGE_BUTTON) {
             fractionActions.sortButton(button, CalculatorButtons.BUTTON_PRESSED);
         }
+
     }
 
     /**
