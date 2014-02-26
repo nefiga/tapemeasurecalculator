@@ -152,14 +152,15 @@ public class CalculateEquation {
      * Removes the last operator/number in the equation.
      */
     public void pressedClear() {
-        if (isOperatorNext()) {
-            numbers[numberPosition] = CalculatorButtons.NONE;
-            number = "";
-        } else {
-            decreesOperatorPosition();
-            decreesNumberPosition();
-        }
-        updateEquation();
+//        if (isOperatorNext()) {
+//            numbers[numberPosition] = CalculatorButtons.NONE;
+//            number = "";
+//        } else {
+//            decreesOperatorPosition();
+//            decreesNumberPosition();
+//        }
+//        updateEquation();
+         holdClear();
     }
 
     /**
@@ -175,30 +176,31 @@ public class CalculateEquation {
 
     private void updateEquation() {
 
-        equation = "";
-
-        for (int i = 0; i <= numberPosition; i++) {
-
-            if (numbers[i] != CalculatorButtons.NONE) equation += numbers[i];
-
-            //Offsets operator by one because operators[] will always be one less than numbers[]
-            if (i <= operatorPosition) {
-                if (operators[i] == CalculatorButtons.PLUS) {
-                    equation += " + ";
-                } else if (operators[i] == CalculatorButtons.MINUS) {
-                    equation += " - ";
-                } else if (operators[i] == CalculatorButtons.DIVIDE) {
-                    equation += " ÷ ";
-                } else if (operators[i] == CalculatorButtons.TIMES) {
-                    equation += " x ";
-                }
-            }
-        }
+//        equation = "";
+//
+//        for (int i = 0; i <= numberPosition; i++) {
+//
+//            if (numbers[i] != CalculatorButtons.NONE) equation += numbers[i];
+//
+//            //Offsets operator by one because operators[] will always be one less than numbers[]
+//            if (i <= operatorPosition) {
+//                if (operators[i] == CalculatorButtons.PLUS) {
+//                    equation += " + ";
+//                } else if (operators[i] == CalculatorButtons.MINUS) {
+//                    equation += " - ";
+//                } else if (operators[i] == CalculatorButtons.DIVIDE) {
+//                    equation += " ÷ ";
+//                } else if (operators[i] == CalculatorButtons.TIMES) {
+//                    equation += " x ";
+//                }
+//            }
+//        }
     }
 
-    public String formatAnswer(double number) {
+    public void formatAnswer() {
 
         equation = "";
+        double number = numbers[0];
 
         int displayMode = buttonActions.getCurrentDisplayButton();
         if(displayMode == CalculatorButtons.DISPLAY_INCHES_ONLY) {
@@ -225,7 +227,6 @@ public class CalculateEquation {
         else if(displayMode == CalculatorButtons.DISPLAY_DECIMAL) {
             equation = df.format(number);
         }
-        return equation;
     }
 
     /**
@@ -326,7 +327,7 @@ public class CalculateEquation {
             resetNumbers(1);
             resetOperators(0);
             number = Double.toString(numbers[0]);
-            equation = formatAnswer(numbers[0]);
+            formatAnswer();
         }
 }
 

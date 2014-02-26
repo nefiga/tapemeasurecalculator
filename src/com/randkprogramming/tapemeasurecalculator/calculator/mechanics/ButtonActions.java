@@ -11,6 +11,7 @@ public class ButtonActions {
         }
         if (button == CalculatorButtons.DISPLAY_CHANGE_BUTTON && buttonState == CalculatorButtons.BUTTON_PRESSED) {
             setCurrentDisplayButton();
+
         }
     }
 
