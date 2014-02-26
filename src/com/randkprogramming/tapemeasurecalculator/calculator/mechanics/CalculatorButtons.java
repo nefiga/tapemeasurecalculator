@@ -30,12 +30,19 @@ public class CalculatorButtons {
     public static final int CALCULATE_BUTTONS = 29;
 
     //Action
-    public static final int SIXTEENTH = 31;
-    public static final int THIRTYSECOND = 32;
-    public static final int SIXTYFOURTH = 33;
-    public static final int DECIMAL = 34;
-    public static final int FRACTION_CHANGE_BUTTON = 35;
-    public static final int INFO = 36;
+    public static final int SIXTEENTH = 30;
+    public static final int THIRTYSECOND = 31;
+    public static final int SIXTYFOURTH = 32;
+    public static final int DECIMAL = 33;
+    public static final int FRACTION_CHANGE_BUTTON = 34;
+    public static final int INFO = 35;
+
+    //Display Mode Button
+    public static final int DISPLAY_CHANGE_BUTTON = 36;
+    public static final int DISPLAY_INCHES_ONLY = 37;
+    public static final int DISPLAY_FEET_AND_INCHES = 38;
+    public static final int DISPLAY_DECIMAL = 39;
+
 
     //FractionActions sixteenth
     public static final int ONE_SIXTEENTH = 40;
