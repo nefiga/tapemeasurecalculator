@@ -7,13 +7,13 @@ import com.randkprogramming.tapemeasurecalculator.Graphics;
 import com.randkprogramming.tapemeasurecalculator.Screen;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.CalculatorInputManager;
 
-public class FractionSixteenthScreen extends Screen{
+public class OptionScreen extends Screen{
 
     CalculatorInputManager manager;
     Paint paint;
     Typeface tf;
 
-    public FractionSixteenthScreen(Calculator calculator, CalculatorInputManager manager) {
+    public OptionScreen(Calculator calculator, CalculatorInputManager manager) {
         super(calculator);
         this.manager = manager;
         tf = Typeface.create("DEFAULT_BOLD", Typeface.BOLD);
@@ -30,7 +30,7 @@ public class FractionSixteenthScreen extends Screen{
     @Override
     public void present(float deltaTime) {
         Graphics g = calculator.getGraphics();
-        g.drawString("SixteenthScreen", 20, 10, paint);
+        g.drawString("OptionScreen", 20, 10, paint);
     }
 
     @Override
