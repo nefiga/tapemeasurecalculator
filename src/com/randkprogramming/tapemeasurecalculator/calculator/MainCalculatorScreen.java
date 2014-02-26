@@ -51,6 +51,7 @@ public class MainCalculatorScreen extends Screen {
             //Called when you touch the screen
             if (event.type == TouchEvent.TOUCH_DOWN) {
                 if (touchIsInBounds(event, 10, 225, 140, 190)) {
+                    System.out.println("PUSHED");
                     manager.setButtonPressed(CalculatorButtons.SEVEN);
                 }
                 if (touchIsInBounds(event, 170, 225, 140, 190)) {
@@ -126,6 +127,7 @@ public class MainCalculatorScreen extends Screen {
                 if (touchIsInBounds(event, 650, 865, 140, 190)) {
                     manager.setButtonPressed(CalculatorButtons.INFO);
                 }
+            }
 
 
                 //Called when you release your finger
@@ -207,7 +209,6 @@ public class MainCalculatorScreen extends Screen {
                         manager.setButtonReleased(CalculatorButtons.INFO);
                     }
                 }
-            }
 
             manager.update(deltaTime);
         }
