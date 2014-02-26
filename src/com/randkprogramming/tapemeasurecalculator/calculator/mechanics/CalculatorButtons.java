@@ -21,12 +21,13 @@ public class CalculatorButtons {
     public static final int MINUS = 21;
     public static final int DIVIDE = 22;
     public static final int TIMES = 23;
-    public static final int OPERATOR_BUTTONS = 25;
+    public static final int OPERATOR_BUTTONS = 24;
 
     //calculate buttons
-    public static final int DECIMAL_POINT = 26;
-    public static final int EQUALS = 27;
-    public static final int CLEAR = 28;
+    public static final int DECIMAL_POINT = 25;
+    public static final int EQUALS = 26;
+    public static final int CLEAR = 27;
+    public static final int BACKSPACE = 28;
     public static final int CALCULATE_BUTTONS = 29;
 
     //Action
@@ -42,6 +43,9 @@ public class CalculatorButtons {
     public static final int DISPLAY_INCHES_ONLY = 37;
     public static final int DISPLAY_FEET_AND_INCHES = 38;
     public static final int DISPLAY_DECIMAL = 39;
+
+    public static final int FEET = 130;
+    public static final int INCHES = 131;
 
 
     //FractionActions sixteenth
@@ -91,39 +95,4 @@ public class CalculatorButtons {
     public static final int BUTTON_PRESSED = 200;
     public static final int BUTTON_HELD = 201;
 
-    /*//FractionActions sixtyfourth
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;
-    public static final int _SIXTYFOURTH = ;*/
 }

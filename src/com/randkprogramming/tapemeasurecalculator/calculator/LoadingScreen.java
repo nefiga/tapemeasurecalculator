@@ -16,11 +16,8 @@ public class LoadingScreen extends Screen {
 
         //load Images here
 
-        //example
-        //Assets.background = g.newPixmap("background.png", PixmapFormat.RGB565);
-
         Assets.testing = g.newPixmap("testing.png", Graphics.PixmapFormat.ARGB4444);
-        Assets.main_calculator = g.newPixmap("main_calculator.png", Graphics.PixmapFormat.RGB565);
+        Assets.main_calculator = g.newPixmap("main_calc.png", Graphics.PixmapFormat.RGB565);
 
         //Loads the main calculator screen
         calculator.setScreen(new MainCalculatorScreen(calculator));
