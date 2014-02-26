@@ -1,6 +1,10 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
+import java.text.DecimalFormat;
+
 public class CalculateEquation {
+
+    private static final int MAX_DECIMAL_DIGITS = 6;
 
     ButtonActions buttonActions;
 
@@ -10,8 +14,10 @@ public class CalculateEquation {
     private String number = "";
     private String total = "";
     private String equation = "";
+    private DecimalFormat df = new DecimalFormat();
 
     public CalculateEquation(ButtonActions buttonActions) {
+        df.setMaximumFractionDigits(MAX_DECIMAL_DIGITS);
         this.buttonActions = buttonActions;
         resetNumbers(0);
         resetOperators(0);
@@ -165,11 +171,12 @@ public class CalculateEquation {
     }
 
     private void updateEquation() {
+
         equation = "";
 
         for (int i = 0; i <= numberPosition; i++) {
 
-            if (numbers[i] != CalculatorButtons.NONE) equation += Double.toString(numbers[i]);
+            if (numbers[i] != CalculatorButtons.NONE) equation += formatNumber(numbers[i]);
 
             //Offsets operator by one because operators[] will always be one less than numbers[]
             if (i <= operatorPosition) {
@@ -185,6 +192,24 @@ public class CalculateEquation {
             }
         }
     }
+
+    public String formatNumber(double number) {
+
+        // TODO: Finish this method
+
+        int displayMode = buttonActions.getCurrentDisplayButton();
+        if(displayMode == CalculatorButtons.DISPLAY_INCHES_ONLY) {
+
+        }
+        else if(displayMode == CalculatorButtons.DISPLAY_FEET_AND_INCHES) {
+
+        }
+        else if(displayMode == CalculatorButtons.DISPLAY_DECIMAL) {
+
+        }
+        return "";
+    }
+
 
     /**
      * Checks to see if a number was the last thing entered.
