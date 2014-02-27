@@ -30,9 +30,18 @@ public class CalculatorState {
     public static void addNumber(int n) {
 
         int current = numbers.size() - 1;
-        if(! numbers.get(current).contains("\'") && ! numbers.get(current).contains("\"")) {
+        String s = numbers.get(current);
 
-            numbers.set(current, numbers.get(current) + n);
+        if(! s.contains("\"")) {
+
+            String append = "";
+
+            if(s.length() > 0 && s.substring(s.length() - 1).equals("\'")) {
+                append += " ";
+            }
+
+            append += n;
+            numbers.set(current, numbers.get(current) + append);
         }
 
     }
@@ -48,14 +57,6 @@ public class CalculatorState {
     }
 
     public static void addFeet() {
-        addUnit("\'");
-    }
-
-    public static void addInches() {
-        addUnit("\"");
-    }
-
-    public static void addUnit(String unit) {
 
         if(isOperatorNext() && numbers.size() > 0) {
             int current = numbers.size() - 1;
@@ -63,7 +64,22 @@ public class CalculatorState {
                     ! numbers.get(current).contains("\'") &&
                     ! numbers.get(current).contains("\"")) {
 
-                numbers.set(current,numbers.get(current) + unit);
+                numbers.set(current,numbers.get(current) + "\'");
+            }
+        }
+    }
+
+    public static void addInches() {
+
+        if(isOperatorNext() && numbers.size() > 0) {
+
+            int current = numbers.size() - 1;
+            String s = numbers.get(current);
+
+            if(s.length() > 0 && ! s.contains("\"") &&
+                    ! s.substring(s.length() - 1).equals("\'")) {
+
+                numbers.set(current,numbers.get(current) + "\"");
             }
         }
     }

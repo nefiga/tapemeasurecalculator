@@ -178,7 +178,7 @@ public class CalculateEquation {
 
         // Assumptions:
         // Ft. symbol always there ' when describing feet.
-        // No space between number and feet symbol.
+        // No space between left number and feet symbol.
         // boolean readingFraction will be turned on when I see the / mark
 
         double value = 0;
