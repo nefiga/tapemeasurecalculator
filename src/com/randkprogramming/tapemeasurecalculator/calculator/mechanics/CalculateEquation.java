@@ -128,8 +128,12 @@ public class CalculateEquation {
 
         String text = "";
 
-        if(CalculatorState.displayMode == Button.DisplayMode.DECIMAL) {
+        if(CalculatorState.precisionMode == Button.PrecisionMode.DECIMAL) {
+            if(CalculatorState.displayMode == Button.DisplayMode.FEET_AND_INCHES) {
+                number /= 12;
+            }
             text = df.format(number);
+            text += (CalculatorState.displayMode == Button.DisplayMode.FEET_AND_INCHES) ? "\'" : "\"";
         }
         else {
             if(CalculatorState.displayMode == Button.DisplayMode.FEET_AND_INCHES) {
@@ -152,7 +156,6 @@ public class CalculateEquation {
                 text += "  ";
                 text += decimal;
             }
-
             text += "\"";
         }
 

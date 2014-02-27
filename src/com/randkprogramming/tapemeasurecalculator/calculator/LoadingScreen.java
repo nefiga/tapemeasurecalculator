@@ -21,10 +21,10 @@ public class LoadingScreen extends Screen {
         Assets.precision[0] = g.newPixmap("p16.png", Graphics.PixmapFormat.RGB565);
         Assets.precision[1] = g.newPixmap("p32.png", Graphics.PixmapFormat.RGB565);
         Assets.precision[2] = g.newPixmap("p64.png", Graphics.PixmapFormat.RGB565);
+        Assets.precision[3] = g.newPixmap("decimal.png", Graphics.PixmapFormat.RGB565);
 
         Assets.displayIn[0] = g.newPixmap("inches.png", Graphics.PixmapFormat.RGB565);
         Assets.displayIn[1] = g.newPixmap("feet.png", Graphics.PixmapFormat.RGB565);
-        Assets.displayIn[2] = g.newPixmap("decimal.png", Graphics.PixmapFormat.RGB565);
 
         // Load the main calculator screen
         calculator.setScreen(new MainCalculatorScreen(calculator));

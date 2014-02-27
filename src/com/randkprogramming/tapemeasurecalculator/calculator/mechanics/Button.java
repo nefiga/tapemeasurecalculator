@@ -88,13 +88,13 @@ public interface Button {
     //----------------------------------------------------------------
 
     public static enum DisplayMode {
-        INCHES_ONLY, FEET_AND_INCHES, DECIMAL;
+        INCHES_ONLY, FEET_AND_INCHES;
 
         public DisplayMode next() { return values()[(ordinal() + 1) % values().length]; }
     }
 
     public static enum PrecisionMode {
-        SIXTEENTH, THIRTY_SECOND, SIXTY_FOURTH;
+        SIXTEENTH, THIRTY_SECOND, SIXTY_FOURTH, DECIMAL;
 
         public PrecisionMode next() { return values()[(ordinal() + 1) % values().length]; }
     }

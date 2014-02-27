@@ -73,6 +73,9 @@ public class CalculatorState {
         int current = numbers.size() - 1;
         String num = numbers.get(current);
 
+        if(numbers.size() == 0 || num.length() == 0)
+            return;
+
         // If user didn't specify feet or inches, insert inches by default.
         if( ! num.contains("\"") && ! num.contains("\'")) {
             numbers.set(current, num + "\"");
