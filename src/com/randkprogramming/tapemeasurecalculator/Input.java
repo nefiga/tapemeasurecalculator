@@ -14,7 +14,7 @@ public interface Input {
 
         public String toString() {
             StringBuilder builder = new StringBuilder();
-            if (type == KEY_DOWN) builder.append("key dwon, ");
+            if (type == KEY_DOWN) builder.append("key down, ");
             else builder.append("key up, ");
             builder.append(keyCode);
             builder.append(",");

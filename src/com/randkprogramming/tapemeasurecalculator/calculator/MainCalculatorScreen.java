@@ -12,240 +12,144 @@ import java.util.List;
 
 public class MainCalculatorScreen extends Screen {
 
-    CalculatorInputManager manager;
-    CalculateEquation equation;
-    ButtonActions buttonActions;
-    FractionActions fractionActions;
-    Paint paint;
-    Typeface tf;
+    //--------------------------
+    // Fields
+    //--------------------------
+    private CalculatorInputManager manager = new CalculatorInputManager();
 
+    private Paint paint = new Paint();
+    private static final Typeface answerFont = Typeface.create("DEFAULT_BOLD", Typeface.BOLD);
+
+    private float debugTimer = 0;
+
+    //--------------------------------
+    // Upper Section Button Layout
+    //--------------------------------
+    private static final int NUM_ROWS_UPPER = 4;
+    private static final int NUM_COLS_UPPER = 5;
+    private static final int BUTTON_WIDTH_UPPER = 140;
+    private static final int BUTTON_HEIGHT_UPPER = 190;
+    private static final int xUpper[] = {10, 170, 330, 490, 650};
+    private static final int yUpper[] = {225, 440, 650, 865};
+    private static final Button layoutUpper[][] = new Button[][]{
+            new Button[]{Button.Number.SEVEN, Button.Number.EIGHT, Button.Number.NINE, Button.Calculate.BACKSPACE, Button.Calculate.CLEAR},
+            new Button[]{Button.Number.FOUR, Button.Number.FIVE, Button.Number.SIX, Button.Operator.PLUS, Button.Operator.TIMES},
+            new Button[]{Button.Number.ONE, Button.Number.TWO, Button.Number.THREE, Button.Operator.MINUS, Button.Operator.DIVIDE},
+            new Button[]{Button.Calculate.DECIMAL_POINT, Button.Number.ZERO, Button.Calculate.EQUALS, Button.Calculate.FEET, Button.Calculate.INCHES}
+    };
+
+    //-------------------------------
+    // Lower Section Button Layout
+    //-------------------------------
+    private static final int NUM_ROWS_LOWER = 1;
+    private static final int NUM_COLS_LOWER = 4;
+    private static final int BUTTON_WIDTH_LOWER = 180;
+    private static final int BUTTON_HEIGHT_LOWER = 190;
+    private static final int xLower[] = {10, 210, 410, 610};
+    private static final int yLower[] = {1075};
+    private static final Button layoutLower[][] = new Button[][]{
+            new Button[] { Button.Special.FRACTION, Button.Special.PRECISION, Button.Special.DISPLAY, Button.Special.INFO }
+    };
+
+    //--------------------------
+    // Constructor
+    //--------------------------
     public MainCalculatorScreen(Calculator calculator) {
         super(calculator);
-        buttonActions = new ButtonActions();
-        equation = new CalculateEquation(buttonActions);
-        fractionActions = new FractionActions();
-        manager = new CalculatorInputManager(equation, buttonActions, fractionActions);
-        tf = Typeface.create("DEFAULT_BOLD", Typeface.BOLD);
-        paint = new Paint();
-        paint.setTypeface(tf);
+        paint.setTypeface(answerFont);
         paint.setTextSize(50);
     }
 
-    float justabit = 0;
-
     @Override
     public void update(float deltaTime) {
-        justabit += deltaTime;
-        if (justabit >= 2.0f) {
-            System.out.println(equation.getEquation());
-            justabit = 0;
+
+        debugTimer += deltaTime;
+        if (debugTimer >= 2.0f) {
+            debugTimer = 0;
+
+            System.out.println(CalculateEquation.buildString());
         }
+
+//      List<Input.KeyEvent> keyEvents = calculator.getInput().getKeyEvents();
+
         // Check for TouchEvents
         List<TouchEvent> touchEvents = calculator.getInput().getTouchEvent();
-        calculator.getInput().getKeyEvents();
 
-        int len = touchEvents.size();
-        for (int i = 0; i < len; i++) {
-            TouchEvent event = touchEvents.get(i);
+        for (TouchEvent event : touchEvents) {
 
-            //Called when you touch the screen
-            if (event.type == TouchEvent.TOUCH_DOWN) {
-                if (touchIsInBounds(event, 10, 225, 140, 190)) {
-                    System.out.println("PUSHED");
-                    manager.setButtonPressed(CalculatorButtons.SEVEN);
-                }
-                if (touchIsInBounds(event, 170, 225, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.EIGHT);
-                }
-                if (touchIsInBounds(event, 330, 225, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.NINE);
-                }
-                if (touchIsInBounds(event, 490, 225, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.BACKSPACE);
-                }
-                if (touchIsInBounds(event, 650, 225, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.CLEAR);
-                }
+            if (event == null)
+                continue;
 
-                if (touchIsInBounds(event, 10, 440, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.FOUR);
-                }
-                if (touchIsInBounds(event, 170, 440, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.FIVE);
-                }
-                if (touchIsInBounds(event, 330, 440, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.SIX);
-                }
-                if (touchIsInBounds(event, 490, 440, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.PLUS);
-                }
-                if (touchIsInBounds(event, 650, 440, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.TIMES);
-                }
+            upperSection(event);
+            lowerSection(event);
 
-                if (touchIsInBounds(event, 10, 650, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.ONE);
-                }
-                if (touchIsInBounds(event, 170, 650, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.TWO);
-                }
-                if (touchIsInBounds(event, 330, 650, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.THREE);
-                }
-                if (touchIsInBounds(event, 490, 650, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.MINUS);
-                }
-                if (touchIsInBounds(event, 650, 650, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.DIVIDE);
-                }
+            manager.updateHoldTime(deltaTime);
+        }
+    }
 
-                if (touchIsInBounds(event, 10, 865, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.DECIMAL_POINT);
-                }
-                if (touchIsInBounds(event, 170, 865, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.ZERO);
-                }
-                if (touchIsInBounds(event, 330, 865, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.EQUALS);
-                }
-                if (touchIsInBounds(event, 490, 865, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.FEET);
-                }
-                if (touchIsInBounds(event, 650, 865, 140, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.INCHES);
-                }
+    /**
+     * Lays out the upper section of the app.
+     * @param event The touch event
+     */
+    private void upperSection(TouchEvent event) {
 
-                if (touchIsInBounds(event, 10, 1075, 180, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.FRACTION_BUTTONS);
-                }
-                if (touchIsInBounds(event, 210, 1075, 180, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.FRACTION_CHANGE_BUTTON);
-                }
-                if (touchIsInBounds(event, 410, 1075, 180, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.DISPLAY_CHANGE_BUTTON);
-                }
-                if (touchIsInBounds(event, 610, 1075, 180, 190)) {
-                    manager.setButtonPressed(CalculatorButtons.INFO);
+        for (int row = 0; row < NUM_ROWS_UPPER; row++) {
+            for (int col = 0; col < NUM_COLS_UPPER; col++) {
+
+                if (touchIsInBounds(event, xUpper[col], yUpper[row], BUTTON_WIDTH_UPPER, BUTTON_HEIGHT_UPPER)) {
+                    switch (event.type) {
+                        case TouchEvent.TOUCH_DOWN:    manager.setButtonPressed(layoutUpper[row][col]);  break;
+                        case TouchEvent.TOUCH_UP:      manager.setButtonReleased(layoutUpper[row][col]); break;
+                        case TouchEvent.TOUCH_DRAGGED: break;
+                    }
+                    return; // Since no buttons overlap, we return
                 }
             }
+        }
+    }
 
+    /**
+     * Lays out the bottom section of the app.
+     * @param event The touch event
+     */
+    private void lowerSection(TouchEvent event) {
 
-                //Called when you release your finger
-                if (event.type == TouchEvent.TOUCH_UP) {
-                    if (touchIsInBounds(event, 10, 225, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.SEVEN);
-                    }
-                    if (touchIsInBounds(event, 170, 225, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.EIGHT);
-                    }
-                    if (touchIsInBounds(event, 330, 225, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.NINE);
-                    }
-                    if (touchIsInBounds(event, 490, 225, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.BACKSPACE);
-                    }
-                    if (touchIsInBounds(event, 650, 225, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.CLEAR);
-                    }
+        for (int row = 0; row < NUM_ROWS_LOWER; row++) {
+            for (int col = 0; col < NUM_COLS_LOWER; col++) {
 
-                    if (touchIsInBounds(event, 10, 440, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.FOUR);
+                if (touchIsInBounds(event, xLower[col], yLower[row], BUTTON_WIDTH_LOWER, BUTTON_HEIGHT_LOWER)) {
+                    switch (event.type) {
+                        case TouchEvent.TOUCH_DOWN:    manager.setButtonPressed(layoutLower[row][col]);  break;
+                        case TouchEvent.TOUCH_UP:      manager.setButtonReleased(layoutLower[row][col]); break;
+                        case TouchEvent.TOUCH_DRAGGED: break;
                     }
-                    if (touchIsInBounds(event, 170, 440, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.FIVE);
-                    }
-                    if (touchIsInBounds(event, 330, 440, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.SIX);
-                    }
-                    if (touchIsInBounds(event, 490, 440, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.PLUS);
-                    }
-                    if (touchIsInBounds(event, 650, 440, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.TIMES);
-                    }
-
-                    if (touchIsInBounds(event, 10, 650, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.ONE);
-                    }
-                    if (touchIsInBounds(event, 170, 650, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.TWO);
-                    }
-                    if (touchIsInBounds(event, 330, 650, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.THREE);
-                    }
-                    if (touchIsInBounds(event, 490, 650, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.MINUS);
-                    }
-                    if (touchIsInBounds(event, 650, 650, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.DIVIDE);
-                    }
-
-                    if (touchIsInBounds(event, 10, 865, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.DECIMAL_POINT);
-                    }
-                    if (touchIsInBounds(event, 170, 865, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.ZERO);
-                    }
-                    if (touchIsInBounds(event, 330, 865, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.EQUALS);
-                    }
-                    if (touchIsInBounds(event, 490, 865, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.FEET);
-                    }
-                    if (touchIsInBounds(event, 650, 865, 140, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.INCHES);
-                    }
-
-                    if (touchIsInBounds(event, 10, 1075, 180, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.FRACTION_BUTTONS);
-                    }
-                    if (touchIsInBounds(event, 210, 1075, 180, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.FRACTION_CHANGE_BUTTON);
-                    }
-                    if (touchIsInBounds(event, 410, 1075, 180, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.DISPLAY_CHANGE_BUTTON);
-                    }
-                    if (touchIsInBounds(event, 610, 1075, 180, 190)) {
-                        manager.setButtonReleased(CalculatorButtons.INFO);
-                    }
+                    return;
                 }
-
-            manager.update(deltaTime);
+            }
         }
     }
 
     @Override
     public void present(float deltaTime) {
+
         //Draw Images
         Graphics g = calculator.getGraphics();
 
         g.drawPixmap(Assets.main_calculator, 0, 0);
-        g.drawString(equation.getEquation(), 10, 50, paint);
+        g.drawString(CalculateEquation.buildString(), 10, 50, paint);
+
+        g.drawPixmap(Assets.precision[CalculatorState.precisionMode.ordinal()], 210, 1075);
+        g.drawPixmap(Assets.displayIn[CalculatorState.displayMode.ordinal()], 410, 1075);
     }
 
     // Checks to see if your finger is within an area
     public boolean touchIsInBounds(TouchEvent event, int x, int y, int width, int height) {
-        if (event.x > x && event.x < x + width - 1 && event.y > y && event.y < y + height - 1) return true;
-        else return false;
+        return (event.x > x && event.x < x + width - 1 &&
+                event.y > y && event.y < y + height - 1);
     }
 
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-    @Override
-    public void androidBackButton() {
-
-    }
+    @Override public void pause() {}
+    @Override public void resume() {}
+    @Override public void dispose() {}
+    @Override public void androidBackButton() {}
 }

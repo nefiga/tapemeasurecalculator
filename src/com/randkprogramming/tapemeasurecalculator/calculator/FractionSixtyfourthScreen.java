@@ -13,33 +13,10 @@ public class FractionSixtyfourthScreen extends Screen{
         this.manager = manager;
     }
 
-    @Override
-    public void update(float deltaTime) {
-
-    }
-
-    @Override
-    public void present(float deltaTime) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-    @Override
-    public void androidBackButton() {
-
-    }
+    @Override public void update(float deltaTime) {}
+    @Override public void present(float deltaTime) {}
+    @Override public void pause() {}
+    @Override public void resume() {}
+    @Override public void dispose() {}
+    @Override public void androidBackButton() {}
 }

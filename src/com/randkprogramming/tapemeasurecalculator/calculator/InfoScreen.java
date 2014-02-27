@@ -4,7 +4,7 @@ import com.randkprogramming.tapemeasurecalculator.Calculator;
 import com.randkprogramming.tapemeasurecalculator.Screen;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.CalculatorInputManager;
 
-public class InfoScreen extends Screen{
+public class InfoScreen extends Screen {
 
     CalculatorInputManager manager;
 
@@ -13,33 +13,11 @@ public class InfoScreen extends Screen{
         this.manager = manager;
     }
 
-    @Override
-    public void update(float deltaTime) {
+    @Override public void update(float deltaTime) {}
+    @Override public void present(float deltaTime) {}
+    @Override public void pause() {}
+    @Override public void resume() {}
+    @Override public void dispose() {}
+    @Override public void androidBackButton() {}
 
-    }
-
-    @Override
-    public void present(float deltaTime) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-    @Override
-    public void androidBackButton() {
-
-    }
 }

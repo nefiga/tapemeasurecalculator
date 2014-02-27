@@ -74,6 +74,28 @@ public class Fraction {
 			
 		return new Fraction(numerator,denominator);
 	}
+
+    /**
+     * This method sets the text of the fraction part of the equation. By the time this method gets
+     * called, the number should only be a decimal, (all whole numbers for inches will have been taken out of it).
+     * If the numerator is 0 it returns an empty string.
+     * @param decimal The remaining decimal value that needs to be converted to a fraction.
+     */
+    public static String getFractionStringFromDecimal(double decimal, Fraction precision) {
+
+        String result = "";
+
+        try {
+            Fraction f = getFractionFromDecimal(decimal, precision);
+            if(f.getNumerator() > 0) {
+                result += f.getNumerator();
+                result += "/";
+                result += f.getDenominator();
+            }
+        } catch(Fraction.ZeroDenominatorException e) { e.printStackTrace();  }
+
+        return result;
+    }
 	
 	//--------------------
 	// Set Values
@@ -122,9 +144,14 @@ public class Fraction {
 	 * @param d denominator
 	 * @throws com.randkprogramming.tapemeasurecalculator.calculator.Fraction.ZeroDenominatorException
 	 */
-	public Fraction(int n, int d) throws ZeroDenominatorException {
-		setValues(n,d);
-		simplify();
+	public Fraction(int n, int d) {
+        try {
+            setValues(n,d);
+            simplify();
+        } catch(ZeroDenominatorException e) {
+            e.printStackTrace();
+        }
+
 	}
 	
 	
@@ -263,6 +290,7 @@ public class Fraction {
 	/** Returns a string representation of the fraction. */
 	@Override
 	public String toString() {
+
 		int wholeNumber = numerator / denominator;
 		int displayedNumerator = 0;
 		if(wholeNumber > 0) {

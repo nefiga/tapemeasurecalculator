@@ -2,25 +2,15 @@ package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
 public class CalculatorInputManager {
 
-    CalculateEquation equation;
-    ButtonActions buttonActions;
-    FractionActions fractionActions;
-
     private boolean pressed = false, buttonHeld = false;
     private float buttonHeldTime = 0;
-    private int pressedButton = CalculatorButtons.NONE;
-
-    public CalculatorInputManager(CalculateEquation equation, ButtonActions buttonActions, FractionActions fractionActions) {
-        this.equation = equation;
-        this.buttonActions = buttonActions;
-        this.fractionActions = fractionActions;
-    }
+    private Button pressedButton = null;
 
     /**
         Sets <code>pressedButton</code> to the pressedButton that was pressed.
      * @param button (int) Button that was pressed.
      */
-    public void setButtonPressed(int button) {
+    public void setButtonPressed(Button button) {
         buttonHeldTime = 0;
         pressedButton = button;
         pressed = true;
@@ -31,14 +21,15 @@ public class CalculatorInputManager {
      If so calls the method pressedButton(pressedButton) with the current pressedButton.
      * @param button (int) Button that was released.
      */
-    public void setButtonReleased(int button) {
+    public void setButtonReleased(Button button) {
         buttonHeldTime = 0;
         pressed = false;
 
-        if (releasedInBounds(button) && !buttonHeld) {
-            pressedButton(button);
+        if (releasedInBounds(button) && ! buttonHeld) {
+            button.pressedButton();
         }
-        pressedButton = CalculatorButtons.NONE;
+
+        pressedButton = null;
         buttonHeld = false;
     }
 
@@ -48,67 +39,31 @@ public class CalculatorInputManager {
      called with the current pressedButton.
      * @param button (int) Button where TouchEvent currently is.
      */
-    public void setButtonDragged(int button) {
+    public void setButtonDragged(Button button) {
         if (button != pressedButton) {
             pressed = false;
             buttonHeldTime = 0;
-            pressedButton = CalculatorButtons.NONE;
-        }
-    }
-
-    /**
-     Calls the method corresponding to the button that was pressed and released.
-      */
-    private void pressedButton(int button) {
-        if (button < CalculatorButtons.CALCULATE_BUTTONS && button > CalculatorButtons.NONE) {
-            equation.sortButton(button, CalculatorButtons.BUTTON_PRESSED);
-        }
-        else if (button == CalculatorButtons.FRACTION_CHANGE_BUTTON) {
-            buttonActions.sortButton(button, CalculatorButtons.BUTTON_PRESSED);
-        }
-        else if (button == 36) {
-            buttonActions.sortButton(button, CalculatorButtons.BUTTON_PRESSED);
-            equation.formatAnswer();
-        }
-        else if (button < CalculatorButtons.FRACTION_BUTTONS && button > CalculatorButtons.FRACTION_CHANGE_BUTTON) {
-            fractionActions.sortButton(button, CalculatorButtons.BUTTON_PRESSED);
-        }
-
-    }
-
-    /**
-     Calls the method corresponding to the button that is pressed and then held.
-      */
-    private void holdingButton(int button) {
-        if (button < CalculatorButtons.CALCULATE_BUTTONS && button > CalculatorButtons.NONE) {
-            equation.sortButton(button, CalculatorButtons.BUTTON_HELD);
-        }
-        else if (button == CalculatorButtons.FRACTION_CHANGE_BUTTON) {
-            buttonActions.sortButton(button, CalculatorButtons.BUTTON_HELD);
-        }
-        else if (button < CalculatorButtons.FRACTION_BUTTONS) {
-            fractionActions.sortButton(button, CalculatorButtons.BUTTON_HELD);
+            pressedButton = null;
         }
     }
 
     /**
         Returns true if the button that was released is the same as the button that was pressed
      * @param button (int) Button that was pressed.
-     * @return (boolean
+     * @return (boolean)
      */
-    private boolean releasedInBounds(int button) {
-        if (pressedButton == button) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    private boolean releasedInBounds(Button button) {
+        return pressedButton == button;
     }
 
-    public void update(float deltaTime) {
+    /**
+     * Updates the time for button holding.
+     * @param deltaTime The amount of time that has elapsed
+     */
+    public void updateHoldTime(float deltaTime) {
         if (pressed) buttonHeldTime += deltaTime;
         if (buttonHeldTime >= 1.5f) {
-            holdingButton(pressedButton);
+            pressedButton.holdingButton();
             buttonHeld = true;
             buttonHeldTime = 0;
         }
