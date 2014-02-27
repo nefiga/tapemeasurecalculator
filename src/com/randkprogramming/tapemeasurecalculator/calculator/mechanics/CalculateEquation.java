@@ -8,7 +8,7 @@ public class CalculateEquation {
 
     public static void updateDisplay() {
 
-        if(CalculatorState.numbers.size() == 1) {
+        if(CalculatorState.numbers.size() == 1 && CalculatorState.numbers.get(0).length() > 0) {
 
             if(CalculatorState.lastResult == null) {
                 CalculatorState.lastResult = parseNumber(CalculatorState.numbers.get(0));
@@ -133,11 +133,17 @@ public class CalculateEquation {
 
         String text = "";
 
+        if(number < 0) {
+            text += "-";
+            number *= -1;
+        }
+
         if(CalculatorState.precisionMode == Button.PrecisionMode.DECIMAL) {
             if(CalculatorState.displayMode == Button.DisplayMode.FEET_AND_INCHES) {
                 number /= 12;
             }
-            text = df.format(number);
+            String n = df.format(number);
+            text += n;
             text += (CalculatorState.displayMode == Button.DisplayMode.FEET_AND_INCHES) ? " Feet" : " Inches";
         }
         else {
@@ -153,13 +159,23 @@ public class CalculateEquation {
             // Parse Inches
             int inches = (int) number;
             number -= inches;
-            text += inches;
 
             // Parse Decimal
-            String decimal = Fraction.getFractionStringFromDecimal(number,getPrecision());
-            if(decimal.length() > 0) {
+            boolean fractionValid = false;
+            String fraction = Fraction.getFractionStringFromDecimal(number,getPrecision());
+            if(fraction.length() > 0 && fraction.charAt(0) != '0') {
+
+                if(fraction.equals("1/1")) {
+                    inches++;
+                }
+                else {
+                    fractionValid = true;
+                }
+            }
+            text += inches;
+            if(fractionValid) {
                 text += "  ";
-                text += decimal;
+                text += fraction;
             }
             text += "\"";
         }
@@ -184,6 +200,7 @@ public class CalculateEquation {
         String read = "";
         Fraction f = new Fraction();
         boolean readingFraction = false;
+        boolean isNegative = false;
 
         for(int i = 0; i < s.length(); i++) {
 
@@ -211,6 +228,10 @@ public class CalculateEquation {
             }
 
             switch (c) {
+                case '-': {
+                    isNegative = true;
+                    break;
+                }
                 case '\'': {
                     value += Double.parseDouble(read) * 12;
                     read = "";
@@ -238,6 +259,10 @@ public class CalculateEquation {
                     break;
                 }
             }
+        }
+
+        if(isNegative) {
+            value *= -1;
         }
 
         return value;
