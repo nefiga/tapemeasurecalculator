@@ -74,6 +74,11 @@ public class CalculatorState {
 
         if(isOperatorNext() && numbers.size() > 0) {
 
+            // Don't allow them to add unit symbols on multiplications or divisions
+            if(mostRecentOperatorIsTimesOrDivide()) {
+                return;
+            }
+
             int current = numbers.size() - 1;
             String s = numbers.get(current);
 
@@ -88,6 +93,11 @@ public class CalculatorState {
     public static void addInches() {
 
         if(isOperatorNext() && numbers.size() > 0) {
+
+            // Don't allow them to add unit symbols on multiplications or divisions
+            if(mostRecentOperatorIsTimesOrDivide()) {
+                return;
+            }
 
             int current = numbers.size() - 1;
             String s = numbers.get(current);
@@ -120,6 +130,20 @@ public class CalculatorState {
     }
 
     /**
+     * Checks to see whether the last operator entered in was a times or a divide.
+     * @return True if the latest one is a times or a divide. False otherwise.
+     */
+    public static boolean mostRecentOperatorIsTimesOrDivide() {
+
+        boolean result = false;
+        if(operators.size() > 0) {
+            Button.Operator mostRecentOp = operators.get(operators.size()-1);
+            result = mostRecentOp.equals(Button.Operator.TIMES) || mostRecentOp.equals(Button.Operator.DIVIDE);
+        }
+        return result;
+    }
+
+    /**
      * Makes sure that the user specified units (feet or inches), if not, insert inches by default.
      */
     public static void verifyUnits() {
@@ -127,11 +151,17 @@ public class CalculatorState {
         int current = numbers.size() - 1;
         String num = numbers.get(current);
 
+        // Don't allow units until they have at least one number
         if(numbers.size() == 0 || num.length() == 0)
             return;
 
         // If user didn't specify feet or inches, insert inches by default.
         if( ! num.contains("\"") && ! num.contains("\'") ) {
+
+            // Ignore adding the unit symbols for multiplications or divisions
+            if(mostRecentOperatorIsTimesOrDivide()) {
+                return;
+            }
             numbers.set(current, num + "\"");
         }
     }

@@ -247,6 +247,7 @@ public class CalculateEquation {
                     if(readingFraction) {
                         f = new Fraction(f.getNumerator(), Integer.parseInt(read));
                         value += f.getDecimalRepresentation();
+                        read = "";
                     }
                     else {
                         value += Double.parseDouble(read);
@@ -265,6 +266,11 @@ public class CalculateEquation {
                     break;
                 }
             }
+        }
+
+        if(read.length() > 0) {
+            value += Double.parseDouble(read);
+            read = "";
         }
 
         if(isNegative) {
