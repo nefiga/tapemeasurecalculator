@@ -10,7 +10,11 @@ public class CalculateEquation {
     public static void updateDisplay() {
 
         if(CalculatorState.numbers.size() == 1) {
-            CalculatorState.numbers.set(0, formatNumber(parseNumber(CalculatorState.numbers.get(0))));
+
+            if(CalculatorState.lastResult == null) {
+                CalculatorState.lastResult = parseNumber(CalculatorState.numbers.get(0));
+            }
+            CalculatorState.numbers.set(0, formatNumber(CalculatorState.lastResult));
         }
     }
 
@@ -48,7 +52,9 @@ public class CalculateEquation {
 
             String answer = CalculatorState.numbers.get(0);
             CalculatorState.clear();
-            CalculatorState.numbers.set(0, formatNumber(parseNumber(answer)));
+            double answerDouble = parseNumber(answer);
+            CalculatorState.numbers.set(0, formatNumber(answerDouble));
+            CalculatorState.lastResult = answerDouble;
         }
     }
 

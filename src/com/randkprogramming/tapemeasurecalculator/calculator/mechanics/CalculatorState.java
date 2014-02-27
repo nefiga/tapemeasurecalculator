@@ -14,6 +14,8 @@ public class CalculatorState {
     public static List<String> numbers = new ArrayList<String>();
     public static List<Button.Operator> operators = new ArrayList<Button.Operator>();
 
+    public static Double lastResult = null;
+
     static {
         clear();
     }
@@ -22,6 +24,7 @@ public class CalculatorState {
         numbers.clear();
         operators.clear();
         numbers.add("");
+        lastResult = null;
     }
 
     public static void addNumber(int n) {
