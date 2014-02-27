@@ -44,6 +44,18 @@ public class CalculateEquation {
 
         if ( CalculatorState.isOperatorNext()) {
 
+            String s = CalculatorState.getLastNumber();
+
+            // Prevent solving equation if user forgot to specify units on last number (unless multiplying or dividing)
+            // This is here as a courtesy to prevent confusion and unexpected results (unexpected by the user)
+            if(s.length() > 0 && ! CalculatorState.mostRecentOperatorIsTimesOrDivide()) {
+
+                char lastChar = s.trim().charAt(s.length()-1);
+                if(lastChar != '\"' && lastChar != '\'') {
+                    return;
+                }
+            }
+
             CalculatorState.convertUnitsToSymbols();
             CalculatorState.verifyUnits();
 

@@ -27,23 +27,42 @@ public class CalculatorState {
         lastResult = null;
     }
 
+    public static String getLastNumber() {
+        if(numbers.size() > 0) {
+            return numbers.get(numbers.size()-1);
+        }
+        return "";
+    }
+
+    public static Button.Operator getLastOperator() {
+        if(operators.size() > 0) {
+            return operators.get(operators.size()-1);
+        }
+        return null;
+    }
+
+    public static void setLastNumber(String num) {
+
+        if(numbers.size() > 0) {
+            numbers.set(numbers.size() - 1, num);
+        }
+    }
+
+    public static void appendToLastNum(String num) {
+
+        setLastNumber(getLastNumber() + num);
+    }
+
     public static void convertUnitsToSymbols() {
 
-        int current = numbers.size() - 1;
-
-        if(current < 0) {
-            return;
-        }
-
         // Replace words with corresponding symbols
-        numbers.set(current,numbers.get(current).replaceAll(" Feet", "\'"));
-        numbers.set(current, numbers.get(current).replaceAll(" Inches", "\""));
+        setLastNumber(getLastNumber().replaceAll(" Feet", "\'"));
+        setLastNumber(getLastNumber().replaceAll(" Inches", "\""));
     }
 
     public static void addNumber(int n) {
 
-        int current = numbers.size() - 1;
-        String s = numbers.get(current);
+        String s = getLastNumber();
 
         if( ! s.contains("\"") && ! s.contains("Inches") && (! s.contains("Feet") || ! s.contains(".")) ) {
 
@@ -54,7 +73,7 @@ public class CalculatorState {
             }
 
             s += n;
-            numbers.set(current, s);
+            setLastNumber(s);
         }
 
     }
@@ -79,13 +98,12 @@ public class CalculatorState {
                 return;
             }
 
-            int current = numbers.size() - 1;
-            String s = numbers.get(current);
+            String s = getLastNumber();
 
             if(s.length() > 0 && ! s.contains("\'") && ! s.contains("\"") &&
                     ! s.contains("Feet") && ! s.contains("Inches")) {
 
-                numbers.set(current,numbers.get(current) + "\'");
+                appendToLastNum("\'");
             }
         }
     }
@@ -99,22 +117,20 @@ public class CalculatorState {
                 return;
             }
 
-            int current = numbers.size() - 1;
-            String s = numbers.get(current);
+            String s = getLastNumber();
 
             if(s.length() > 0 && ! s.contains("\"") &&
                     ! s.substring(s.length() - 1).equals("\'") &&
                     ! s.contains("Feet") && ! s.contains("Inches")) {
 
-                numbers.set(current,numbers.get(current) + "\"");
+                appendToLastNum("\"");
             }
         }
     }
 
     public static void addDecimal() {
 
-        int current = numbers.size() - 1;
-        String s = numbers.get(current);
+        String s = getLastNumber();
 
         if ( ! s.contains(".") && ! s.contains("\'") && ! s.contains("\"")) {
 
@@ -125,7 +141,7 @@ public class CalculatorState {
                 s = "0";
             }
 
-            numbers.set(current, s + ".");
+            setLastNumber(s + ".");
         }
     }
 
@@ -144,25 +160,23 @@ public class CalculatorState {
     }
 
     /**
-     * Makes sure that the user specified units (feet or inches), if not, insert inches by default.
+     * If user didn't specify feet or inches, insert inches by default.
      */
     public static void verifyUnits() {
 
-        int current = numbers.size() - 1;
-        String num = numbers.get(current);
+        String num = getLastNumber();
 
         // Don't allow units until they have at least one number
         if(numbers.size() == 0 || num.length() == 0)
             return;
 
-        // If user didn't specify feet or inches, insert inches by default.
-        if( ! num.contains("\"") && ! num.contains("\'") ) {
+        if( ! num.contains("\"") && Character.isDigit(num.charAt(num.length()-1)) ) {
 
             // Ignore adding the unit symbols for multiplications or divisions
             if(mostRecentOperatorIsTimesOrDivide()) {
                 return;
             }
-            numbers.set(current, num + "\"");
+            appendToLastNum("\"");
         }
     }
 
@@ -172,10 +186,9 @@ public class CalculatorState {
      */
     public static boolean isOperatorNext() {
 
-        assert numbers.size() > 0;
-        String value = numbers.get(numbers.size() - 1);
+        String s = getLastNumber();
 
-        if(value == null || value.length() == 0) {
+        if(s == null || s.length() == 0) {
             return false;
         }
         return operators.size() < numbers.size();
