@@ -181,9 +181,12 @@ public class CalculateEquation {
 
             char c = s.charAt(i);
 
-            if(Character.isSpaceChar(c) && read.length() > 0) {
-                value += Double.parseDouble(read);
-                read = "";
+            if(Character.isSpaceChar(c)) {
+
+                if(read.length() > 0) {
+                    value += Double.parseDouble(read);
+                    read = "";
+                }
                 continue;
             }
 
