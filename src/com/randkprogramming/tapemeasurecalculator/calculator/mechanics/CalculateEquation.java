@@ -1,6 +1,5 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
-import com.randkprogramming.tapemeasurecalculator.Calculator;
 import com.randkprogramming.tapemeasurecalculator.calculator.Fraction;
 
 import java.text.DecimalFormat;
@@ -139,7 +138,7 @@ public class CalculateEquation {
                 number /= 12;
             }
             text = df.format(number);
-            text += (CalculatorState.displayMode == Button.DisplayMode.FEET_AND_INCHES) ? "\'" : "\"";
+            text += (CalculatorState.displayMode == Button.DisplayMode.FEET_AND_INCHES) ? " Feet" : " Inches";
         }
         else {
             if(CalculatorState.displayMode == Button.DisplayMode.FEET_AND_INCHES) {
@@ -193,7 +192,19 @@ public class CalculateEquation {
             if(Character.isSpaceChar(c)) {
 
                 if(read.length() > 0) {
-                    value += Double.parseDouble(read);
+
+                    // If the next letter is an F, then assume it is going to say Feet
+                    if(s.length() >= i+1 && s.charAt(i+1) == 'F') {
+                        value += Double.parseDouble(read) * 12;
+                        i += 4; // Skip the word Feet
+                    }
+                    else if(s.length() >= i+1 && s.charAt(i+1) == 'I') {
+                        value += Double.parseDouble(read);
+                        i += 6; // Skip the word Inches
+                    }
+                    else {
+                        value += Double.parseDouble(read);
+                    }
                     read = "";
                 }
                 continue;

@@ -27,16 +27,31 @@ public class CalculatorState {
         lastResult = null;
     }
 
+    private static void convertUnitsToSymbols() {
+
+        int current = numbers.size() - 1;
+
+        if(current < 0) {
+            return;
+        }
+
+        // Replace words with corresponding symbols
+        numbers.set(current,numbers.get(current).replaceAll(" Feet", "\'"));
+        numbers.set(current, numbers.get(current).replaceAll(" Inches", "\""));
+    }
+
     public static void addNumber(int n) {
 
         int current = numbers.size() - 1;
         String s = numbers.get(current);
 
+        convertUnitsToSymbols();
+
         if(! s.contains("\"")) {
 
             String append = "";
 
-            if(s.length() > 0 && s.substring(s.length() - 1).equals("\'")) {
+            if(s.length() > 0 && (s.substring(s.length() - 1).equals("\'"))) {
                 append += " ";
             }
 
@@ -50,6 +65,7 @@ public class CalculatorState {
 
         if (isOperatorNext()) {
 
+            convertUnitsToSymbols();
             verifyUnits();
             operators.add(op);
             numbers.add("");
@@ -57,6 +73,8 @@ public class CalculatorState {
     }
 
     public static void addFeet() {
+
+        convertUnitsToSymbols();
 
         if(isOperatorNext() && numbers.size() > 0) {
             int current = numbers.size() - 1;
@@ -70,6 +88,8 @@ public class CalculatorState {
     }
 
     public static void addInches() {
+
+        convertUnitsToSymbols();
 
         if(isOperatorNext() && numbers.size() > 0) {
 
@@ -96,16 +116,18 @@ public class CalculatorState {
             return;
 
         // If user didn't specify feet or inches, insert inches by default.
-        if( ! num.contains("\"") && ! num.contains("\'")) {
+        if( ! num.contains("\"") && ! num.contains("\'") ) {
             numbers.set(current, num + "\"");
         }
     }
 
     public static void addDecimal() {
 
+        convertUnitsToSymbols();
+
         int current = numbers.size() - 1;
 
-        if (!numbers.get(current).contains(".")) {
+        if ( ! numbers.get(current).contains(".") && ! numbers.get(current).contains("\'")) {
 
             if (numbers.get(current).length() == 0) {
                 numbers.set(current, "0");
