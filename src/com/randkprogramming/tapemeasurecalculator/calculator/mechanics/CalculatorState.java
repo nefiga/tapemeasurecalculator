@@ -27,7 +27,7 @@ public class CalculatorState {
         lastResult = null;
     }
 
-    private static void convertUnitsToSymbols() {
+    public static void convertUnitsToSymbols() {
 
         int current = numbers.size() - 1;
 
@@ -45,18 +45,16 @@ public class CalculatorState {
         int current = numbers.size() - 1;
         String s = numbers.get(current);
 
-        convertUnitsToSymbols();
+        if( ! s.contains("\"") && ! s.contains("Inches") && (! s.contains("Feet") || ! s.contains(".")) ) {
 
-        if(! s.contains("\"")) {
-
-            String append = "";
+            s = s.replaceAll(" Feet","\'");
 
             if(s.length() > 0 && (s.substring(s.length() - 1).equals("\'"))) {
-                append += " ";
+                s += " ";
             }
 
-            append += n;
-            numbers.set(current, numbers.get(current) + append);
+            s += n;
+            numbers.set(current, s);
         }
 
     }
@@ -74,13 +72,13 @@ public class CalculatorState {
 
     public static void addFeet() {
 
-        convertUnitsToSymbols();
-
         if(isOperatorNext() && numbers.size() > 0) {
+
             int current = numbers.size() - 1;
-            if(numbers.get(current).length() > 0 &&
-                    ! numbers.get(current).contains("\'") &&
-                    ! numbers.get(current).contains("\"")) {
+            String s = numbers.get(current);
+
+            if(s.length() > 0 && ! s.contains("\'") && ! s.contains("\"") &&
+                    ! s.contains("Feet") && ! s.contains("Inches")) {
 
                 numbers.set(current,numbers.get(current) + "\'");
             }
@@ -89,18 +87,35 @@ public class CalculatorState {
 
     public static void addInches() {
 
-        convertUnitsToSymbols();
-
         if(isOperatorNext() && numbers.size() > 0) {
 
             int current = numbers.size() - 1;
             String s = numbers.get(current);
 
             if(s.length() > 0 && ! s.contains("\"") &&
-                    ! s.substring(s.length() - 1).equals("\'")) {
+                    ! s.substring(s.length() - 1).equals("\'") &&
+                    ! s.contains("Feet") && ! s.contains("Inches")) {
 
                 numbers.set(current,numbers.get(current) + "\"");
             }
+        }
+    }
+
+    public static void addDecimal() {
+
+        int current = numbers.size() - 1;
+        String s = numbers.get(current);
+
+        if ( ! s.contains(".") && ! s.contains("\'") && ! s.contains("\"")) {
+
+            s = s.replaceAll(" Feet","");
+            s = s.replaceAll(" Inches","");
+
+            if (s.length() == 0) {
+                s = "0";
+            }
+
+            numbers.set(current, s + ".");
         }
     }
 
@@ -118,22 +133,6 @@ public class CalculatorState {
         // If user didn't specify feet or inches, insert inches by default.
         if( ! num.contains("\"") && ! num.contains("\'") ) {
             numbers.set(current, num + "\"");
-        }
-    }
-
-    public static void addDecimal() {
-
-        convertUnitsToSymbols();
-
-        int current = numbers.size() - 1;
-
-        if ( ! numbers.get(current).contains(".") && ! numbers.get(current).contains("\'")) {
-
-            if (numbers.get(current).length() == 0) {
-                numbers.set(current, "0");
-            }
-
-            numbers.set(current, numbers.get(current) + ".");
         }
     }
 

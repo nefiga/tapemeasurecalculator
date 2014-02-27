@@ -44,6 +44,7 @@ public class CalculateEquation {
 
         if ( CalculatorState.isOperatorNext()) {
 
+            CalculatorState.convertUnitsToSymbols();
             CalculatorState.verifyUnits();
 
             multiplyAndDivide();
@@ -127,9 +128,14 @@ public class CalculateEquation {
      */
     public static String formatNumber(double number) {
 
-        final int MAX_DECIMAL_DIGITS = 6;
         DecimalFormat df = new DecimalFormat();
-        df.setMaximumFractionDigits(MAX_DECIMAL_DIGITS);
+
+        if(CalculatorState.displayMode == Button.DisplayMode.FEET_AND_INCHES) {
+            df.setMaximumFractionDigits(10);
+        }
+        else {
+            df.setMaximumFractionDigits(7);
+        }
 
         String text = "";
 
