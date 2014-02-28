@@ -1,6 +1,6 @@
-package com.randkprogramming.tapemeasurecalculator.calculator;
+package com.randkprogramming.tapemeasurecalculator.calculator.assets;
 
-import com.randkprogramming.tapemeasurecalculator.Pixmap;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Pixmap;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.Button;
 
 public class Assets {

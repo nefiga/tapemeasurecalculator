@@ -1,4 +1,4 @@
-package com.randkprogramming.tapemeasurecalculator;
+package com.randkprogramming.tapemeasurecalculator.interfaces;
 
 import java.util.ArrayList;
 import java.util.List;

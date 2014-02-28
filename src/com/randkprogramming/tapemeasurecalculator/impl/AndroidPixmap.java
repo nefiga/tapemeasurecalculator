@@ -1,8 +1,8 @@
 package com.randkprogramming.tapemeasurecalculator.impl;
 
 import android.graphics.Bitmap;
-import com.randkprogramming.tapemeasurecalculator.Graphics.PixmapFormat;
-import com.randkprogramming.tapemeasurecalculator.Pixmap;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics.PixmapFormat;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Pixmap;
 
 public class AndroidPixmap implements Pixmap {
 

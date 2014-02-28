@@ -1,6 +1,6 @@
-package com.randkprogramming.tapemeasurecalculator;
+package com.randkprogramming.tapemeasurecalculator.interfaces;
 
-import com.randkprogramming.tapemeasurecalculator.Graphics.PixmapFormat;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics.PixmapFormat;
 
 public interface Pixmap {
 

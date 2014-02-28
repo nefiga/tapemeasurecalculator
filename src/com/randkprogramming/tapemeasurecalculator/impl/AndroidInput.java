@@ -2,7 +2,7 @@ package com.randkprogramming.tapemeasurecalculator.impl;
 
 import android.content.Context;
 import android.view.View;
-import com.randkprogramming.tapemeasurecalculator.Input;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Input;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.randkprogramming.tapemeasurecalculator;
+package com.randkprogramming.tapemeasurecalculator.interfaces;
 
 public abstract class Screen {
 

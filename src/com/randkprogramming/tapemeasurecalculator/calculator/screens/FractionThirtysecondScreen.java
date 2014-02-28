@@ -1,7 +1,7 @@
-package com.randkprogramming.tapemeasurecalculator.calculator;
+package com.randkprogramming.tapemeasurecalculator.calculator.screens;
 
-import com.randkprogramming.tapemeasurecalculator.Calculator;
-import com.randkprogramming.tapemeasurecalculator.Screen;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Screen;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.CalculatorInputManager;
 
 public class FractionThirtysecondScreen extends Screen{

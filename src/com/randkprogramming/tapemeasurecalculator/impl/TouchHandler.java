@@ -1,7 +1,7 @@
 package com.randkprogramming.tapemeasurecalculator.impl;
 
 import android.view.View.OnTouchListener;
-import com.randkprogramming.tapemeasurecalculator.Input.TouchEvent;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Input.TouchEvent;
 
 import java.util.List;
 

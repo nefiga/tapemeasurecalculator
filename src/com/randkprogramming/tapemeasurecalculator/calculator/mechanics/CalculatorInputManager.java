@@ -1,5 +1,8 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
+//----------------------------------
+// Calculator Input Manager
+//----------------------------------
 public class CalculatorInputManager {
 
     private boolean pressed = false, buttonHeld = false;

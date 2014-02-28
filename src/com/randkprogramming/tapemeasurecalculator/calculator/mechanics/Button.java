@@ -11,7 +11,7 @@ public interface Button {
     public static enum Number implements Button {
         ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE;
 
-        @Override public void pressedButton() { CalculatorState.addNumber(ordinal()); }
+        @Override public void pressedButton() { CalcState.addNumber(ordinal()); }
         @Override public void holdingButton(){}
     }
 
@@ -21,7 +21,7 @@ public interface Button {
     public static enum Operator implements Button {
         PLUS, MINUS, DIVIDE, TIMES;
 
-        @Override public void pressedButton() { CalculatorState.addOperator(this); }
+        @Override public void pressedButton() { CalcState.addOperator(this); }
         @Override public void holdingButton(){}
         @Override public String toString() {
 
@@ -44,12 +44,12 @@ public interface Button {
         @Override
         public void pressedButton() {
             switch(this) {
-                case DECIMAL_POINT: { CalculatorState.addDecimal(); break; }
-                case EQUALS: { CalculateEquation.solveEquation(); break; }
-                case CLEAR: { CalculatorState.clear(); break; }
+                case DECIMAL_POINT: { CalcState.addDecimal(); break; }
+                case EQUALS: { CalculateEquation.solveEquation(CalcState.equation); break; }
+                case CLEAR: { CalcState.equation.clear(); break; }
                 case BACKSPACE: { break; } // TODO: Implement Backspace!
-                case FEET: { CalculatorState.addFeet(); break; }
-                case INCHES: { CalculatorState.addInches(); break; }
+                case FEET: { CalcState.addFeet(); break; }
+                case INCHES: { CalcState.addInches(); break; }
             }
         }
         @Override public void holdingButton(){}
@@ -66,15 +66,15 @@ public interface Button {
             switch(this) {
                 case FRACTION: { break; } // TODO: Make Fractions Page!
                 case PRECISION: {
-                    CalculatorState.verifyUnits();
-                    CalculatorState.precisionMode = CalculatorState.precisionMode.next();
-                    CalculateEquation.updateDisplay();
+                    CalcState.equation.verifyUnits();
+                    CalcState.precisionMode = CalcState.precisionMode.next();
+                    CalcState.equation.updateDisplay();
                     break;
                 }
                 case DISPLAY: {
-                    CalculatorState.verifyUnits();
-                    CalculatorState.displayMode = CalculatorState.displayMode.next();
-                    CalculateEquation.updateDisplay();
+                    CalcState.equation.verifyUnits();
+                    CalcState.displayMode = CalcState.displayMode.next();
+                    CalcState.equation.updateDisplay();
                     break; }
                 case INFO: { break; } // TODO: Make Info/Options Page!
             }
@@ -87,16 +87,34 @@ public interface Button {
     //  certain buttons will use to keep track of it's current state.
     //----------------------------------------------------------------
 
+    //---------------------
+    //  Display Mode
+    //---------------------
     public static enum DisplayMode {
         INCHES_ONLY, FEET_AND_INCHES;
 
         public DisplayMode next() { return values()[(ordinal() + 1) % values().length]; }
     }
 
+    //---------------------
+    //  Precision Mode
+    //---------------------
     public static enum PrecisionMode {
         SIXTEENTH, THIRTY_SECOND, SIXTY_FOURTH, DECIMAL;
 
         public PrecisionMode next() { return values()[(ordinal() + 1) % values().length]; }
+
+        /** Returns a fraction object according to the currently selected precision button.
+         * @return The corresponding precision in the form of a Fraction object. */
+        public Fraction getFraction() {
+
+            switch (this) {
+                case SIXTEENTH: return new Fraction(1, 16);
+                case THIRTY_SECOND: return new Fraction(1, 32);
+                case SIXTY_FOURTH: return new Fraction(1, 64);
+            }
+            return null;
+        }
     }
 
 }

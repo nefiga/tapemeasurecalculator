@@ -1,8 +1,9 @@
-package com.randkprogramming.tapemeasurecalculator.calculator;
+package com.randkprogramming.tapemeasurecalculator.calculator.screens;
 
-import com.randkprogramming.tapemeasurecalculator.Calculator;
-import com.randkprogramming.tapemeasurecalculator.Graphics;
-import com.randkprogramming.tapemeasurecalculator.Screen;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Screen;
+import com.randkprogramming.tapemeasurecalculator.calculator.assets.Assets;
 
 public class LoadingScreen extends Screen {
 

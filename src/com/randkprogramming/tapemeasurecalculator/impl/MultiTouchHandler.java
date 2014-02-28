@@ -2,9 +2,9 @@ package com.randkprogramming.tapemeasurecalculator.impl;
 
 import android.view.MotionEvent;
 import android.view.View;
-import com.randkprogramming.tapemeasurecalculator.Input.TouchEvent;
-import com.randkprogramming.tapemeasurecalculator.Pool;
-import com.randkprogramming.tapemeasurecalculator.Pool.PoolObjectFactory;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Input.TouchEvent;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Pool;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Pool.PoolObjectFactory;
 
 import java.util.ArrayList;
 import java.util.List;

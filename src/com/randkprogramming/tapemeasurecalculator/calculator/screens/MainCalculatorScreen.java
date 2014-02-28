@@ -1,11 +1,12 @@
-package com.randkprogramming.tapemeasurecalculator.calculator;
+package com.randkprogramming.tapemeasurecalculator.calculator.screens;
 
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import com.randkprogramming.tapemeasurecalculator.Calculator;
-import com.randkprogramming.tapemeasurecalculator.Graphics;
-import com.randkprogramming.tapemeasurecalculator.Input.TouchEvent;
-import com.randkprogramming.tapemeasurecalculator.Screen;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Input.TouchEvent;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Screen;
+import com.randkprogramming.tapemeasurecalculator.calculator.assets.Assets;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.*;
 
 import java.util.List;
@@ -21,6 +22,15 @@ public class MainCalculatorScreen extends Screen {
     private static final Typeface answerFont = Typeface.create("DEFAULT_BOLD", Typeface.BOLD);
 
     private float debugTimer = 0;
+
+    //--------------------------
+    // Constructor
+    //--------------------------
+    public MainCalculatorScreen(Calculator calculator) {
+        super(calculator);
+        paint.setTypeface(answerFont);
+        paint.setTextSize(50);
+    }
 
     //--------------------------------
     // Upper Section Button Layout
@@ -51,34 +61,23 @@ public class MainCalculatorScreen extends Screen {
             new Button[] { Button.Special.FRACTION, Button.Special.PRECISION, Button.Special.DISPLAY, Button.Special.INFO }
     };
 
-    //--------------------------
-    // Constructor
-    //--------------------------
-    public MainCalculatorScreen(Calculator calculator) {
-        super(calculator);
-        paint.setTypeface(answerFont);
-        paint.setTextSize(50);
-    }
-
-    @Override
-    public void update(float deltaTime) {
+    public void printDebugStatements(float deltaTime) {
 
         debugTimer += deltaTime;
         if (debugTimer >= 2.0f) {
             debugTimer = 0;
 
-            System.out.println(CalculateEquation.buildString());
+            System.out.println(CalcState.equation.buildString());
         }
+    }
 
-//      List<Input.KeyEvent> keyEvents = calculator.getInput().getKeyEvents();
+    @Override
+    public void update(float deltaTime) {
 
-        // Check for TouchEvents
+//        printDebugStatements(deltaTime);
+
         List<TouchEvent> touchEvents = calculator.getInput().getTouchEvent();
-
         for (TouchEvent event : touchEvents) {
-
-            if (event == null)
-                continue;
 
             upperSection(event);
             lowerSection(event);
@@ -132,14 +131,14 @@ public class MainCalculatorScreen extends Screen {
     @Override
     public void present(float deltaTime) {
 
-        //Draw Images
+        // Draw Images
         Graphics g = calculator.getGraphics();
 
         g.drawPixmap(Assets.main_calculator, 0, 0);
-        g.drawString(CalculateEquation.buildString(), 10, 50, paint);
+        g.drawString(CalcState.equation.buildString(), 10, 50, paint);
 
-        g.drawPixmap(Assets.precision[CalculatorState.precisionMode.ordinal()], 210, 1075);
-        g.drawPixmap(Assets.displayIn[CalculatorState.displayMode.ordinal()], 410, 1075);
+        g.drawPixmap(Assets.precision[CalcState.precisionMode.ordinal()], 210, 1075);
+        g.drawPixmap(Assets.displayIn[CalcState.displayMode.ordinal()], 410, 1075);
     }
 
     // Checks to see if your finger is within an area

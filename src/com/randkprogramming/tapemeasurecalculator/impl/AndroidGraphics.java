@@ -4,8 +4,8 @@ import android.content.res.AssetManager;
 import android.graphics.*;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory.Options;
-import com.randkprogramming.tapemeasurecalculator.Graphics;
-import com.randkprogramming.tapemeasurecalculator.Pixmap;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Pixmap;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

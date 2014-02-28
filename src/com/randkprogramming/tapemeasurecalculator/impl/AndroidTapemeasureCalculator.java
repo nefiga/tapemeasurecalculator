@@ -8,10 +8,10 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.view.Window;
 import android.view.WindowManager;
-import com.randkprogramming.tapemeasurecalculator.Calculator;
-import com.randkprogramming.tapemeasurecalculator.Graphics;
-import com.randkprogramming.tapemeasurecalculator.Input;
-import com.randkprogramming.tapemeasurecalculator.Screen;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Input;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Screen;
 
 public abstract class AndroidTapemeasureCalculator extends Activity implements Calculator {
     AndroidFastRenderView renderView;

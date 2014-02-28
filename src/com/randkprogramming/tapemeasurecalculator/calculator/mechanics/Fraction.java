@@ -1,4 +1,4 @@
-package com.randkprogramming.tapemeasurecalculator.calculator;
+package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
 /**
  * A simple class for storing fractions and performing simple arithmetic operations on them.
@@ -43,7 +43,7 @@ public class Fraction {
 	 *      e.g. if you give 1/16 as the round value you will get
 	 *           an answer that is a multiple of 1/16 in simple reduced form.
 	 * @return The resulting fraction in reduced form.
-	 * @throws com.randkprogramming.tapemeasurecalculator.calculator.Fraction.ZeroDenominatorException if the denominator of the round parameter you provide is 0.
+	 * @throws Fraction.ZeroDenominatorException if the denominator of the round parameter you provide is 0.
 	 */
 	public static Fraction getFractionFromDecimal(double decimal, Fraction precision) throws ZeroDenominatorException {
 		double precisionValue = precision.getDecimalRepresentation();
@@ -57,8 +57,6 @@ public class Fraction {
 	public static Fraction getFractionFromString(String fraction_string) throws ZeroDenominatorException {
 		 
 		StringBuilder sb = new StringBuilder();
-		int numerator = 0;
-		int denominator = 0;
 		
 		int i = 0;
 		char c = fraction_string.charAt(i);
@@ -69,9 +67,9 @@ public class Fraction {
 			c = fraction_string.charAt(i);
 		}
 		
-		numerator = Integer.parseInt(sb.toString());
-		denominator = Integer.parseInt(fraction_string.substring(i+1));
-			
+		int numerator = Integer.parseInt(sb.toString());
+		int denominator = Integer.parseInt(fraction_string.substring(i+1));
+
 		return new Fraction(numerator,denominator);
 	}
 
@@ -105,7 +103,7 @@ public class Fraction {
 	 * for either one, or both. Denominator can not be 0.
 	 * @param n numerator
 	 * @param d denominator
-	 * @throws com.randkprogramming.tapemeasurecalculator.calculator.Fraction.ZeroDenominatorException
+	 * @throws Fraction.ZeroDenominatorException
 	 */
 	private void setValues(int n, int d) throws ZeroDenominatorException {
 		
@@ -131,7 +129,7 @@ public class Fraction {
 	/**
 	 * This constructor works much like a copy or clone method. It returns a new Fraction that is equal to the given fraction, and reduces the result if necessary.
 	 * @param f fraction
-	 * @throws com.randkprogramming.tapemeasurecalculator.calculator.Fraction.ZeroDenominatorException
+	 * @throws Fraction.ZeroDenominatorException
 	 */
 	public Fraction(Fraction f) throws ZeroDenominatorException {
 		setValues(f.numerator,f.denominator);
@@ -142,7 +140,7 @@ public class Fraction {
 	 * Creates a new Fraction from the given parameters and reduces the result.
 	 * @param n numerator
 	 * @param d denominator
-	 * @throws com.randkprogramming.tapemeasurecalculator.calculator.Fraction.ZeroDenominatorException
+	 * @throws Fraction.ZeroDenominatorException
 	 */
 	public Fraction(int n, int d) {
         try {
@@ -162,7 +160,7 @@ public class Fraction {
 	 * The result of adding the two fractions together.
 	 * This method does not modify the original fractions.
 	 * @return a new Fraction containing the result in simplest form.
-	 * @throws com.randkprogramming.tapemeasurecalculator.calculator.Fraction.ZeroDenominatorException
+	 * @throws Fraction.ZeroDenominatorException
 	 */
 	public static Fraction add(final Fraction leftSide, final Fraction rightSide) throws ZeroDenominatorException {
 		
@@ -186,7 +184,7 @@ public class Fraction {
 	 * The result of subtracting the right side from the left. 
 	 * This method does not modify the original fractions.
 	 * @return a new Fraction containing the result in simplest form.
-	 * @throws com.randkprogramming.tapemeasurecalculator.calculator.Fraction.ZeroDenominatorException
+	 * @throws Fraction.ZeroDenominatorException
 	 */
 	public static Fraction subtract(final Fraction leftSide, final Fraction rightSide) throws ZeroDenominatorException {
 		
@@ -231,7 +229,7 @@ public class Fraction {
 	 * Multiplies numerators together and denominators together and returns a new fraction as the result.
 	 * Does not modify the original fractions.
 	 * @return a new Fraction containing the result in simplest form.
-	 * @throws com.randkprogramming.tapemeasurecalculator.calculator.Fraction.ZeroDenominatorException
+	 * @throws Fraction.ZeroDenominatorException
 	 */
 	public static Fraction multiply(final Fraction leftSide, final Fraction rightSide) throws ZeroDenominatorException {
 		int n = leftSide.numerator * rightSide.numerator;
@@ -248,7 +246,7 @@ public class Fraction {
 	 * Dividing a fraction by another fraction yields the same result as multiplying
 	 * the fraction by the other fraction's reciprocal (3/4 DIVIDE 2/3 == 3/4 MULTIPLY 3/2)
 	 * @return a new Fraction containing the result in simplest form.
-	 * @throws com.randkprogramming.tapemeasurecalculator.calculator.Fraction.ZeroDenominatorException
+	 * @throws Fraction.ZeroDenominatorException
 	 */
 	public static Fraction divide(final Fraction leftSide, final Fraction rightSide) throws ZeroDenominatorException {
 		int n = leftSide.numerator * rightSide.denominator;
@@ -263,7 +261,7 @@ public class Fraction {
 	/**
 	 * Reduces a fraction to its simplest form by finding the greatest common divisor of the numerator and denominator
 	 * and then divides each one by that number. If there is none, the result stays the same.
-	 * @throws com.randkprogramming.tapemeasurecalculator.calculator.Fraction.ZeroDenominatorException
+	 * @throws Fraction.ZeroDenominatorException
 	 */
 	public void simplify() throws ZeroDenominatorException {
 		int greatestCommonDivisor = findGCD(this.numerator,this.denominator);
