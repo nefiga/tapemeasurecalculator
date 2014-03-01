@@ -11,20 +11,24 @@ public class CalculateEquation {
             equation.convertUnitsToSymbols();
             equation.verifyUnits();
 
-            multiplyAndDivide(equation);
-            addAndSubtract(equation);
+            Equation historic = equation.copy();
+
+            doOperations(equation, true);
+            doOperations(equation, false);
 
             String answer = equation.numbers.get(0);
             equation.clear();
             double answerDouble = ParserConverter.parseNumber(answer);
-            equation.numbers.set(0, ParserConverter.formatToString(answerDouble,CalcState.precisionMode,CalcState.displayMode));
-            equation.result = answerDouble;
+            equation.numbers.set(0, ParserConverter.formatToString(answerDouble));
+            equation.setResult(answerDouble);
+            historic.setResult(answerDouble);
+            CalcHistory.add(historic);
         }
     }
 
     /** Runs through numbers and operators and performs multiplication and division and shifts
      * them to the left each time an operation happens. */
-    private static void multiplyAndDivide(Equation equation) {
+    private static void doOperations(Equation equation, boolean multAndDivide) {
 
         for (int i = 0; i < equation.operators.size(); i++) {
 
@@ -33,30 +37,10 @@ public class CalculateEquation {
 
             switch(equation.operators.get(i)) {
 
-                case DIVIDE: { equation.numbers.set(i, "" + (first / second) + "\""); break; }
-                case  TIMES: { equation.numbers.set(i, "" + (first * second) + "\""); break; }
-                default: { continue; }
-            }
-
-            equation.numbers.remove(i + 1);
-            equation.operators.remove(i);
-            i--;
-        }
-    }
-
-    /** Runs through numbers and operators and performs addition and subtraction and shifts
-     * them to the left each time an operation happens. */
-    private static void addAndSubtract(Equation equation) {
-
-        for (int i = 0; i < equation.operators.size(); i++) {
-
-            double first = ParserConverter.parseNumber(equation.numbers.get(i));
-            double second = ParserConverter.parseNumber(equation.numbers.get(i + 1));
-
-            switch(equation.operators.get(i)) {
-
-                case  PLUS: { equation.numbers.set(i, "" + (first + second) + "\"" ); break; }
-                case MINUS: { equation.numbers.set(i, "" + (first - second) + "\"" ); break; }
+                case  TIMES: { if(!multAndDivide) continue; equation.numbers.set(i, "" + (first * second) + "\""); break; }
+                case DIVIDE: { if(!multAndDivide) continue; equation.numbers.set(i, "" + (first / second) + "\""); break; }
+                case  PLUS: { if(multAndDivide) continue; equation.numbers.set(i, "" + (first + second) + "\"" ); break; }
+                case MINUS: { if(multAndDivide) continue; equation.numbers.set(i, "" + (first - second) + "\"" ); break; }
                 default: { continue; }
             }
 

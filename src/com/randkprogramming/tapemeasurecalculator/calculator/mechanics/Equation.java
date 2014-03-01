@@ -15,15 +15,34 @@ public class Equation {
     public List<String> numbers = new ArrayList<String>();
     public List<Button.Operator> operators = new ArrayList<Button.Operator>();
     public Double result = null;
+    public String equation = "";
 
     //----------------------------------
     // Constructors
     //----------------------------------
-    public Equation() {}
+    public Equation() {
+        clear();
+    }
     public Equation(List<String> numbs, List<Button.Operator> opers, Double answer) {
         this.numbers = numbs;
         this.operators = opers;
         this.result = answer;
+        updateEquation();
+    }
+
+    //----------------------------------
+    // Get String
+    //----------------------------------
+    public String getString() {
+        return this.equation;
+    }
+
+    //----------------------------------
+    // Set Result
+    //----------------------------------
+    public void setResult(double answer) {
+        result = answer;
+        updateEquation();
     }
 
     //----------------------------------
@@ -34,6 +53,7 @@ public class Equation {
         this.operators.clear();
         this.result = null;
         this.numbers.add("");
+        this.equation = "";
     }
 
     //----------------------------------
@@ -117,8 +137,8 @@ public class Equation {
     //----------------------------------
     // Update Equation
     //----------------------------------
-    /** Builds the equation from the numbers and operators currently stored. */
-    public String buildString() {
+    /** Builds the string of the equation from the numbers and operators currently stored. */
+    public void updateEquation() {
 
         StringBuilder sb = new StringBuilder();
 
@@ -130,7 +150,7 @@ public class Equation {
                 sb.append(operators.get(i).toString());
             }
         }
-        return sb.toString();
+        equation = sb.toString();
     }
 
     //----------------------------------
@@ -143,7 +163,8 @@ public class Equation {
             if(result == null) {
                 result = ParserConverter.parseNumber(numbers.get(0));
             }
-            numbers.set(0, ParserConverter.formatToString(result, CalcState.precisionMode, CalcState.displayMode));
+            numbers.set(0, ParserConverter.formatToString(result));
+            updateEquation();
         }
     }
 
@@ -168,5 +189,25 @@ public class Equation {
             appendToLastNum("\"");
         }
     }
+
+    //----------------------------------
+    //  Copy
+    //----------------------------------
+    public Equation copy() {
+
+        List<String> cloneNums = new ArrayList<String>(numbers.size());
+        for(String s : numbers) { cloneNums.add(s); }
+
+        List<Button.Operator> cloneOps = new ArrayList<Button.Operator>(operators.size());
+        for(Button.Operator op : operators) { cloneOps.add(op); }
+
+        Double cloneResult = null;
+        if(result != null) {
+            cloneResult = Double.valueOf(result);
+        }
+
+        return new Equation(cloneNums,cloneOps,cloneResult);
+    }
+
 
 }

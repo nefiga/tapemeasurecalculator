@@ -1,5 +1,9 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
+import com.randkprogramming.tapemeasurecalculator.calculator.screens.HistoryScreen;
+import com.randkprogramming.tapemeasurecalculator.impl.AndroidFastRenderView;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
+
 public interface Button {
 
     public abstract void pressedButton();
@@ -76,7 +80,13 @@ public interface Button {
                     CalcState.displayMode = CalcState.displayMode.next();
                     CalcState.equation.updateDisplay();
                     break; }
-                case INFO: { break; } // TODO: Make Info/Options Page!
+
+                // TODO: Make Info/Options Page!
+                case INFO: {
+                    Calculator c = AndroidFastRenderView.getCalculator();
+                    c.setScreen(new HistoryScreen(c));
+                    break;
+                }
             }
         }
         @Override public void holdingButton(){}

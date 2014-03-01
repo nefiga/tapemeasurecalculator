@@ -5,18 +5,24 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
 
-public class AndroidFastRenderView extends SurfaceView implements Runnable{
+public class AndroidFastRenderView extends SurfaceView implements Runnable {
 
-    AndroidTapemeasureCalculator calculator;
-    Bitmap frameBuffer;
-    Thread renderThread = null;
-    SurfaceHolder holder;
+    public static Calculator getCalculator() {
+        return calculator;
+    }
+
+    private static AndroidTapemeasureCalculator calculator;
+
+    private Bitmap frameBuffer;
+    private Thread renderThread = null;
+    private SurfaceHolder holder;
     volatile boolean running = false;
 
-    public AndroidFastRenderView(AndroidTapemeasureCalculator calculator, Bitmap frameBuffer) {
-        super(calculator);
-        this.calculator = calculator;
+    public AndroidFastRenderView(AndroidTapemeasureCalculator calc, Bitmap frameBuffer) {
+        super(calc);
+        calculator = calc;
         this.frameBuffer = frameBuffer;
         this.holder = getHolder();
     }

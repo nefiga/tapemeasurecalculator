@@ -11,8 +11,10 @@ public class ParserConverter {
      * @param number The number that needs to be converted
      * @return The formatted result
      */
-    public static String formatToString(double number, Button.PrecisionMode precision, Button.DisplayMode display) {
+    public static String formatToString(double number) {
 
+        Button.DisplayMode display = CalcState.displayMode;
+        Button.PrecisionMode precision = CalcState.precisionMode;
         DecimalFormat df = new DecimalFormat();
 
         if(display == Button.DisplayMode.FEET_AND_INCHES) {

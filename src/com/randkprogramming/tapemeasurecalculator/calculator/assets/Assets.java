@@ -9,4 +9,5 @@ public class Assets {
     public static Pixmap main_calculator;
     public static Pixmap[] precision = new Pixmap[Button.PrecisionMode.values().length];
     public static Pixmap[] displayIn = new Pixmap[Button.DisplayMode.values().length];
+    public static Pixmap history;
 }

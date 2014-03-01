@@ -1,9 +1,7 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
-/**
- * A simple class for storing fractions and performing simple arithmetic operations on them.
- * @author Apollo
- */
+/** A class for storing fractions and performing arithmetic operations on them.
+ * @author Jay */
 public class Fraction {
 	
 	@SuppressWarnings("serial")

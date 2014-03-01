@@ -32,6 +32,51 @@ public class MainCalculatorScreen extends Screen {
         paint.setTextSize(50);
     }
 
+    public void printDebugStatements(float deltaTime) {
+
+        debugTimer += deltaTime;
+        if (debugTimer >= 5.0f) {
+            debugTimer = 0;
+
+            System.out.println(CalcHistory.print());
+        }
+    }
+
+    @Override
+    public void update(float deltaTime) {
+
+//        printDebugStatements(deltaTime);
+
+        List<TouchEvent> touchEvents = calculator.getInput().getTouchEvent();
+        for (TouchEvent event : touchEvents) {
+
+            upperSection(event);
+            lowerSection(event);
+
+            manager.updateHoldTime(deltaTime);
+        }
+    }
+
+    @Override
+    public void present(float deltaTime) {
+
+        // Draw Images
+        Graphics g = calculator.getGraphics();
+
+        g.drawPixmap(Assets.main_calculator, 0, 0);
+        g.drawString(CalcState.equation.getString(), 10, 50, paint);
+
+        g.drawPixmap(Assets.precision[CalcState.precisionMode.ordinal()], 210, 1075);
+        g.drawPixmap(Assets.displayIn[CalcState.displayMode.ordinal()], 410, 1075);
+    }
+
+    // Checks to see if your finger is within an area
+    public boolean touchIsInBounds(TouchEvent event, int x, int y, int width, int height) {
+        return (event.x > x && event.x < x + width - 1 &&
+                event.y > y && event.y < y + height - 1);
+    }
+
+
     //--------------------------------
     // Upper Section Button Layout
     //--------------------------------
@@ -60,31 +105,6 @@ public class MainCalculatorScreen extends Screen {
     private static final Button layoutLower[][] = new Button[][]{
             new Button[] { Button.Special.FRACTION, Button.Special.PRECISION, Button.Special.DISPLAY, Button.Special.INFO }
     };
-
-    public void printDebugStatements(float deltaTime) {
-
-        debugTimer += deltaTime;
-        if (debugTimer >= 2.0f) {
-            debugTimer = 0;
-
-            System.out.println(CalcState.equation.buildString());
-        }
-    }
-
-    @Override
-    public void update(float deltaTime) {
-
-//        printDebugStatements(deltaTime);
-
-        List<TouchEvent> touchEvents = calculator.getInput().getTouchEvent();
-        for (TouchEvent event : touchEvents) {
-
-            upperSection(event);
-            lowerSection(event);
-
-            manager.updateHoldTime(deltaTime);
-        }
-    }
 
     /**
      * Lays out the upper section of the app.
@@ -128,24 +148,6 @@ public class MainCalculatorScreen extends Screen {
         }
     }
 
-    @Override
-    public void present(float deltaTime) {
-
-        // Draw Images
-        Graphics g = calculator.getGraphics();
-
-        g.drawPixmap(Assets.main_calculator, 0, 0);
-        g.drawString(CalcState.equation.buildString(), 10, 50, paint);
-
-        g.drawPixmap(Assets.precision[CalcState.precisionMode.ordinal()], 210, 1075);
-        g.drawPixmap(Assets.displayIn[CalcState.displayMode.ordinal()], 410, 1075);
-    }
-
-    // Checks to see if your finger is within an area
-    public boolean touchIsInBounds(TouchEvent event, int x, int y, int width, int height) {
-        return (event.x > x && event.x < x + width - 1 &&
-                event.y > y && event.y < y + height - 1);
-    }
 
     @Override public void pause() {}
     @Override public void resume() {}

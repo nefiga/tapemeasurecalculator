@@ -27,6 +27,8 @@ public class LoadingScreen extends Screen {
         Assets.displayIn[0] = g.newPixmap("inches.png", Graphics.PixmapFormat.RGB565);
         Assets.displayIn[1] = g.newPixmap("feet.png", Graphics.PixmapFormat.RGB565);
 
+        Assets.history = g.newPixmap("history.png", Graphics.PixmapFormat.RGB565);
+
         // Load the main calculator screen
         calculator.setScreen(new MainCalculatorScreen(calculator));
     }

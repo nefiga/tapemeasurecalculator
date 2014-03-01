@@ -15,13 +15,6 @@ public class CalcState {
     public static Equation equation = new Equation();
 
     //----------------------------------
-    // Constructor
-    //----------------------------------
-    public CalcState() {
-        equation.clear();
-    }
-
-    //----------------------------------
     //  Add Number
     //----------------------------------
     /** Tries to append a number to the equation if the current state of the calculator will allow it */
@@ -39,6 +32,7 @@ public class CalcState {
 
             s += n;
             equation.setLastNumber(s);
+            equation.updateEquation();
         }
 
     }
@@ -55,6 +49,7 @@ public class CalcState {
             equation.verifyUnits();
             equation.operators.add(op);
             equation.numbers.add("");
+            equation.updateEquation();
         }
     }
 
@@ -77,7 +72,9 @@ public class CalcState {
                     ! s.contains("Feet") && ! s.contains("Inches")) {
 
                 equation.appendToLastNum("\'");
+                equation.updateEquation();
             }
+
         }
     }
 
@@ -101,6 +98,7 @@ public class CalcState {
                     ! s.contains("Feet") && ! s.contains("Inches")) {
 
                 equation.appendToLastNum("\"");
+                equation.updateEquation();
             }
         }
     }
@@ -123,6 +121,7 @@ public class CalcState {
             }
 
             equation.setLastNumber(s + ".");
+            equation.updateEquation();
         }
     }
 
