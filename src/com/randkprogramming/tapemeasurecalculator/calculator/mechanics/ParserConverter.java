@@ -13,11 +13,12 @@ public class ParserConverter {
      */
     public static String formatToString(double number) {
 
-        Button.DisplayMode display = CalcState.displayMode;
-        Button.PrecisionMode precision = CalcState.precisionMode;
+        DisplayModes.FractionOrDecimal fractionOrDecimal = CalcState.fractionOrDecimal;
+        DisplayModes.DisplayUnits units = CalcState.displayUnits;
+
         DecimalFormat df = new DecimalFormat();
 
-        if(display == Button.DisplayMode.FEET_AND_INCHES) {
+        if(units == DisplayModes.DisplayUnits.FEET_AND_INCHES) {
             df.setMaximumFractionDigits(10);
         }
         else {
@@ -31,16 +32,18 @@ public class ParserConverter {
             number *= -1;
         }
 
-        if(precision == Button.PrecisionMode.DECIMAL) {
-            if(display == Button.DisplayMode.FEET_AND_INCHES) {
+        if(fractionOrDecimal == DisplayModes.FractionOrDecimal.DECIMAL_OPTION) {
+
+            if(units == DisplayModes.DisplayUnits.FEET_AND_INCHES) {
                 number /= 12;
             }
             String n = df.format(number);
             text += n;
-            text += (display == Button.DisplayMode.FEET_AND_INCHES) ? " Feet" : " Inches";
+            text += (units == DisplayModes.DisplayUnits.FEET_AND_INCHES) ? " Feet" : " Inches";
         }
         else {
-            if(display == Button.DisplayMode.FEET_AND_INCHES) {
+
+            if(units == DisplayModes.DisplayUnits.FEET_AND_INCHES) {
 
                 // Parse Feet
                 int feet = (int) number / 12;
@@ -55,7 +58,7 @@ public class ParserConverter {
 
             // Parse Decimal
             boolean fractionValid = false;
-            String fraction = Fraction.getFractionStringFromDecimal(number, precision.getFraction());
+            String fraction = Fraction.getFractionStringFromDecimal(number, CalcState.fractionPrecision.getFraction());
             if(fraction.length() > 0 && fraction.charAt(0) != '0') {
 
                 if(fraction.equals("1/1")) {
@@ -78,7 +81,7 @@ public class ParserConverter {
 
     /** Converts a number from a string into a decimal number.
      * This will take into account decimals, fractions, feet, and inches.
-     * Format depends on precision mode and display option. Examples are:
+     * Format depends on fractionPrecision mode and display option. Examples are:
      * 4' 7 8/9"  4.353 Feet  3 7/8"  5.26 Inches   All of these are valid numbers.
      * Some assumptions this parser makes are:
      * Ft. symbol (') will always be there when describing feet.

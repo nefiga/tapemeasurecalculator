@@ -43,17 +43,17 @@ public interface Button {
     //  Calculate Button
     //---------------------
     public static enum Calculate implements Button {
-        DECIMAL_POINT, EQUALS, CLEAR, BACKSPACE, FEET, INCHES;
+        FRACTION, DECIMAL_POINT, EQUALS, CLEAR, BACKSPACE, FEET, INCHES;
 
         @Override
         public void pressedButton() {
             switch(this) {
+                case FRACTION: { break; }  // TODO: Make Fractions Page!
                 case DECIMAL_POINT: { CalcState.addDecimal(); break; }
                 case EQUALS: { CalculateEquation.solveEquation(CalcState.equation); break; }
                 case CLEAR: { CalcState.equation.clear(); break; }
                 case BACKSPACE: { break; } // TODO: Implement Backspace!
                 case FEET: { CalcState.addFeet(); break; }
-                case INCHES: { CalcState.addInches(); break; }
             }
         }
         @Override public void holdingButton(){}
@@ -63,24 +63,32 @@ public interface Button {
     //  Special Button
     //---------------------
     public static enum Special implements Button {
-        FRACTION, PRECISION, DISPLAY, INFO;
+        FRACTION_OR_DECIMAL, FRACTION_PRECISION, DISPLAY_UNITS, INFO;
 
         @Override
         public void pressedButton() {
+
             switch(this) {
-                case FRACTION: { break; } // TODO: Make Fractions Page!
-                case PRECISION: {
+                case FRACTION_OR_DECIMAL: {
                     CalcState.equation.verifyUnits();
-                    CalcState.precisionMode = CalcState.precisionMode.next();
+                    CalcState.fractionOrDecimal = CalcState.fractionOrDecimal.next();
                     CalcState.equation.updateDisplay();
                     break;
                 }
-                case DISPLAY: {
+                case FRACTION_PRECISION: {
+                    if(CalcState.fractionOrDecimal == DisplayModes.FractionOrDecimal.FRACTION_OPTION) {
+                        CalcState.equation.verifyUnits();
+                        CalcState.fractionPrecision = CalcState.fractionPrecision.next();
+                        CalcState.equation.updateDisplay();
+                    }
+                    break;
+                }
+                case DISPLAY_UNITS: {
                     CalcState.equation.verifyUnits();
-                    CalcState.displayMode = CalcState.displayMode.next();
+                    CalcState.displayUnits = CalcState.displayUnits.next();
                     CalcState.equation.updateDisplay();
-                    break; }
-
+                    break;
+                }
                 // TODO: Make Info/Options Page!
                 case INFO: {
                     Calculator c = AndroidFastRenderView.getCalculator();
@@ -90,41 +98,6 @@ public interface Button {
             }
         }
         @Override public void holdingButton(){}
-    }
-
-    //----------------------------------------------------------------
-    //  The following are not buttons, instead, they are values that
-    //  certain buttons will use to keep track of it's current state.
-    //----------------------------------------------------------------
-
-    //---------------------
-    //  Display Mode
-    //---------------------
-    public static enum DisplayMode {
-        INCHES_ONLY, FEET_AND_INCHES;
-
-        public DisplayMode next() { return values()[(ordinal() + 1) % values().length]; }
-    }
-
-    //---------------------
-    //  Precision Mode
-    //---------------------
-    public static enum PrecisionMode {
-        SIXTEENTH, THIRTY_SECOND, SIXTY_FOURTH, DECIMAL;
-
-        public PrecisionMode next() { return values()[(ordinal() + 1) % values().length]; }
-
-        /** Returns a fraction object according to the currently selected precision button.
-         * @return The corresponding precision in the form of a Fraction object. */
-        public Fraction getFraction() {
-
-            switch (this) {
-                case SIXTEENTH: return new Fraction(1, 16);
-                case THIRTY_SECOND: return new Fraction(1, 32);
-                case SIXTY_FOURTH: return new Fraction(1, 64);
-            }
-            return null;
-        }
     }
 
 }

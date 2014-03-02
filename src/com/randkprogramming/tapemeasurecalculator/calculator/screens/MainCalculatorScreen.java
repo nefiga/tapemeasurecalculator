@@ -29,7 +29,7 @@ public class MainCalculatorScreen extends Screen {
     public MainCalculatorScreen(Calculator calculator) {
         super(calculator);
         paint.setTypeface(answerFont);
-        paint.setTextSize(50);
+        paint.setTextSize(75);
     }
 
     public void printDebugStatements(float deltaTime) {
@@ -50,9 +50,7 @@ public class MainCalculatorScreen extends Screen {
         List<TouchEvent> touchEvents = calculator.getInput().getTouchEvent();
         for (TouchEvent event : touchEvents) {
 
-            upperSection(event);
-            lowerSection(event);
-
+            checkTouchEvent(event);
             manager.updateHoldTime(deltaTime);
         }
     }
@@ -64,10 +62,13 @@ public class MainCalculatorScreen extends Screen {
         Graphics g = calculator.getGraphics();
 
         g.drawPixmap(Assets.main_calculator, 0, 0);
-        g.drawString(CalcState.equation.getString(), 10, 50, paint);
+        g.drawString(CalcState.equation.getString(), 40, 100, paint);
 
-        g.drawPixmap(Assets.precision[CalcState.precisionMode.ordinal()], 210, 1075);
-        g.drawPixmap(Assets.displayIn[CalcState.displayMode.ordinal()], 410, 1075);
+        g.drawPixmap(Assets.fractionOrDecimal[CalcState.fractionOrDecimal.ordinal()], 68, 1055);
+        if(CalcState.fractionOrDecimal == DisplayModes.FractionOrDecimal.FRACTION_OPTION) {
+            g.drawPixmap(Assets.fractionPrecision[CalcState.fractionPrecision.ordinal()], 251, 1055);
+        }
+        g.drawPixmap(Assets.units[CalcState.displayUnits.ordinal()], 434, 1055);
     }
 
     // Checks to see if your finger is within an area
@@ -78,47 +79,55 @@ public class MainCalculatorScreen extends Screen {
 
 
     //--------------------------------
-    // Upper Section Button Layout
+    // Button Layout
     //--------------------------------
-    private static final int NUM_ROWS_UPPER = 4;
-    private static final int NUM_COLS_UPPER = 5;
-    private static final int BUTTON_WIDTH_UPPER = 140;
-    private static final int BUTTON_HEIGHT_UPPER = 190;
-    private static final int xUpper[] = {10, 170, 330, 490, 650};
-    private static final int yUpper[] = {225, 440, 650, 865};
-    private static final Button layoutUpper[][] = new Button[][]{
-            new Button[]{Button.Number.SEVEN, Button.Number.EIGHT, Button.Number.NINE, Button.Calculate.BACKSPACE, Button.Calculate.CLEAR},
-            new Button[]{Button.Number.FOUR, Button.Number.FIVE, Button.Number.SIX, Button.Operator.PLUS, Button.Operator.TIMES},
-            new Button[]{Button.Number.ONE, Button.Number.TWO, Button.Number.THREE, Button.Operator.MINUS, Button.Operator.DIVIDE},
-            new Button[]{Button.Calculate.DECIMAL_POINT, Button.Number.ZERO, Button.Calculate.EQUALS, Button.Calculate.FEET, Button.Calculate.INCHES}
+    private static final int NUM_ROWS = 6;
+    private static final int NUM_COLS = 4;
+
+    private static final int BUTTON_WIDTH = 115;
+    private static final int BUTTON_HEIGHT = 115;
+
+    private static final int HORIZONTAL_GAP = 68;
+    private static final int VERTICAL_GAP = 30;
+
+    private static final int X_OFFSET = 0;
+    private static final int Y_OFFSET = 300;
+
+    private static final Button buttonLayout[][] = new Button[][]{
+            new Button[]{Button.Calculate.CLEAR, Button.Operator.DIVIDE, Button.Operator.TIMES, Button.Calculate.BACKSPACE},
+            new Button[]{Button.Number.SEVEN, Button.Number.EIGHT, Button.Number.NINE, Button.Operator.MINUS},
+            new Button[]{Button.Number.FOUR, Button.Number.FIVE, Button.Number.SIX, Button.Operator.PLUS},
+            new Button[]{Button.Number.ONE, Button.Number.TWO, Button.Number.THREE, Button.Calculate.FEET},
+            new Button[]{Button.Calculate.DECIMAL_POINT, Button.Number.ZERO, Button.Calculate.FRACTION, Button.Calculate.EQUALS},
+            new Button[]{Button.Special.FRACTION_OR_DECIMAL, Button.Special.FRACTION_PRECISION, Button.Special.DISPLAY_UNITS, Button.Special.INFO},
     };
 
-    //-------------------------------
-    // Lower Section Button Layout
-    //-------------------------------
-    private static final int NUM_ROWS_LOWER = 1;
-    private static final int NUM_COLS_LOWER = 4;
-    private static final int BUTTON_WIDTH_LOWER = 180;
-    private static final int BUTTON_HEIGHT_LOWER = 190;
-    private static final int xLower[] = {10, 210, 410, 610};
-    private static final int yLower[] = {1075};
-    private static final Button layoutLower[][] = new Button[][]{
-            new Button[] { Button.Special.FRACTION, Button.Special.PRECISION, Button.Special.DISPLAY, Button.Special.INFO }
-    };
+    private static final int[] xCoords = new int[NUM_COLS];
+    private static final int[] yCoords = new int[NUM_ROWS];
 
-    /**
-     * Lays out the upper section of the app.
-     * @param event The touch event
-     */
-    private void upperSection(TouchEvent event) {
+    /** Calculates the top left x and y coordinates for each button. */
+    public static void setupLayout() {
 
-        for (int row = 0; row < NUM_ROWS_UPPER; row++) {
-            for (int col = 0; col < NUM_COLS_UPPER; col++) {
+        for (int col = 0; col < NUM_COLS; col++) {
+            xCoords[col] = X_OFFSET + HORIZONTAL_GAP + col * (BUTTON_WIDTH + HORIZONTAL_GAP);
+        }
+        for (int row = 0; row < NUM_ROWS; row++) {
+            yCoords[row] = Y_OFFSET + VERTICAL_GAP + row * (BUTTON_HEIGHT + VERTICAL_GAP);
+        }
+    }
 
-                if (touchIsInBounds(event, xUpper[col], yUpper[row], BUTTON_WIDTH_UPPER, BUTTON_HEIGHT_UPPER)) {
+    /** Checks to see if the event fired is in bounds of a button. If it is, then it lets
+     * the manager know which button was pressed or released.
+     * @param event The event being fired. */
+    private void checkTouchEvent(TouchEvent event) {
+
+        for (int row = 0; row < NUM_ROWS; row++) {
+            for (int col = 0; col < NUM_COLS; col++) {
+
+                if (touchIsInBounds(event, xCoords[col], yCoords[row], BUTTON_WIDTH, BUTTON_HEIGHT)) {
                     switch (event.type) {
-                        case TouchEvent.TOUCH_DOWN:    manager.setButtonPressed(layoutUpper[row][col]);  break;
-                        case TouchEvent.TOUCH_UP:      manager.setButtonReleased(layoutUpper[row][col]); break;
+                        case TouchEvent.TOUCH_DOWN:    manager.setButtonPressed(buttonLayout[row][col]);  break;
+                        case TouchEvent.TOUCH_UP:      manager.setButtonReleased(buttonLayout[row][col]); break;
                         case TouchEvent.TOUCH_DRAGGED: break;
                     }
                     return; // Since no buttons overlap, we return
@@ -126,28 +135,6 @@ public class MainCalculatorScreen extends Screen {
             }
         }
     }
-
-    /**
-     * Lays out the bottom section of the app.
-     * @param event The touch event
-     */
-    private void lowerSection(TouchEvent event) {
-
-        for (int row = 0; row < NUM_ROWS_LOWER; row++) {
-            for (int col = 0; col < NUM_COLS_LOWER; col++) {
-
-                if (touchIsInBounds(event, xLower[col], yLower[row], BUTTON_WIDTH_LOWER, BUTTON_HEIGHT_LOWER)) {
-                    switch (event.type) {
-                        case TouchEvent.TOUCH_DOWN:    manager.setButtonPressed(layoutLower[row][col]);  break;
-                        case TouchEvent.TOUCH_UP:      manager.setButtonReleased(layoutLower[row][col]); break;
-                        case TouchEvent.TOUCH_DRAGGED: break;
-                    }
-                    return;
-                }
-            }
-        }
-    }
-
 
     @Override public void pause() {}
     @Override public void resume() {}

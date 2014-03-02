@@ -3,8 +3,7 @@ package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 /** A class for storing fractions and performing arithmetic operations on them.
  * @author Jay */
 public class Fraction {
-	
-	@SuppressWarnings("serial")
+
 	public class ZeroDenominatorException extends Exception {
 	}
 	

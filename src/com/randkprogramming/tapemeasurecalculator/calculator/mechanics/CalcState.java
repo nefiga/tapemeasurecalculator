@@ -10,8 +10,9 @@ public class CalcState {
     //----------------------------------
     // Fields
     //----------------------------------
-    public static Button.PrecisionMode precisionMode = Button.PrecisionMode.SIXTEENTH;
-    public static Button.DisplayMode displayMode = Button.DisplayMode.FEET_AND_INCHES;
+    public static DisplayModes.FractionOrDecimal fractionOrDecimal = DisplayModes.FractionOrDecimal.FRACTION_OPTION;
+    public static DisplayModes.FractionPrecision fractionPrecision = DisplayModes.FractionPrecision.SIXTEENTH;
+    public static DisplayModes.DisplayUnits displayUnits = DisplayModes.DisplayUnits.FEET_AND_INCHES;
     public static Equation equation = new Equation();
 
     //----------------------------------

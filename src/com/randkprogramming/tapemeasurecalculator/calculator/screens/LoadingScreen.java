@@ -13,21 +13,9 @@ public class LoadingScreen extends Screen {
 
     @Override
     public void update(float deltaTime) {
-        Graphics g = calculator.getGraphics();
 
-        // Load Images
-        Assets.testing = g.newPixmap("testing.png", Graphics.PixmapFormat.ARGB4444);
-        Assets.main_calculator = g.newPixmap("main_calc.png", Graphics.PixmapFormat.RGB565);
-
-        Assets.precision[0] = g.newPixmap("p16.png", Graphics.PixmapFormat.RGB565);
-        Assets.precision[1] = g.newPixmap("p32.png", Graphics.PixmapFormat.RGB565);
-        Assets.precision[2] = g.newPixmap("p64.png", Graphics.PixmapFormat.RGB565);
-        Assets.precision[3] = g.newPixmap("decimal.png", Graphics.PixmapFormat.RGB565);
-
-        Assets.displayIn[0] = g.newPixmap("inches.png", Graphics.PixmapFormat.RGB565);
-        Assets.displayIn[1] = g.newPixmap("feet.png", Graphics.PixmapFormat.RGB565);
-
-        Assets.history = g.newPixmap("history.png", Graphics.PixmapFormat.RGB565);
+        Assets.loadImages();
+        MainCalculatorScreen.setupLayout();
 
         // Load the main calculator screen
         calculator.setScreen(new MainCalculatorScreen(calculator));
