@@ -17,13 +17,7 @@ public class ParserConverter {
         DisplayModes.DisplayUnits units = CalcState.displayUnits;
 
         DecimalFormat df = new DecimalFormat();
-
-        if(units == DisplayModes.DisplayUnits.FEET_AND_INCHES) {
-            df.setMaximumFractionDigits(10);
-        }
-        else {
-            df.setMaximumFractionDigits(7);
-        }
+        df.setMaximumFractionDigits(6);
 
         String text = "";
 

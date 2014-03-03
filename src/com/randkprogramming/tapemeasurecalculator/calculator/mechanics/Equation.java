@@ -95,6 +95,15 @@ public class Equation {
     }
 
     //----------------------------------
+    // Set Last Operator
+    //----------------------------------
+    public void setLastOperator(Button.Operator op) {
+        if(operators.size() > 0) {
+            operators.set(operators.size()-1, op);
+        }
+    }
+
+    //----------------------------------
     // Convert Units to Symbols
     //----------------------------------
     public void convertUnitsToSymbols() {

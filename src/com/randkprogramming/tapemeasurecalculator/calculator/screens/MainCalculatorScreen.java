@@ -1,7 +1,9 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.screens;
 
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import com.randkprogramming.tapemeasurecalculator.impl.AndroidFastRenderView;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Input.TouchEvent;
@@ -10,6 +12,7 @@ import com.randkprogramming.tapemeasurecalculator.calculator.assets.Assets;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.*;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class MainCalculatorScreen extends Screen {
 
@@ -18,8 +21,11 @@ public class MainCalculatorScreen extends Screen {
     //--------------------------
     private CalculatorInputManager manager = new CalculatorInputManager();
 
-    private Paint paint = new Paint();
-    private static final Typeface answerFont = Typeface.create("DEFAULT_BOLD", Typeface.BOLD);
+    private Paint paintEquation = new Paint();
+    private Paint paintAnswer = new Paint();
+    private Paint paintEquationSmall = new Paint();
+    private Paint paintAnswerSmall = new Paint();
+    private static final Typeface equationFont = Typeface.create("DEFAULT_BOLD", Typeface.BOLD);
 
     private float debugTimer = 0;
 
@@ -28,8 +34,19 @@ public class MainCalculatorScreen extends Screen {
     //--------------------------
     public MainCalculatorScreen(Calculator calculator) {
         super(calculator);
-        paint.setTypeface(answerFont);
-        paint.setTextSize(75);
+        paintEquation.setTypeface(equationFont);
+        paintEquation.setTextSize(75);
+
+        paintAnswer.setTypeface(equationFont);
+        paintAnswer.setTextSize(75);
+        paintAnswer.setColor(Color.RED);
+
+        paintEquationSmall.setTypeface(equationFont);
+        paintEquationSmall.setTextSize(50);
+
+        paintAnswerSmall.setTypeface(equationFont);
+        paintAnswerSmall.setTextSize(50);
+        paintAnswerSmall.setColor(Color.RED);
     }
 
     public void printDebugStatements(float deltaTime) {
@@ -62,7 +79,7 @@ public class MainCalculatorScreen extends Screen {
         Graphics g = calculator.getGraphics();
 
         g.drawPixmap(Assets.main_calculator, 0, 0);
-        g.drawString(CalcState.equation.getString(), 40, 100, paint);
+        drawEquation(g);
 
         g.drawPixmap(Assets.fractionOrDecimal[CalcState.fractionOrDecimal.ordinal()], 68, 1055);
         if(CalcState.fractionOrDecimal == DisplayModes.FractionOrDecimal.FRACTION_OPTION) {
@@ -71,12 +88,64 @@ public class MainCalculatorScreen extends Screen {
         g.drawPixmap(Assets.units[CalcState.displayUnits.ordinal()], 434, 1055);
     }
 
+    public static final int[] yCoordsSmallText = {75,135,195,255};
+    public void drawEquation(Graphics g) {
+
+        String equation = CalcState.equation.getString();
+
+        if(equation.length() <= MAX_DIGITS_BIG_FONT) {
+            g.drawString(equation, 40, 100, paintEquation);
+        }
+        else {
+
+            if(equation.length() <= MAX_DIGITS_SMALL_FONT) {
+                g.drawString(equation, 28, 75, paintEquationSmall);
+            }
+            else {
+
+                Scanner s = new Scanner(equation);
+                String[] lines = new String[4];
+
+                for(int i = 0; i < lines.length; i++) {
+                    lines[i] = parseNextLine(s);
+                }
+
+                for(int i = 0; i < yCoordsSmallText.length; i++) {
+                    g.drawString(lines[i], 28, yCoordsSmallText[i], paintEquationSmall);
+                }
+            }
+        }
+
+    }
+
+    public static final int MAX_DIGITS_BIG_FONT = 20;
+    public static final int MAX_DIGITS_SMALL_FONT = 31;
+    private String next = "";
+    private String parseNextLine(Scanner s) {
+
+        // Grab what was leftover from the previous line.
+        String result = next;
+        next = "";
+
+        // Add as much as possible to this line
+        while(s.hasNext() && result.length() <= MAX_DIGITS_SMALL_FONT) {
+
+            next = s.next();
+            if(result.length() + next.length() <= MAX_DIGITS_SMALL_FONT) {
+                result += next;
+                result += " ";
+                next = "";
+            }
+            else return result;
+        }
+        return result;
+    }
+
     // Checks to see if your finger is within an area
     public boolean touchIsInBounds(TouchEvent event, int x, int y, int width, int height) {
         return (event.x > x && event.x < x + width - 1 &&
                 event.y > y && event.y < y + height - 1);
     }
-
 
     //--------------------------------
     // Button Layout
@@ -133,6 +202,12 @@ public class MainCalculatorScreen extends Screen {
                     return; // Since no buttons overlap, we return
                 }
             }
+        }
+
+        // If user touches equation screen...
+        if (touchIsInBounds(event,0,0,800,300)) {
+            Calculator c = AndroidFastRenderView.getCalculator();
+            c.setScreen(new HistoryScreen(c));
         }
     }
 

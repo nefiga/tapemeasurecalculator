@@ -10,6 +10,8 @@ public class CalcState {
     //----------------------------------
     // Fields
     //----------------------------------
+    public static final int DIGIT_LINE_LIMIT = 28;
+    public static final int DIGIT_EQUATION_LIMIT = 120;
     public static DisplayModes.FractionOrDecimal fractionOrDecimal = DisplayModes.FractionOrDecimal.FRACTION_OPTION;
     public static DisplayModes.FractionPrecision fractionPrecision = DisplayModes.FractionPrecision.SIXTEENTH;
     public static DisplayModes.DisplayUnits displayUnits = DisplayModes.DisplayUnits.FEET_AND_INCHES;
@@ -23,17 +25,24 @@ public class CalcState {
 
         String s = equation.getLastNumber();
 
-        if( ! s.contains("\"") && ! s.contains("Inches") && (! s.contains("Feet") || ! s.contains(".")) ) {
+        if( ! s.contains("\"") && ! s.contains("Inches") && (! s.contains("Feet") || ! s.contains("."))) {
 
-            s = s.replaceAll(" Feet","\'");
+            if(equation.equation.length() < DIGIT_EQUATION_LIMIT && s.length() < DIGIT_LINE_LIMIT) {
 
-            if(s.length() > 0 && (s.substring(s.length() - 1).equals("\'"))) {
-                s += " ";
+                s = s.replaceAll(" Feet","\'");
+
+                if(s.length() > 0 && (s.substring(s.length() - 1).equals("\'"))) {
+                    s += " ";
+                }
+
+                s += n;
+                equation.setLastNumber(s);
+                equation.updateEquation();
+            }
+            else {
+//                MainCalculatorScreen.flashScreen();
             }
 
-            s += n;
-            equation.setLastNumber(s);
-            equation.updateEquation();
         }
 
     }
@@ -44,12 +53,21 @@ public class CalcState {
     /** Tries to append an operator to the equation if the current state of the calculator will allow it */
     public static void addOperator(Button.Operator op) {
 
+        if(equation.equation.length() >=  DIGIT_EQUATION_LIMIT) {
+            return;
+        }
+
         if (equation.isOperatorNext()) {
 
             equation.convertUnitsToSymbols();
             equation.verifyUnits();
             equation.operators.add(op);
             equation.numbers.add("");
+            equation.updateEquation();
+        }
+        else {
+
+            equation.setLastOperator(op);
             equation.updateEquation();
         }
     }
@@ -124,6 +142,44 @@ public class CalcState {
             equation.setLastNumber(s + ".");
             equation.updateEquation();
         }
+    }
+
+    //----------------------------------
+    //  Backspace
+    //----------------------------------
+    public static void backspace() {
+
+        if(equation.numbers.size() > 0) {
+
+            equation.result = null;
+            equation.convertUnitsToSymbols();
+            String num = equation.getLastNumber();
+            if(num.length() > 0) {
+
+                int i = num.length()-1;
+
+                // Ignore trailing spaces
+                while(i > 0 && Character.isSpaceChar(num.charAt(i))) {
+                    i--;
+                }
+
+                // Remove entire fraction by going back until you find a space.
+                if(num.contains("/") && Character.isDigit(num.charAt(i))) {
+                    while(i > 0 && ! Character.isSpaceChar(num.charAt(i))) {
+                        i--;
+                    }
+                }
+                equation.setLastNumber(num.substring(0,i));
+            }
+            else {
+                if(equation.operators.size() > 0) {
+                    equation.numbers.remove(equation.numbers.size()-1);
+                    equation.operators.remove(equation.operators.size()-1);
+                }
+            }
+            equation.updateEquation();
+        }
+
     }
 
 }

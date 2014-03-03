@@ -26,8 +26,8 @@ public class Assets {
         fractionPrecision[1] = g.newPixmap("32nds.png", Graphics.PixmapFormat.RGB565);
         fractionPrecision[2] = g.newPixmap("64ths.png", Graphics.PixmapFormat.RGB565);
 
-        units[0] = g.newPixmap("feet_and_inches.png", Graphics.PixmapFormat.RGB565);
-        units[1] = g.newPixmap("inches_only.png", Graphics.PixmapFormat.RGB565);
+        units[0] = g.newPixmap("inches_only.png", Graphics.PixmapFormat.RGB565);
+        units[1] = g.newPixmap("feet_and_inches.png", Graphics.PixmapFormat.RGB565);
 
         Assets.history = g.newPixmap("history.png", Graphics.PixmapFormat.RGB565);
     }

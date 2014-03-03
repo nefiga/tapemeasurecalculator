@@ -52,7 +52,7 @@ public interface Button {
                 case DECIMAL_POINT: { CalcState.addDecimal(); break; }
                 case EQUALS: { CalculateEquation.solveEquation(CalcState.equation); break; }
                 case CLEAR: { CalcState.equation.clear(); break; }
-                case BACKSPACE: { break; } // TODO: Implement Backspace!
+                case BACKSPACE: { CalcState.backspace(); break; }
                 case FEET: { CalcState.addFeet(); break; }
             }
         }
@@ -91,8 +91,6 @@ public interface Button {
                 }
                 // TODO: Make Info/Options Page!
                 case INFO: {
-                    Calculator c = AndroidFastRenderView.getCalculator();
-                    c.setScreen(new HistoryScreen(c));
                     break;
                 }
             }
