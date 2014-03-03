@@ -162,6 +162,10 @@ public class MainCalculatorScreen extends Screen {
     private static final int X_OFFSET = 0;
     private static final int Y_OFFSET = 300;
 
+    // Half the gap on one side plus half the gap on the other to allow for bigger touch areas.
+    private static final int TOUCH_WIDTH = BUTTON_WIDTH + HORIZONTAL_GAP;
+    private static final int TOUCH_HEIGHT = BUTTON_HEIGHT + VERTICAL_GAP;
+
     private static final Button buttonLayout[][] = new Button[][]{
             new Button[]{Button.Calculate.CLEAR, Button.Operator.DIVIDE, Button.Operator.TIMES, Button.Calculate.BACKSPACE},
             new Button[]{Button.Number.SEVEN, Button.Number.EIGHT, Button.Number.NINE, Button.Operator.MINUS},
@@ -174,14 +178,15 @@ public class MainCalculatorScreen extends Screen {
     private static final int[] xCoords = new int[NUM_COLS];
     private static final int[] yCoords = new int[NUM_ROWS];
 
-    /** Calculates the top left x and y coordinates for each button. */
+    /** Calculates the top left x and y coordinates for each button. This method makes adjustments so that
+     * touch events pressed within gap areas will go to the closest button. */
     public static void setupLayout() {
 
         for (int col = 0; col < NUM_COLS; col++) {
-            xCoords[col] = X_OFFSET + HORIZONTAL_GAP + col * (BUTTON_WIDTH + HORIZONTAL_GAP);
+            xCoords[col] = (X_OFFSET + HORIZONTAL_GAP + col * (BUTTON_WIDTH + HORIZONTAL_GAP)) - (HORIZONTAL_GAP / 2);
         }
         for (int row = 0; row < NUM_ROWS; row++) {
-            yCoords[row] = Y_OFFSET + VERTICAL_GAP + row * (BUTTON_HEIGHT + VERTICAL_GAP);
+            yCoords[row] = (Y_OFFSET + VERTICAL_GAP + row * (BUTTON_HEIGHT + VERTICAL_GAP)) - (VERTICAL_GAP / 2);
         }
     }
 
@@ -193,7 +198,7 @@ public class MainCalculatorScreen extends Screen {
         for (int row = 0; row < NUM_ROWS; row++) {
             for (int col = 0; col < NUM_COLS; col++) {
 
-                if (touchIsInBounds(event, xCoords[col], yCoords[row], BUTTON_WIDTH, BUTTON_HEIGHT)) {
+                if (touchIsInBounds(event, xCoords[col], yCoords[row], TOUCH_WIDTH, TOUCH_HEIGHT)) {
                     switch (event.type) {
                         case TouchEvent.TOUCH_DOWN:    manager.setButtonPressed(buttonLayout[row][col]);  break;
                         case TouchEvent.TOUCH_UP:      manager.setButtonReleased(buttonLayout[row][col]); break;
