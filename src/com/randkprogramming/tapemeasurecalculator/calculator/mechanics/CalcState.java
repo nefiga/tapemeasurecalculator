@@ -25,17 +25,17 @@ public class CalcState {
 
         String s = equation.getLastNumber();
 
-        if( ! s.contains("\"") && ! s.contains("Inches") && (! s.contains("Feet") || ! s.contains("."))) {
+                if( ! s.contains("\"") && ! s.contains("Inches") && (! s.contains("Feet") || ! s.contains("."))) {
 
-            if(equation.equation.length() < DIGIT_EQUATION_LIMIT && s.length() < DIGIT_LINE_LIMIT) {
+                    if(equation.equation.length() < DIGIT_EQUATION_LIMIT && s.length() < DIGIT_LINE_LIMIT) {
 
-                s = s.replaceAll(" Feet","\'");
+                        s = s.replaceAll(" Feet","\'");
 
-                if(s.length() > 0 && (s.substring(s.length() - 1).equals("\'"))) {
-                    s += " ";
-                }
+                        if(s.length() > 0 && (s.substring(s.length() - 1).equals("\'"))) {
+                            s += " ";
+                        }
 
-                s += n;
+                        s += n;
                 equation.setLastNumber(s);
                 equation.updateEquation();
             }

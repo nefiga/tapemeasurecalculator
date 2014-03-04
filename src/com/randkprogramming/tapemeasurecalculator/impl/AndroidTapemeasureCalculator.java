@@ -45,6 +45,11 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     }
 
     @Override
+    public void onBackPressed() {
+        screen.androidBackButton();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         wakeLock.acquire();
