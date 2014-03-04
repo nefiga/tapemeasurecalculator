@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import com.randkprogramming.tapemeasurecalculator.impl.AndroidFastRenderView;
+import com.randkprogramming.tapemeasurecalculator.impl.AndroidTapemeasureCalculator;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Input.TouchEvent;
@@ -214,10 +215,16 @@ public class MainCalculatorScreen extends Screen {
             Calculator c = AndroidFastRenderView.getCalculator();
             c.setScreen(new HistoryScreen(c));
         }
+        if (touchIsInBounds(event, 435, 910, 115, 115)) {
+            calculator.setScreen(new FractionThirtysecondScreen(calculator, manager));
+        }
     }
 
     @Override public void pause() {}
     @Override public void resume() {}
     @Override public void dispose() {}
-    @Override public void androidBackButton() {}
+
+    @Override public void androidBackButton() {
+        System.exit(0);
+    }
 }

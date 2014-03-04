@@ -48,7 +48,7 @@ public interface Button {
         @Override
         public void pressedButton() {
             switch(this) {
-                case FRACTION: { break; }  // TODO: Make Fractions Page!
+                case FRACTION: {  }  // TODO: Make Fractions Page!
                 case DECIMAL_POINT: { CalcState.addDecimal(); break; }
                 case EQUALS: { CalculateEquation.solveEquation(CalcState.equation); break; }
                 case CLEAR: { CalcState.equation.clear(); break; }
