@@ -1,7 +1,7 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
 import com.randkprogramming.tapemeasurecalculator.calculator.screens.FractionSixteenthScreen;
-import com.randkprogramming.tapemeasurecalculator.calculator.screens.FractionSixtyfourthScreen;
+import com.randkprogramming.tapemeasurecalculator.calculator.screens.ManualFractionScreen;
 import com.randkprogramming.tapemeasurecalculator.calculator.screens.FractionThirtysecondScreen;
 import com.randkprogramming.tapemeasurecalculator.impl.AndroidFastRenderView;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
@@ -88,7 +88,7 @@ public interface Button {
                             break;
                         }
                         case SIXTY_FOURTH: {
-                            calculator.setScreen(new FractionSixtyfourthScreen(calculator));
+                            calculator.setScreen(new ManualFractionScreen(calculator));
                             break;
                         }
                     }
