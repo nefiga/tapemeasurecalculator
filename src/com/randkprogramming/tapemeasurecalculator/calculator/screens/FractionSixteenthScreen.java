@@ -87,6 +87,7 @@ public class FractionSixteenthScreen extends Screen{
 
     @Override public void present(float deltaTime) {
         Graphics g = calculator.getGraphics();
+        g.clear(0xffffff);
         g.drawPixmap(Assets.sixteenths_screen, 0, 0);
     }
     @Override public void pause() {}

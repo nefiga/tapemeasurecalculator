@@ -93,6 +93,7 @@ public class FractionThirtysecondScreen extends Screen{
 
     @Override public void present(float deltaTime) {
         Graphics g = calculator.getGraphics();
+        g.clear(0xffffff);
         g.drawPixmap(Assets.thirtyseconds_screen, 0, 0);
     }
 

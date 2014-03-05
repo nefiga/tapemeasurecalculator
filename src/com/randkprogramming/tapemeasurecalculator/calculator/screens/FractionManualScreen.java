@@ -6,11 +6,11 @@ import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Screen;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.CalculatorInputManager;
 
-public class ManualFractionScreen extends Screen{
+public class FractionManualScreen extends Screen{
 
     CalculatorInputManager manager;
 
-    public ManualFractionScreen(Calculator calculator) {
+    public FractionManualScreen(Calculator calculator) {
         super(calculator);
         manager = new CalculatorInputManager();
     }
@@ -19,6 +19,7 @@ public class ManualFractionScreen extends Screen{
 
     @Override public void present(float deltaTime) {
         Graphics g = calculator.getGraphics();
+        g.clear(0xffffff);
         g.drawPixmap(Assets.manual_fraction_screen, 0, 0);
     }
 

@@ -79,6 +79,7 @@ public class MainCalculatorScreen extends Screen {
         // Draw Images
         Graphics g = calculator.getGraphics();
 
+        g.clear(0xffffff);
         g.drawPixmap(Assets.main_calculator, 0, 0);
         drawEquation(g);
 
