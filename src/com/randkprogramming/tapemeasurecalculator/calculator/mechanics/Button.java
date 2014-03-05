@@ -1,6 +1,14 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
+import com.randkprogramming.tapemeasurecalculator.calculator.screens.FractionSixteenthScreen;
+import com.randkprogramming.tapemeasurecalculator.calculator.screens.FractionSixtyfourthScreen;
+import com.randkprogramming.tapemeasurecalculator.calculator.screens.FractionThirtysecondScreen;
+import com.randkprogramming.tapemeasurecalculator.impl.AndroidFastRenderView;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
+
 public interface Button {
+
+    Calculator calculator = AndroidFastRenderView.getCalculator();
 
     public abstract void pressedButton();
     public abstract void holdingButton();
@@ -72,15 +80,15 @@ public interface Button {
 
                     switch(CalcState.fractionPrecision) {
                         case SIXTEENTH: {
-
+                            calculator.setScreen(new FractionSixteenthScreen(calculator));
                             break;
                         }
                         case THIRTY_SECOND: {
-
+                            calculator.setScreen(new FractionThirtysecondScreen(calculator));
                             break;
                         }
                         case SIXTY_FOURTH: {
-
+                            calculator.setScreen(new FractionSixtyfourthScreen(calculator));
                             break;
                         }
                     }
@@ -161,7 +169,7 @@ public interface Button {
         @Override
         public void pressedButton() {
             switch (this) {
-                case ONE:   break;
+                case ONE:   System.out.println("one thirtysecond"); break;
                 case THREE: break;
                 case FIVE:  break;
                 case SEVEN: break;
@@ -175,7 +183,7 @@ public interface Button {
                 case TWENTY_THREE:   break;
                 case TWENTY_FIVE:    break;
                 case TWENTY_SEVEN:   break;
-                case TWENTY_NINE:    break;
+                case TWENTY_NINE:  System.out.println("twenty nine thirtyseconds");  break;
                 case THIRTY_ONE:      break;
             }
         }
@@ -193,12 +201,12 @@ public interface Button {
             switch (this) {
                 case ONE:   break;
                 case THREE: break;
-                case FIVE:  break;
+                case FIVE: System.out.println("five sixteenths");  break;
                 case SEVEN: break;
                 case NINE:  break;
                 case ELEVEN:    break;
                 case THIRTEEN:  break;
-                case FIFTEEN:   break;
+                case FIFTEEN:  System.out.println("fifteen sixteenths"); break;
             }
         }
 
@@ -219,7 +227,7 @@ public interface Button {
                 case SEVEN_EIGHTHS:     break;
                 case ONE_QUARTER:   break;
                 case THREE_QUARTERS:    break;
-                case ONE_HALF:  break;
+                case ONE_HALF: System.out.println("one half"); break;
             }
         }
 

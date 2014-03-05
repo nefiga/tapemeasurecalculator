@@ -8,9 +8,9 @@ public class FractionSixtyfourthScreen extends Screen{
 
     CalculatorInputManager manager;
 
-    public FractionSixtyfourthScreen(Calculator calculator, CalculatorInputManager manager) {
+    public FractionSixtyfourthScreen(Calculator calculator) {
         super(calculator);
-        this.manager = manager;
+        manager = new CalculatorInputManager();
     }
 
     @Override public void update(float deltaTime) {}
@@ -18,5 +18,7 @@ public class FractionSixtyfourthScreen extends Screen{
     @Override public void pause() {}
     @Override public void resume() {}
     @Override public void dispose() {}
-    @Override public void androidBackButton() {}
+    @Override public void androidBackButton() {
+        calculator.setScreen(new MainCalculatorScreen(calculator));
+    }
 }

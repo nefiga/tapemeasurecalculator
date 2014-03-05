@@ -14,9 +14,9 @@ public class FractionThirtysecondScreen extends Screen{
 
     CalculatorInputManager manager;
 
-    public FractionThirtysecondScreen(Calculator calculator, CalculatorInputManager manager) {
+    public FractionThirtysecondScreen(Calculator calculator) {
         super(calculator);
-        this.manager = manager;
+        manager = new CalculatorInputManager();
         setupLayout();
     }
 
@@ -29,8 +29,8 @@ public class FractionThirtysecondScreen extends Screen{
     private static final int BUTTON_WIDTH = 120;
     private static final int BUTTON_HEIGHT = 120;
 
-    private static final int HORIZONTAL_GAP = 40;
-    private static final int VERTICAL_GAP = 20;
+    private static final int HORIZONTAL_GAP = 80;
+    private static final int VERTICAL_GAP = 40;
 
     private static final Button buttonLayout[][] = new Button[][]{
             new Button[] {Button.ThirtySeconds.ONE, Button.Sixteenths.ONE, Button.ThirtySeconds.THREE, Button.OtherFractions.ONE_EIGHTH},

@@ -218,7 +218,7 @@ public class MainCalculatorScreen extends Screen {
             }
         }
         if (touchIsInBounds(event, 435, 910, 115, 115)) {
-            calculator.setScreen(new FractionThirtysecondScreen(calculator, manager));
+            calculator.setScreen(new FractionThirtysecondScreen(calculator));
         }
     }
 
