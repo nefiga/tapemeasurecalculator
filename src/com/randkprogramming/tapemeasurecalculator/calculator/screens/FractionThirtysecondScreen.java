@@ -2,7 +2,6 @@ package com.randkprogramming.tapemeasurecalculator.calculator.screens;
 
 import com.randkprogramming.tapemeasurecalculator.calculator.assets.Assets;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.Button;
-import com.randkprogramming.tapemeasurecalculator.impl.AndroidFastRenderView;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Input;
@@ -18,6 +17,7 @@ public class FractionThirtysecondScreen extends Screen{
     public FractionThirtysecondScreen(Calculator calculator, CalculatorInputManager manager) {
         super(calculator);
         this.manager = manager;
+        setupLayout();
     }
 
     //--------------------------------
@@ -37,10 +37,10 @@ public class FractionThirtysecondScreen extends Screen{
             new Button[] {Button.ThirtySeconds.FIVE, Button.Sixteenths.THREE, Button.ThirtySeconds.SEVEN, Button.OtherFractions.ONE_QUARTER},
             new Button[] {Button.ThirtySeconds.NINE, Button.Sixteenths.FIVE, Button.ThirtySeconds.ELEVEN, Button.OtherFractions.THREE_EIGHTHS},
             new Button[] {Button.ThirtySeconds.THIRTEEN, Button.Sixteenths.SEVEN, Button.ThirtySeconds.FIFTEEN, Button.OtherFractions.ONE_HALF},
-            new Button[] {Button.ThirtySeconds.SEVENTEEN, Button.Sixteenths.NINE, Button.ThirtySeconds.NINETEEEN, Button.OtherFractions.FIVE_EIGHTHS},
-            new Button[] {Button.ThirtySeconds.TWENTYONE, Button.Sixteenths.ELEVEN, Button.ThirtySeconds.TWENTYTHREE, Button.OtherFractions.THREE_QUARTERS},
-            new Button[] {Button.ThirtySeconds.TWENTYFIVE, Button.Sixteenths.THIRTEEN, Button.ThirtySeconds.TWENTYSEVEN, Button.OtherFractions.SEVEN_EIGHTHS},
-            new Button[] {Button.ThirtySeconds.TWENTYNINE, Button.Sixteenths.FIFTEEN, Button.ThirtySeconds.THIRTYONE}
+            new Button[] {Button.ThirtySeconds.SEVENTEEN, Button.Sixteenths.NINE, Button.ThirtySeconds.NINETEEN, Button.OtherFractions.FIVE_EIGHTHS},
+            new Button[] {Button.ThirtySeconds.TWENTY_ONE, Button.Sixteenths.ELEVEN, Button.ThirtySeconds.TWENTY_THREE, Button.OtherFractions.THREE_QUARTERS},
+            new Button[] {Button.ThirtySeconds.TWENTY_FIVE, Button.Sixteenths.THIRTEEN, Button.ThirtySeconds.TWENTY_SEVEN, Button.OtherFractions.SEVEN_EIGHTHS},
+            new Button[] {Button.ThirtySeconds.TWENTY_NINE, Button.Sixteenths.FIFTEEN, Button.ThirtySeconds.THIRTY_ONE}
     };
 
     private static final int[] xCoords = new int[NUM_COLS];

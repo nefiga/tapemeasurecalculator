@@ -1,8 +1,5 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
-import com.randkprogramming.tapemeasurecalculator.impl.AndroidTapemeasureCalculator;
-import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
-
 public interface Button {
 
     public abstract void pressedButton();
@@ -144,60 +141,27 @@ public interface Button {
     }
 
     public static enum ThirtySeconds implements Button {
-        ONE, THREE, FIVE, SEVEN, NINE, ELEVEN, THIRTEEN, FIFTEEN, SEVENTEEN, NINETEEEN, TWENTYONE, TWENTYTHREE, TWENTYFIVE, TWENTYSEVEN, TWENTYNINE, THIRTYONE;
+        ONE, THREE, FIVE, SEVEN, NINE, ELEVEN, THIRTEEN, FIFTEEN, SEVENTEEN, NINETEEN, TWENTY_ONE, TWENTY_THREE, TWENTY_FIVE, TWENTY_SEVEN, TWENTY_NINE, THIRTY_ONE;
 
         @Override
         public void pressedButton() {
             switch (this) {
-                case ONE:
-
-                    break;
-                case THREE:
-
-                    break;
-                case FIVE:
-
-                    break;
-                case SEVEN:
-
-                    break;
-                case NINE:
-
-                    break;
-                case ELEVEN:
-
-                    break;
-                case THIRTEEN:
-
-                    break;
-                case FIFTEEN:
-
-                    break;
-                case SEVENTEEN:
-
-                    break;
-
-                case NINETEEEN:
-
-                    break;
-                case TWENTYONE:
-
-                    break;
-                case TWENTYTHREE:
-
-                    break;
-                case TWENTYFIVE:
-
-                    break;
-                case TWENTYSEVEN:
-
-                    break;
-                case TWENTYNINE:
-
-                    break;
-                case THIRTYONE:
-
-                    break;
+                case ONE:   break;
+                case THREE: break;
+                case FIVE:  break;
+                case SEVEN: break;
+                case NINE:  break;
+                case ELEVEN:    break;
+                case THIRTEEN:  break;
+                case FIFTEEN:   break;
+                case SEVENTEEN:     break;
+                case NINETEEN:     break;
+                case TWENTY_ONE:     break;
+                case TWENTY_THREE:   break;
+                case TWENTY_FIVE:    break;
+                case TWENTY_SEVEN:   break;
+                case TWENTY_NINE:    break;
+                case THIRTY_ONE:      break;
             }
         }
 
@@ -212,30 +176,14 @@ public interface Button {
         @Override
         public void pressedButton() {
             switch (this) {
-                case ONE:
-
-                    break;
-                case THREE:
-
-                    break;
-                case FIVE:
-
-                    break;
-                case SEVEN:
-
-                    break;
-                case NINE:
-
-                    break;
-                case ELEVEN:
-
-                    break;
-                case THIRTEEN:
-
-                    break;
-                case FIFTEEN:
-
-                    break;
+                case ONE:   break;
+                case THREE: break;
+                case FIVE:  break;
+                case SEVEN: break;
+                case NINE:  break;
+                case ELEVEN:    break;
+                case THIRTEEN:  break;
+                case FIFTEEN:   break;
             }
         }
 
@@ -250,27 +198,13 @@ public interface Button {
         @Override
         public void pressedButton() {
             switch (this) {
-                case ONE_EIGHTH:
-
-                    break;
-                case THREE_EIGHTHS:
-
-                    break;
-                case FIVE_EIGHTHS:
-
-                    break;
-                case SEVEN_EIGHTHS:
-
-                    break;
-                case ONE_QUARTER:
-
-                    break;
-                case THREE_QUARTERS:
-
-                    break;
-                case ONE_HALF:
-
-                    break;
+                case ONE_EIGHTH:    break;
+                case THREE_EIGHTHS: break;
+                case FIVE_EIGHTHS:  break;
+                case SEVEN_EIGHTHS:     break;
+                case ONE_QUARTER:   break;
+                case THREE_QUARTERS:    break;
+                case ONE_HALF:  break;
             }
         }
 
