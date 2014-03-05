@@ -1,7 +1,6 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
-import com.randkprogramming.tapemeasurecalculator.calculator.screens.HistoryScreen;
-import com.randkprogramming.tapemeasurecalculator.impl.AndroidFastRenderView;
+import com.randkprogramming.tapemeasurecalculator.impl.AndroidTapemeasureCalculator;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
 
 public interface Button {
@@ -15,8 +14,14 @@ public interface Button {
     public static enum Number implements Button {
         ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE;
 
-        @Override public void pressedButton() { CalcState.addNumber(ordinal()); }
-        @Override public void holdingButton(){}
+        @Override
+        public void pressedButton() {
+            CalcState.addNumber(ordinal());
+        }
+
+        @Override
+        public void holdingButton() {
+        }
     }
 
     //---------------------
@@ -25,16 +30,34 @@ public interface Button {
     public static enum Operator implements Button {
         PLUS, MINUS, DIVIDE, TIMES;
 
-        @Override public void pressedButton() { CalcState.addOperator(this); }
-        @Override public void holdingButton(){}
-        @Override public String toString() {
+        @Override
+        public void pressedButton() {
+            CalcState.addOperator(this);
+        }
 
-            switch(this) {
-                case PLUS: { return " + "; }
-                case MINUS: { return " - "; }
-                case DIVIDE: { return " ÷ "; }
-                case TIMES: { return " x "; }
-                default: { return ""; }
+        @Override
+        public void holdingButton() {
+        }
+
+        @Override
+        public String toString() {
+
+            switch (this) {
+                case PLUS: {
+                    return " + ";
+                }
+                case MINUS: {
+                    return " - ";
+                }
+                case DIVIDE: {
+                    return " ÷ ";
+                }
+                case TIMES: {
+                    return " x ";
+                }
+                default: {
+                    return "";
+                }
             }
         }
     }
@@ -47,16 +70,35 @@ public interface Button {
 
         @Override
         public void pressedButton() {
-            switch(this) {
-                case FRACTION: {  }  // TODO: Make Fractions Page!
-                case DECIMAL_POINT: { CalcState.addDecimal(); break; }
-                case EQUALS: { CalculateEquation.solveEquation(CalcState.equation); break; }
-                case CLEAR: { CalcState.equation.clear(); break; }
-                case BACKSPACE: { CalcState.backspace(); break; }
-                case FEET: { CalcState.addFeet(); break; }
+            switch (this) {
+                case FRACTION: {
+                }  // TODO: Make Fractions Page!
+                case DECIMAL_POINT: {
+                    CalcState.addDecimal();
+                    break;
+                }
+                case EQUALS: {
+                    CalculateEquation.solveEquation(CalcState.equation);
+                    break;
+                }
+                case CLEAR: {
+                    CalcState.equation.clear();
+                    break;
+                }
+                case BACKSPACE: {
+                    CalcState.backspace();
+                    break;
+                }
+                case FEET: {
+                    CalcState.addFeet();
+                    break;
+                }
             }
         }
-        @Override public void holdingButton(){}
+
+        @Override
+        public void holdingButton() {
+        }
     }
 
     //---------------------
@@ -68,7 +110,7 @@ public interface Button {
         @Override
         public void pressedButton() {
 
-            switch(this) {
+            switch (this) {
                 case FRACTION_OR_DECIMAL: {
                     CalcState.equation.verifyUnits();
                     CalcState.fractionOrDecimal = CalcState.fractionOrDecimal.next();
@@ -76,7 +118,7 @@ public interface Button {
                     break;
                 }
                 case FRACTION_PRECISION: {
-                    if(CalcState.fractionOrDecimal == DisplayModes.FractionOrDecimal.FRACTION_OPTION) {
+                    if (CalcState.fractionOrDecimal == DisplayModes.FractionOrDecimal.FRACTION_OPTION) {
                         CalcState.equation.verifyUnits();
                         CalcState.fractionPrecision = CalcState.fractionPrecision.next();
                         CalcState.equation.updateDisplay();
@@ -95,7 +137,145 @@ public interface Button {
                 }
             }
         }
-        @Override public void holdingButton(){}
+
+        @Override
+        public void holdingButton() {
+        }
     }
 
+    public static enum ThirtySeconds implements Button {
+        ONE, THREE, FIVE, SEVEN, NINE, ELEVEN, THIRTEEN, FIFTEEN, SEVENTEEN, NINETEEEN, TWENTYONE, TWENTYTHREE, TWENTYFIVE, TWENTYSEVEN, TWENTYNINE, THIRTYONE;
+
+        @Override
+        public void pressedButton() {
+            switch (this) {
+                case ONE:
+
+                    break;
+                case THREE:
+
+                    break;
+                case FIVE:
+
+                    break;
+                case SEVEN:
+
+                    break;
+                case NINE:
+
+                    break;
+                case ELEVEN:
+
+                    break;
+                case THIRTEEN:
+
+                    break;
+                case FIFTEEN:
+
+                    break;
+                case SEVENTEEN:
+
+                    break;
+
+                case NINETEEEN:
+
+                    break;
+                case TWENTYONE:
+
+                    break;
+                case TWENTYTHREE:
+
+                    break;
+                case TWENTYFIVE:
+
+                    break;
+                case TWENTYSEVEN:
+
+                    break;
+                case TWENTYNINE:
+
+                    break;
+                case THIRTYONE:
+
+                    break;
+            }
+        }
+
+        @Override
+        public void holdingButton() {
+        }
+    }
+
+    public static enum Sixteenths implements Button {
+        ONE, THREE, FIVE, SEVEN, NINE, ELEVEN, THIRTEEN, FIFTEEN;
+
+        @Override
+        public void pressedButton() {
+            switch (this) {
+                case ONE:
+
+                    break;
+                case THREE:
+
+                    break;
+                case FIVE:
+
+                    break;
+                case SEVEN:
+
+                    break;
+                case NINE:
+
+                    break;
+                case ELEVEN:
+
+                    break;
+                case THIRTEEN:
+
+                    break;
+                case FIFTEEN:
+
+                    break;
+            }
+        }
+
+        @Override
+        public void holdingButton() {
+        }
+    }
+
+    public static enum OtherFractions implements Button {
+        ONE_EIGHTH, THREE_EIGHTHS, FIVE_EIGHTHS, SEVEN_EIGHTHS, ONE_QUARTER, THREE_QUARTERS, ONE_HALF;
+
+        @Override
+        public void pressedButton() {
+            switch (this) {
+                case ONE_EIGHTH:
+
+                    break;
+                case THREE_EIGHTHS:
+
+                    break;
+                case FIVE_EIGHTHS:
+
+                    break;
+                case SEVEN_EIGHTHS:
+
+                    break;
+                case ONE_QUARTER:
+
+                    break;
+                case THREE_QUARTERS:
+
+                    break;
+                case ONE_HALF:
+
+                    break;
+            }
+        }
+
+        @Override
+        public void holdingButton() {
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.screens;
 
 import com.randkprogramming.tapemeasurecalculator.calculator.assets.Assets;
+import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.Button;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Screen;
@@ -14,6 +15,22 @@ public class FractionThirtysecondScreen extends Screen{
         super(calculator);
         this.manager = manager;
     }
+
+    //--------------------------------
+    // Button Layout
+    //--------------------------------
+    private static final int NUM_ROWS = 8;
+    private static final int NUM_COLS = 4;
+
+    private static final int BUTTON_WIDTH = 120;
+    private static final int BUTTON_HEIGHT = 120;
+
+    private static final int HORIZONTAL_GAP = 40;
+    private static final int VERTICAL_GAP = 20;
+
+    private static final Button buttonLayout[][] = new Button[][]{
+            new Button[] {}
+    };
 
     @Override public void update(float deltaTime) {}
     @Override public void present(float deltaTime) {
