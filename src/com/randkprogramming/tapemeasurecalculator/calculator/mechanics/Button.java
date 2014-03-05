@@ -69,7 +69,22 @@ public interface Button {
         public void pressedButton() {
             switch (this) {
                 case FRACTION: {
-                }  // TODO: Make Fractions Page!
+
+                    switch(CalcState.fractionPrecision) {
+                        case SIXTEENTH: {
+
+                            break;
+                        }
+                        case THIRTY_SECOND: {
+
+                            break;
+                        }
+                        case SIXTY_FOURTH: {
+
+                            break;
+                        }
+                    }
+                }
                 case DECIMAL_POINT: {
                     CalcState.addDecimal();
                     break;
