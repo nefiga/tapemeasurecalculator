@@ -53,8 +53,7 @@ public class HistoryScreen extends Screen {
     @Override public void dispose() {}
     @Override public void androidBackButton() {
 
-        Calculator c = AndroidFastRenderView.getCalculator();
-        c.setScreen(new MainCalculatorScreen(c));
+        calculator.setScreen(new MainCalculatorScreen(calculator));
     }
 
     private static final int NUM_ROWS = 10;

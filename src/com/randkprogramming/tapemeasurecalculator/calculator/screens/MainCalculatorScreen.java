@@ -201,7 +201,7 @@ public class MainCalculatorScreen extends Screen {
 
                 if (touchIsInBounds(event, xCoords[col], yCoords[row], TOUCH_WIDTH, TOUCH_HEIGHT)) {
                     switch (event.type) {
-                        case TouchEvent.TOUCH_DOWN:    manager.setButtonPressed(buttonLayout[row][col]);  break;
+                        case TouchEvent.TOUCH_DOWN:    manager.setButtonPressed(buttonLayout[row][col]); break;
                         case TouchEvent.TOUCH_UP:      manager.setButtonReleased(buttonLayout[row][col]); break;
                         case TouchEvent.TOUCH_DRAGGED: break;
                     }
@@ -212,8 +212,10 @@ public class MainCalculatorScreen extends Screen {
 
         // If user touches equation screen...
         if (touchIsInBounds(event,0,0,800,300)) {
-            Calculator c = AndroidFastRenderView.getCalculator();
-            c.setScreen(new HistoryScreen(c));
+
+            if (event.type == TouchEvent.TOUCH_DOWN) {
+                calculator.setScreen(new HistoryScreen(calculator));
+            }
         }
         if (touchIsInBounds(event, 435, 910, 115, 115)) {
             calculator.setScreen(new FractionThirtysecondScreen(calculator, manager));
