@@ -3,8 +3,6 @@ package com.randkprogramming.tapemeasurecalculator.calculator.screens;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import com.randkprogramming.tapemeasurecalculator.impl.AndroidFastRenderView;
-import com.randkprogramming.tapemeasurecalculator.impl.AndroidTapemeasureCalculator;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Input.TouchEvent;
@@ -12,8 +10,6 @@ import com.randkprogramming.tapemeasurecalculator.interfaces.Screen;
 import com.randkprogramming.tapemeasurecalculator.calculator.assets.Assets;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.*;
 
-import java.awt.font.TextAttribute;
-import java.text.AttributedString;
 import java.util.List;
 import java.util.Scanner;
 
@@ -64,7 +60,6 @@ public class MainCalculatorScreen extends Screen {
 
     @Override
     public void update(float deltaTime) {
-
 //        printDebugStatements(deltaTime);
 
         List<TouchEvent> touchEvents = calculator.getInput().getTouchEvent();
@@ -200,7 +195,6 @@ public class MainCalculatorScreen extends Screen {
      * the manager know which button was pressed or released.
      * @param event The event being fired. */
     private void checkTouchEvent(TouchEvent event) {
-
         for (int row = 0; row < NUM_ROWS; row++) {
             for (int col = 0; col < NUM_COLS; col++) {
 
@@ -221,9 +215,6 @@ public class MainCalculatorScreen extends Screen {
             if (event.type == TouchEvent.TOUCH_DOWN) {
                 calculator.setScreen(new HistoryScreen(calculator));
             }
-        }
-        if (touchIsInBounds(event, 435, 910, 115, 115)) {
-            calculator.setScreen(new FractionThirtysecondScreen(calculator));
         }
     }
 
