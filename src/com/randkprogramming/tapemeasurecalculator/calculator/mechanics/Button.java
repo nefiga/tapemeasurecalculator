@@ -78,21 +78,7 @@ public interface Button {
         public void pressedButton() {
             switch (this) {
                 case FRACTION: {
-
-                    switch(CalcState.fractionPrecision) {
-                        case SIXTEENTH: {
-                            calculator.setScreen(new FractionSixteenthScreen(calculator));
-                            break;
-                        }
-                        case THIRTY_SECOND: {
-                            calculator.setScreen(new FractionThirtysecondScreen(calculator));
-                            break;
-                        }
-                        case SIXTY_FOURTH: {
-                            calculator.setScreen(new FractionManualScreen(calculator));
-                            break;
-                        }
-                    }
+                    calculator.setScreen(new FractionManualScreen(calculator));
                 }
                 case DECIMAL_POINT: {
                     CalcState.addDecimal();
@@ -162,6 +148,59 @@ public interface Button {
 
         @Override
         public void holdingButton() {
+        }
+    }
+
+    public static enum ManualFractions implements Button {
+        ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, HALF, QUARTER, EIGHTH, SIXTEENTH, THIRTYSECOND, SIXTYFOURTH, BACK, CLEAR;
+
+        @Override
+        public void pressedButton() {
+            switch (this) {
+                case ZERO:
+                case ONE:
+                case TWO:
+                case THREE:
+                case FOUR:
+                case FIVE:
+                case SIX:
+                case SEVEN:
+                case EIGHT:
+                case NINE:
+                    String f = "";
+                    f += ordinal();
+                    FractionManualScreen.addNumerator(f);
+                    break;
+                case HALF:
+                    FractionManualScreen.addDenominator("/2");
+                    break;
+                case QUARTER:
+                    FractionManualScreen.addDenominator("/4");
+                    break;
+                case EIGHTH:
+                    FractionManualScreen.addDenominator("/8");
+                    break;
+                case SIXTEENTH:
+                    FractionManualScreen.addDenominator("/16");
+                    break;
+                case THIRTYSECOND:
+                    FractionManualScreen.addDenominator("/32");
+                    break;
+                case SIXTYFOURTH:
+                    FractionManualScreen.addDenominator("/64");
+                    break;
+                case BACK:
+                    FractionManualScreen.backspace();
+                    break;
+                case CLEAR:
+                    FractionManualScreen.clear();
+                    break;
+            }
+        }
+
+        @Override
+        public void holdingButton() {
+
         }
     }
 

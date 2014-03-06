@@ -182,4 +182,10 @@ public class CalcState {
 
     }
 
+    //----------------------------------
+    //  Add Fraction
+    //----------------------------------
+    public static void addFraction(String fraction){
+        equation.appendToLastNum("  " + fraction);
+    }
 }
