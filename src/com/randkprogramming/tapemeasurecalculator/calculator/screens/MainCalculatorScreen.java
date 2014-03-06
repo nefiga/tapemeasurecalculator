@@ -12,6 +12,8 @@ import com.randkprogramming.tapemeasurecalculator.interfaces.Screen;
 import com.randkprogramming.tapemeasurecalculator.calculator.assets.Assets;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.*;
 
+import java.awt.font.TextAttribute;
+import java.text.AttributedString;
 import java.util.List;
 import java.util.Scanner;
 
@@ -83,11 +85,11 @@ public class MainCalculatorScreen extends Screen {
         g.drawPixmap(Assets.main_calculator, 0, 0);
         drawEquation(g);
 
-        g.drawPixmap(Assets.fractionOrDecimal[CalcState.fractionOrDecimal.ordinal()], 68, 1055);
+        g.drawPixmap(Assets.fractionOrDecimal[CalcState.fractionOrDecimal.ordinal()], 68, 1135);
         if(CalcState.fractionOrDecimal == DisplayModes.FractionOrDecimal.FRACTION_OPTION) {
-            g.drawPixmap(Assets.fractionPrecision[CalcState.fractionPrecision.ordinal()], 251, 1055);
+            g.drawPixmap(Assets.fractionPrecision[CalcState.fractionPrecision.ordinal()], 251, 1135);
         }
-        g.drawPixmap(Assets.units[CalcState.displayUnits.ordinal()], 434, 1055);
+        g.drawPixmap(Assets.units[CalcState.displayUnits.ordinal()], 434, 1135);
     }
 
     public static final int[] yCoordsSmallText = {75,135,195,255};
@@ -190,6 +192,8 @@ public class MainCalculatorScreen extends Screen {
         for (int row = 0; row < NUM_ROWS; row++) {
             yCoords[row] = (Y_OFFSET + VERTICAL_GAP + row * (BUTTON_HEIGHT + VERTICAL_GAP)) - (VERTICAL_GAP / 2);
         }
+        // Last row is offset more pixels
+        yCoords[NUM_ROWS - 1] += 80; // From 1055 to 1135
     }
 
     /** Checks to see if the event fired is in bounds of a button. If it is, then it lets

@@ -13,6 +13,8 @@ import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Input;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Screen;
 
+import java.util.List;
+
 public abstract class AndroidTapemeasureCalculator extends Activity implements Calculator {
     AndroidFastRenderView renderView;
     Graphics graphics;
@@ -76,9 +78,9 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
 
         this.screen.pause();
         this.screen.dispose();
+        this.screen = screen;
         screen.resume();
         screen.update(0);
-        this.screen = screen;
     }
 
     public Screen getCurrentScreen() {return screen;}

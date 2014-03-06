@@ -23,7 +23,7 @@ public class Assets {
         main_calculator = g.newPixmap("square_colored.png", Graphics.PixmapFormat.RGB565);
         thirtyseconds_screen = g.newPixmap("32nds_screen.png", Graphics.PixmapFormat.RGB565);
         sixteenths_screen = g.newPixmap("16ths_screen.png", Graphics.PixmapFormat.RGB565);
-        manual_fraction_screen= g.newPixmap("manual_fraction_screen.png", Graphics.PixmapFormat.RGB565);
+        manual_fraction_screen= g.newPixmap("fraction_screen.png", Graphics.PixmapFormat.RGB565);
 
         fractionOrDecimal[0] = g.newPixmap("fraction_option.png", Graphics.PixmapFormat.RGB565);
         fractionOrDecimal[1] = g.newPixmap("decimal_option.png", Graphics.PixmapFormat.RGB565);
