@@ -9,8 +9,6 @@ import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
 
 public interface Button {
 
-    Calculator calculator = AndroidFastRenderView.getCalculator();
-
     public abstract void pressedButton();
     public abstract void holdingButton();
 
@@ -78,7 +76,15 @@ public interface Button {
         public void pressedButton() {
             switch (this) {
                 case FRACTION: {
-                    calculator.setScreen(new FractionManualScreen(calculator));
+
+                    // Prevent more than one fraction by only allowing you to press the button if...
+                    if( ! CalcState.equation.getLastNumber().contains("\"") &&
+                            ! CalcState.equation.getLastNumber().contains("/")) {
+                        Calculator c = AndroidFastRenderView.getCalculator();
+                        c.setScreen(new FractionManualScreen(c));
+                    }
+
+                    break;
                 }
                 case DECIMAL_POINT: {
                     CalcState.addDecimal();
@@ -140,7 +146,8 @@ public interface Button {
                 }
                 // TODO: Make Info/Options Page!
                 case INFO: {
-                    calculator.setScreen(new TabInfoScreen(calculator));
+                    Calculator c = AndroidFastRenderView.getCalculator();
+                    c.setScreen(new FractionManualScreen(c));
                     break;
                 }
             }
@@ -152,7 +159,8 @@ public interface Button {
     }
 
     public static enum ManualFractions implements Button {
-        ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, HALF, QUARTER, EIGHTH, SIXTEENTH, THIRTYSECOND, SIXTYFOURTH, BACK, CLEAR;
+        ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, HALF, QUARTER, EIGHTH, SIXTEENTH,
+        THIRTYSECOND, SIXTYFOURTH, BACK, CLEAR, ENTER;
 
         @Override
         public void pressedButton() {
@@ -194,6 +202,9 @@ public interface Button {
                     break;
                 case CLEAR:
                     FractionManualScreen.clear();
+                    break;
+                case ENTER:
+                    FractionManualScreen.enter();
                     break;
             }
         }
