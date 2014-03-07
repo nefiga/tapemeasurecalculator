@@ -1,8 +1,6 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
 import com.randkprogramming.tapemeasurecalculator.calculator.screens.FractionManualScreen;
-import com.randkprogramming.tapemeasurecalculator.calculator.screens.FractionSixteenthScreen;
-import com.randkprogramming.tapemeasurecalculator.calculator.screens.FractionThirtysecondScreen;
 import com.randkprogramming.tapemeasurecalculator.calculator.screens.TabInfoScreen;
 import com.randkprogramming.tapemeasurecalculator.impl.AndroidFastRenderView;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;

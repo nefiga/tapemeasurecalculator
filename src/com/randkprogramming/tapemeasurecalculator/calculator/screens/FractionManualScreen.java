@@ -75,8 +75,7 @@ public class FractionManualScreen extends Screen{
         List<Input.TouchEvent> touchEvents = calculator.getInput().getTouchEvent();
         for (Input.TouchEvent event : touchEvents) {
 
-            checkUpperSection(event);
-            checkLowerSection(event);
+            checkMainSection(event);
             checkEnterButton(event);
             manager.updateHoldTime(deltaTime);
         }
@@ -91,59 +90,56 @@ public class FractionManualScreen extends Screen{
         g.drawString(fraction, x_position, 220, paint);
     }
 
-    public static void setupLayout() {
-
-        setupLayoutUpper();
-    }
-
     //--------------------------------
     // Button Layout - Upper section
     //--------------------------------
-    private static final int NUM_ROWS_UPPER = 3;
-    private static final int NUM_COLS_UPPER = 4;
-    private static final int BUTTON_WIDTH_UPPER = 115;
-    private static final int BUTTON_HEIGHT_UPPER = 115;
-    private static final int HORIZONTAL_GAP_UPPER = 68;
-    private static final int VERTICAL_GAP_UPPER = 30;
-    private static final int X_OFFSET_UPPER = 0;
-    private static final int Y_OFFSET_UPPER = 300;
+    private static final int NUM_ROWS = 5;
+    private static final int NUM_COLS = 4;
+    private static final int BUTTON_WIDTH = 115;
+    private static final int BUTTON_HEIGHT = 115;
+    private static final int HORIZONTAL_GAP = 68;
+    private static final int VERTICAL_GAP = 30;
+    private static final int X_OFFSET = 0;
+    private static final int Y_OFFSET = 465;
 
     // Half the gap on one side plus half the gap on the other to allow for bigger touch areas.
-    private static final int TOUCH_WIDTH_UPPER = BUTTON_WIDTH_UPPER + HORIZONTAL_GAP_UPPER;
-    private static final int TOUCH_HEIGHT_UPPER = BUTTON_HEIGHT_UPPER + VERTICAL_GAP_UPPER;
+    private static final int TOUCH_WIDTH = BUTTON_WIDTH + HORIZONTAL_GAP;
+    private static final int TOUCH_HEIGHT = BUTTON_HEIGHT + VERTICAL_GAP;
 
     private static final Button buttonLayoutUpper[][] = new Button[][]{
-            new Button[]{Button.ManualFractions.SEVEN, Button.ManualFractions.EIGHT, Button.ManualFractions.NINE, Button.ManualFractions.BACK},
-            new Button[]{Button.ManualFractions.FOUR, Button.ManualFractions.FIVE, Button.ManualFractions.SIX},
-            new Button[]{Button.ManualFractions.ONE, Button.ManualFractions.TWO, Button.ManualFractions.THREE, Button.ManualFractions.CLEAR}
+            new Button[]{Button.ManualFractions.CLEAR, null, null, Button.ManualFractions.BACK},
+            new Button[]{Button.ManualFractions.SEVEN, Button.ManualFractions.EIGHT, Button.ManualFractions.NINE, Button.ManualFractions.FRACTION},
+            new Button[]{Button.ManualFractions.FOUR, Button.ManualFractions.FIVE, Button.ManualFractions.SIX, Button.ManualFractions.FRACTION},
+            new Button[]{Button.ManualFractions.ONE, Button.ManualFractions.TWO, Button.ManualFractions.THREE, Button.ManualFractions.FRACTION},
+            new Button[]{null,Button.ManualFractions.ZERO,null,null}
     };
 
-    private static final int[] xCoordsUpper = new int[NUM_COLS_UPPER];
-    private static final int[] yCoordsUpper = new int[NUM_ROWS_UPPER];
+    private static final int[] xCoordsUpper = new int[NUM_COLS];
+    private static final int[] yCoordsUpper = new int[NUM_ROWS];
 
     /** Calculates the top left x and y coordinates for each button. This method makes adjustments so that
      * touch events pressed within gap areas will go to the closest button. */
-    private static void setupLayoutUpper() {
+    public static void setupLayout() {
 
-        for (int col = 0; col < NUM_COLS_UPPER; col++) {
-            xCoordsUpper[col] = (X_OFFSET_UPPER + HORIZONTAL_GAP_UPPER + col *
-                    (BUTTON_WIDTH_UPPER + HORIZONTAL_GAP_UPPER)) - (HORIZONTAL_GAP_UPPER / 2);
+        for (int col = 0; col < NUM_COLS; col++) {
+            xCoordsUpper[col] = (X_OFFSET + HORIZONTAL_GAP + col *
+                    (BUTTON_WIDTH + HORIZONTAL_GAP)) - (HORIZONTAL_GAP / 2);
         }
-        for (int row = 0; row < NUM_ROWS_UPPER; row++) {
-            yCoordsUpper[row] = (Y_OFFSET_UPPER + VERTICAL_GAP_UPPER + row *
-                    (BUTTON_HEIGHT_UPPER + VERTICAL_GAP_UPPER)) - (VERTICAL_GAP_UPPER / 2);
+        for (int row = 0; row < NUM_ROWS; row++) {
+            yCoordsUpper[row] = (Y_OFFSET + VERTICAL_GAP + row *
+                    (BUTTON_HEIGHT + VERTICAL_GAP)) - (VERTICAL_GAP / 2);
         }
     }
 
-    private void checkUpperSection(Input.TouchEvent event) {
+    private void checkMainSection(Input.TouchEvent event) {
 
-        for (int row = 0; row < NUM_ROWS_UPPER; row++) {
-            for (int col = 0; col < NUM_COLS_UPPER; col++) {
+        for (int row = 0; row < NUM_ROWS; row++) {
+            for (int col = 0; col < NUM_COLS; col++) {
 
-                if (touchIsInBounds(event, xCoordsUpper[col], yCoordsUpper[row], TOUCH_WIDTH_UPPER, TOUCH_HEIGHT_UPPER)) {
+                if (touchIsInBounds(event, xCoordsUpper[col], yCoordsUpper[row], TOUCH_WIDTH, TOUCH_HEIGHT)) {
 
-                    // No button here
-                    if(row == 1 && col == 3)
+                    // No buttons in these positions: (0,1),(0,2),(4,0),(4,2),(4,3)
+                    if((row == 0 && (col == 1 || col == 2)) || (row == 3 && col != 1))
                         return;
 
                     switch (event.type) {
@@ -158,42 +154,10 @@ public class FractionManualScreen extends Screen{
     }
 
 
-
-
-    //--------------------------------
-    // Button Layout - Lower section
-    //--------------------------------
-    private static final int[] denom_x = {34,282,519};
-    private static final int[] denom_y = {770,925};
-    private static final Button denom_buttons[][] = new Button[][]{
-
-    };
-
-    private void checkLowerSection(Input.TouchEvent event) {
-
-        for(int row = 0; row < 2; row++) {
-            for(int col = 0; col < 3; col++) {
-
-                if(touchIsInBounds(event,denom_x[col],denom_y[row],237,155)) {
-                    switch (event.type) {
-                        case Input.TouchEvent.TOUCH_DOWN:    manager.setButtonPressed(denom_buttons[row][col]); break;
-                        case Input.TouchEvent.TOUCH_UP:      manager.setButtonReleased(denom_buttons[row][col]); break;
-                        case Input.TouchEvent.TOUCH_DRAGGED: break;
-                    }
-                    return;
-                }
-            }
-        }
-
-    }
-
-
-
-
     private void checkEnterButton(Input.TouchEvent event) {
 
         // Enter Button
-        if(touchIsInBounds(event,34,1095,711,155)) {
+        if(touchIsInBounds(event,34,1070,731,170)) {
             switch (event.type) {
                 case Input.TouchEvent.TOUCH_DOWN:    manager.setButtonPressed(Button.ManualFractions.ENTER); break;
                 case Input.TouchEvent.TOUCH_UP:      manager.setButtonReleased(Button.ManualFractions.ENTER); break;
