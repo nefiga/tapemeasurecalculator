@@ -48,7 +48,7 @@ public class Fraction {
 		
 		int numerator = (int) ( (decimal + roundOffValue) / precisionValue );
 		int denominator = precision.getDenominator();
-		return new Fraction(numerator,denominator,false);
+		return new Fraction(numerator,denominator);
 	}
 	
 	public static Fraction getFractionFromString(String fraction_string) throws ZeroDenominatorException {

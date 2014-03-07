@@ -77,9 +77,10 @@ public interface Button {
             switch (this) {
                 case FRACTION: {
 
-                    // Prevent more than one fraction by only allowing you to press the button if...
-                    if( ! CalcState.equation.getLastNumber().contains("\"") &&
-                            ! CalcState.equation.getLastNumber().contains("/")) {
+                    String lastNum = CalcState.equation.getLastNumber();
+
+                    // Only allow pressing fraction in certain cases...
+                    if( ! lastNum.contains("\"") && ! lastNum.contains("/") && ! lastNum.contains(".")) {
                         Calculator c = AndroidFastRenderView.getCalculator();
                         c.setScreen(new FractionManualScreen(c));
                     }
@@ -147,7 +148,7 @@ public interface Button {
                 // TODO: Make Info/Options Page!
                 case INFO: {
                     Calculator c = AndroidFastRenderView.getCalculator();
-                    c.setScreen(new FractionManualScreen(c));
+                    c.setScreen(new TabInfoScreen(c));
                     break;
                 }
             }

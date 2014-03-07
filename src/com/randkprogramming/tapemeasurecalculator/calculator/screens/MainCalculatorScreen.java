@@ -19,13 +19,6 @@ public class MainCalculatorScreen extends Screen {
     // Fields
     //--------------------------
     private CalculatorInputManager manager = new CalculatorInputManager();
-
-    private Paint paintEquation = new Paint();
-    private Paint paintAnswer = new Paint();
-    private Paint paintEquationSmall = new Paint();
-    private Paint paintAnswerSmall = new Paint();
-    private static final Typeface equationFont = Typeface.create("DEFAULT_BOLD", Typeface.BOLD);
-
     private float debugTimer = 0;
 
     //--------------------------
@@ -33,19 +26,6 @@ public class MainCalculatorScreen extends Screen {
     //--------------------------
     public MainCalculatorScreen(Calculator calculator) {
         super(calculator);
-        paintEquation.setTypeface(equationFont);
-        paintEquation.setTextSize(75);
-
-        paintAnswer.setTypeface(equationFont);
-        paintAnswer.setTextSize(75);
-        paintAnswer.setColor(Color.RED);
-
-        paintEquationSmall.setTypeface(equationFont);
-        paintEquationSmall.setTextSize(50);
-
-        paintAnswerSmall.setTypeface(equationFont);
-        paintAnswerSmall.setTextSize(50);
-        paintAnswerSmall.setColor(Color.RED);
     }
 
     public void printDebugStatements(float deltaTime) {
@@ -87,58 +67,22 @@ public class MainCalculatorScreen extends Screen {
         g.drawPixmap(Assets.units[CalcState.displayUnits.ordinal()], 434, 1135);
     }
 
-    public static final int[] yCoordsSmallText = {75,135,195,255};
+    public static final int[] yCoordsMultiple = {75,135,195,255};
     public void drawEquation(Graphics g) {
 
         String equation = CalcState.equation.getString();
-
-        if(equation.length() <= MAX_DIGITS_BIG_FONT) {
-            g.drawString(equation, 40, 100, paintEquation);
+        PaintEquation p = CalcState.paint;
+        if(p.hasMultipleLines()) {
+            for(int i = 0; i < 4; i++) {
+                g.drawString(p.getLines()[i],p.getXCoords()[i],yCoordsMultiple[i],p.getPaint());
+            }
         }
         else {
-
-            if(equation.length() <= MAX_DIGITS_SMALL_FONT) {
-                g.drawString(equation, 28, 75, paintEquationSmall);
-            }
-            else {
-
-                Scanner s = new Scanner(equation);
-                String[] lines = new String[4];
-
-                for(int i = 0; i < lines.length; i++) {
-                    lines[i] = parseNextLine(s);
-                }
-
-                for(int i = 0; i < yCoordsSmallText.length; i++) {
-                    g.drawString(lines[i], 28, yCoordsSmallText[i], paintEquationSmall);
-                }
-            }
+            g.drawString(equation,p.getXCoords()[0],180,p.getPaint());
         }
-
     }
 
-    public static final int MAX_DIGITS_BIG_FONT = 20;
-    public static final int MAX_DIGITS_SMALL_FONT = 31;
-    private String next = "";
-    private String parseNextLine(Scanner s) {
 
-        // Grab what was leftover from the previous line.
-        String result = next;
-        next = "";
-
-        // Add as much as possible to this line
-        while(s.hasNext() && result.length() <= MAX_DIGITS_SMALL_FONT) {
-
-            next = s.next();
-            if(result.length() + next.length() <= MAX_DIGITS_SMALL_FONT) {
-                result += next;
-                result += " ";
-                next = "";
-            }
-            else return result;
-        }
-        return result;
-    }
 
     // Checks to see if your finger is within an area
     public boolean touchIsInBounds(TouchEvent event, int x, int y, int width, int height) {

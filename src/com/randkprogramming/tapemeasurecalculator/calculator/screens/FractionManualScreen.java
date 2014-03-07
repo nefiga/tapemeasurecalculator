@@ -88,7 +88,7 @@ public class FractionManualScreen extends Screen{
         g.drawPixmap(Assets.manual_fraction_screen, 0, 0);
         float offset = paint.measureText(fraction) / 2;
         float x_position = 400 - offset;
-        g.drawString(fraction, x_position, 200, paint);
+        g.drawString(fraction, x_position, 220, paint);
     }
 
     public static void setupLayout() {

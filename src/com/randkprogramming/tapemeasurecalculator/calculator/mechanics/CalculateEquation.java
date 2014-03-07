@@ -16,10 +16,10 @@ public class CalculateEquation {
             doOperations(equation, true);
             doOperations(equation, false);
 
-            String answer = equation.numbers.get(0);
+            String answer = equation.getNumbers().get(0);
             equation.clear();
             double answerDouble = ParserConverter.parseNumber(answer);
-            equation.numbers.set(0, ParserConverter.formatToString(answerDouble));
+            equation.getNumbers().set(0, ParserConverter.formatToString(answerDouble));
             equation.setResult(answerDouble);
             historic.setResult(answerDouble);
             CalcHistory.add(historic);
@@ -30,22 +30,22 @@ public class CalculateEquation {
      * them to the left each time an operation happens. */
     private static void doOperations(Equation equation, boolean multAndDivide) {
 
-        for (int i = 0; i < equation.operators.size(); i++) {
+        for (int i = 0; i < equation.getOperators().size(); i++) {
 
-            double first = ParserConverter.parseNumber(equation.numbers.get(i));
-            double second = ParserConverter.parseNumber(equation.numbers.get(i + 1));
+            double first = ParserConverter.parseNumber(equation.getNumbers().get(i));
+            double second = ParserConverter.parseNumber(equation.getNumbers().get(i + 1));
 
-            switch(equation.operators.get(i)) {
+            switch(equation.getOperators().get(i)) {
 
-                case  TIMES: { if(!multAndDivide) continue; equation.numbers.set(i, "" + (first * second) + "\""); break; }
-                case DIVIDE: { if(!multAndDivide) continue; equation.numbers.set(i, "" + (first / second) + "\""); break; }
-                case  PLUS: { if(multAndDivide) continue; equation.numbers.set(i, "" + (first + second) + "\"" ); break; }
-                case MINUS: { if(multAndDivide) continue; equation.numbers.set(i, "" + (first - second) + "\"" ); break; }
+                case  TIMES: { if(!multAndDivide) continue; equation.getNumbers().set(i, "" + (first * second) + "\""); break; }
+                case DIVIDE: { if(!multAndDivide) continue; equation.getNumbers().set(i, "" + (first / second) + "\""); break; }
+                case  PLUS: { if(multAndDivide) continue; equation.getNumbers().set(i, "" + (first + second) + "\"" ); break; }
+                case MINUS: { if(multAndDivide) continue; equation.getNumbers().set(i, "" + (first - second) + "\"" ); break; }
                 default: { continue; }
             }
 
-            equation.numbers.remove(i + 1);
-            equation.operators.remove(i);
+            equation.getNumbers().remove(i + 1);
+            equation.getOperators().remove(i);
             i--;
         }
     }

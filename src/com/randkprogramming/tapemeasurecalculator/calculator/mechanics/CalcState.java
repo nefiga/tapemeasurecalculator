@@ -16,6 +16,7 @@ public class CalcState {
     public static DisplayModes.FractionPrecision fractionPrecision = DisplayModes.FractionPrecision.SIXTEENTH;
     public static DisplayModes.DisplayUnits displayUnits = DisplayModes.DisplayUnits.FEET_AND_INCHES;
     public static Equation equation = new Equation();
+    public static PaintEquation paint = new PaintEquation();
 
     //----------------------------------
     //  Add Number
@@ -25,22 +26,21 @@ public class CalcState {
 
         String s = equation.getLastNumber();
 
-                if( ! s.contains("\"") && ! s.contains("Inches") && (! s.contains("Feet") || ! s.contains("."))) {
+        if( ! s.contains("\"") && ! s.contains("/") && ! s.contains("Inches") &&
+                (! s.contains("Feet") || ! s.contains("."))) {
 
-                    if(equation.equation.length() < DIGIT_EQUATION_LIMIT && s.length() < DIGIT_LINE_LIMIT) {
+            if(equation.getEquation().length() < DIGIT_EQUATION_LIMIT && s.length() < DIGIT_LINE_LIMIT) {
 
-                        s = s.replaceAll(" Feet","\'");
+                s = s.replaceAll(" Feet","\'");
 
-                        if(s.length() > 0 && (s.substring(s.length() - 1).equals("\'"))) {
-                            s += " ";
-                        }
+                if(s.length() > 0 && (s.substring(s.length() - 1).equals("\'"))) {
+                    s += " ";
+                }
 
-                        s += n;
+                s += n;
                 equation.setLastNumber(s);
                 equation.updateEquation();
-            }
-            else {
-//                MainCalculatorScreen.flashScreen();
+                paint.update(equation.getEquation());
             }
 
         }
@@ -53,7 +53,7 @@ public class CalcState {
     /** Tries to append an operator to the equation if the current state of the calculator will allow it */
     public static void addOperator(Button.Operator op) {
 
-        if(equation.equation.length() >=  DIGIT_EQUATION_LIMIT) {
+        if(equation.getEquation().length() >=  DIGIT_EQUATION_LIMIT) {
             return;
         }
 
@@ -61,15 +61,15 @@ public class CalcState {
 
             equation.convertUnitsToSymbols();
             equation.verifyUnits();
-            equation.operators.add(op);
-            equation.numbers.add("");
-            equation.updateEquation();
+            equation.getOperators().add(op);
+            equation.getNumbers().add("");
         }
         else {
-
             equation.setLastOperator(op);
-            equation.updateEquation();
         }
+
+        equation.updateEquation();
+        paint.update(equation.getEquation());
     }
 
     //----------------------------------
@@ -78,7 +78,7 @@ public class CalcState {
     /** Tries to append a feet symbol (apostrophe) to the equation if possible. */
     public static void addFeet() {
 
-        if(equation.isOperatorNext() && equation.numbers.size() > 0) {
+        if(equation.isOperatorNext() && equation.getNumbers().size() > 0) {
 
             // Don't allow them to add unit symbols on multiplications or divisions
             if(equation.mostRecentOperatorIsTimesOrDivide()) {
@@ -92,6 +92,7 @@ public class CalcState {
 
                 equation.appendToLastNum("\'");
                 equation.updateEquation();
+                paint.update(equation.getEquation());
             }
 
         }
@@ -103,7 +104,7 @@ public class CalcState {
     /** Tries to add an inches symbol (double quotes) to the equation if possible. */
     public static void addInches() {
 
-        if(equation.isOperatorNext() && equation.numbers.size() > 0) {
+        if(equation.isOperatorNext() && equation.getNumbers().size() > 0) {
 
             // Don't allow them to add unit symbols on multiplications or divisions
             if(equation.mostRecentOperatorIsTimesOrDivide()) {
@@ -118,6 +119,7 @@ public class CalcState {
 
                 equation.appendToLastNum("\"");
                 equation.updateEquation();
+                paint.update(equation.getEquation());
             }
         }
     }
@@ -141,6 +143,7 @@ public class CalcState {
 
             equation.setLastNumber(s + ".");
             equation.updateEquation();
+            paint.update(equation.getEquation());
         }
     }
 
@@ -149,9 +152,9 @@ public class CalcState {
     //----------------------------------
     public static void backspace() {
 
-        if(equation.numbers.size() > 0) {
+        if(equation.getNumbers().size() > 0) {
 
-            equation.result = null;
+            equation.setResult(null);
             equation.convertUnitsToSymbols();
             String num = equation.getLastNumber();
             if(num.length() > 0) {
@@ -163,23 +166,37 @@ public class CalcState {
                     i--;
                 }
 
+                if(num.contains("\'") && num.charAt(i) == '"') {
+                    i--;
+                }
+
+                // Special case for  0.  then remove the zero as well
+                if(num.charAt(i) == '.' && num.length() == 2 && num.charAt(i-1) == '0') {
+                    i--;
+                }
+
                 // Remove entire fraction by going back until you find a space.
-                if(num.contains("/") && Character.isDigit(num.charAt(i))) {
+                if(num.contains("/")) {
                     while(i > 0 && ! Character.isSpaceChar(num.charAt(i))) {
                         i--;
                     }
-                    if(i > 0)
-                        i--; // Go back one more when you find a space because we have two spaces before fractions
                 }
+
+                // Remove extra spaces
+                while(i > 0 && Character.isSpaceChar(num.charAt(i-1))) {
+                    i--;
+                }
+
                 equation.setLastNumber(num.substring(0,i));
             }
             else {
-                if(equation.operators.size() > 0) {
-                    equation.numbers.remove(equation.numbers.size()-1);
-                    equation.operators.remove(equation.operators.size()-1);
+                if(equation.getOperators().size() > 0) {
+                    equation.getNumbers().remove(equation.getNumbers().size()-1);
+                    equation.getOperators().remove(equation.getOperators().size()-1);
                 }
             }
             equation.updateEquation();
+            paint.update(equation.getEquation());
         }
 
     }
@@ -195,6 +212,10 @@ public class CalcState {
             }
             equation.appendToLastNum(fraction + "\"");
             equation.updateEquation();
+            paint.update(equation.getEquation());
         }
     }
+
+
+
 }

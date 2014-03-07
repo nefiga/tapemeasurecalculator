@@ -12,10 +12,26 @@ public class Equation {
     //----------------------------------
     // Fields
     //----------------------------------
-    public List<String> numbers = new ArrayList<String>();
-    public List<Button.Operator> operators = new ArrayList<Button.Operator>();
-    public Double result = null;
-    public String equation = "";
+    private List<String> numbers = new ArrayList<String>();
+    private List<Button.Operator> operators = new ArrayList<Button.Operator>();
+    private Double result = null;
+    private String equation = "";
+
+    //----------------------------------
+    // Getters
+    //----------------------------------
+    public List<String> getNumbers() { return this.numbers; }
+    public List<Button.Operator> getOperators() { return this.operators; }
+    public Double getResult() { return this.result; }
+    public String getEquation() { return this.equation; }
+
+    //----------------------------------
+    // Setters
+    //----------------------------------
+    public void setNumbers(List<String> nums) { this.numbers = nums; }
+    public void setOperators(List<Button.Operator> ops) { this.operators = ops; }
+    public void setResult(Double d) { this.result = d; }
+    public void setEquation(String s) { this.equation = s; }
 
     //----------------------------------
     // Constructors
