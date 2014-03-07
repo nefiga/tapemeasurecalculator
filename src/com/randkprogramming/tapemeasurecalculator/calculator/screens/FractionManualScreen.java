@@ -2,6 +2,7 @@ package com.randkprogramming.tapemeasurecalculator.calculator.screens;
 
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import com.google.ads.AdView;
 import com.randkprogramming.tapemeasurecalculator.calculator.assets.Assets;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.Button;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.CalcState;
@@ -15,6 +16,7 @@ import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.Calculato
 import java.util.List;
 
 public class FractionManualScreen extends Screen{
+
 
     private static final Typeface font = Typeface.create("DEFAULT_BOLD", Typeface.BOLD);
     Paint paint = new Paint();
@@ -50,7 +52,7 @@ public class FractionManualScreen extends Screen{
         if (fraction.length() < 2 && ! fraction.contains("/")) {
             addNumerator(number);
         }
-        else if (fraction.length() >= 1 && !fraction.contains("/") && fraction.codePointCount(fraction.indexOf("/"), fraction.length()) < 2) {
+        else if (fraction.length() >= 1 && fraction.contains("/") && fraction.codePointCount(fraction.indexOf("/"), fraction.length()) <= 2) {
             addDenominator(number);
         }
     }

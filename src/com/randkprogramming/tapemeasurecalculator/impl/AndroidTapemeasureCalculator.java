@@ -8,6 +8,8 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.view.Window;
 import android.view.WindowManager;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Input;
@@ -21,6 +23,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     Input input;
     Screen screen;
     WakeLock wakeLock;
+    private AdView adView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,8 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        adView = new AdView(this, AdSize.BANNER, "a14ded47ad3779e");
 
         int frameBufferWidth = 800;
         int frameBufferHeight = 1280;
