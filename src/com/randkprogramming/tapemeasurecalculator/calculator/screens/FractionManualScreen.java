@@ -102,7 +102,7 @@ public class FractionManualScreen extends Screen{
     private static final int HORIZONTAL_GAP = 68;
     private static final int VERTICAL_GAP = 30;
     private static final int X_OFFSET = 0;
-    private static final int Y_OFFSET = 465;
+    private static final int Y_OFFSET = 310;
 
     // Half the gap on one side plus half the gap on the other to allow for bigger touch areas.
     private static final int TOUCH_WIDTH = BUTTON_WIDTH + HORIZONTAL_GAP;
