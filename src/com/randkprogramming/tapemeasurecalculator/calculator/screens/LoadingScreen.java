@@ -16,6 +16,7 @@ public class LoadingScreen extends Screen {
 
         Assets.loadImages();
         MainCalculatorScreen.setupLayout();
+        FractionManualScreen.setupLayout();
 
         // Load the main calculator screen
         calculator.setScreen(new MainCalculatorScreen(calculator));

@@ -168,6 +168,8 @@ public class CalcState {
                     while(i > 0 && ! Character.isSpaceChar(num.charAt(i))) {
                         i--;
                     }
+                    if(i > 0)
+                        i--; // Go back one more when you find a space because we have two spaces before fractions
                 }
                 equation.setLastNumber(num.substring(0,i));
             }
@@ -186,6 +188,13 @@ public class CalcState {
     //  Add Fraction
     //----------------------------------
     public static void addFraction(String fraction){
-        equation.appendToLastNum("  " + fraction);
+
+        if(fraction.length() > 0) {
+            if(equation.getLastNumber().length() > 0) {
+                equation.appendToLastNum("  ");
+            }
+            equation.appendToLastNum(fraction + "\"");
+            equation.updateEquation();
+        }
     }
 }
