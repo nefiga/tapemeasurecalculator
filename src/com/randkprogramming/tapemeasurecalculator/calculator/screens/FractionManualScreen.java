@@ -36,35 +36,31 @@ public class FractionManualScreen extends Screen{
     public static void backspace() {
 
         if(fraction.length() > 0) {
+            fraction = fraction.substring(0, fraction.length()-1);
+        }
+    }
 
-            int i = fraction.length()-1;
+    public static void addForwardSlash() {
+        if (fraction.length() > 0 && !fraction.contains("/")) {
+            fraction += "/";
+        }
+    }
 
-            // Remove denominator and slash if it exists.
-            if(fraction.contains("/")) {
-                while(i > 0 && fraction.charAt(i) != '/') {
-                    i--;
-                }
-            }
-            fraction = fraction.substring(0,i);
+    public static void addNumber(String number) {
+        if (fraction.length() < 2 && ! fraction.contains("/")) {
+            addNumerator(number);
+        }
+        else if (fraction.length() >= 1 && !fraction.contains("/") && fraction.codePointCount(fraction.indexOf("/"), fraction.length()) < 2) {
+            addDenominator(number);
         }
     }
 
     public static void addNumerator(String n) {
-        if (fraction.length() < 2 && ! fraction.contains("/")) {
             fraction += n;
-        }
     }
 
     public static void addDenominator(String d) {
-
-        if (fraction.length() >= 1) {
-
-            if (fraction.contains("/")) {
-                backspace();
-            }
-
             fraction += d;
-        }
     }
 
     public static void enter() {
@@ -93,15 +89,6 @@ public class FractionManualScreen extends Screen{
         float offset = paint.measureText(fraction) / 2;
         float x_position = 400 - offset;
         g.drawString(fraction, x_position, 200, paint);
-    }
-
-    @Override public void pause() {}
-    @Override public void resume() {}
-    @Override public void dispose() {}
-
-    @Override public void androidBackButton() {
-        clear();
-        calculator.setScreen(new MainCalculatorScreen(calculator));
     }
 
     public static void setupLayout() {
@@ -179,8 +166,7 @@ public class FractionManualScreen extends Screen{
     private static final int[] denom_x = {34,282,519};
     private static final int[] denom_y = {770,925};
     private static final Button denom_buttons[][] = new Button[][]{
-            new Button[]{Button.ManualFractions.HALF, Button.ManualFractions.QUARTER, Button.ManualFractions.EIGHTH},
-            new Button[]{Button.ManualFractions.SIXTEENTH, Button.ManualFractions.THIRTYSECOND, Button.ManualFractions.SIXTYFOURTH},
+
     };
 
     private void checkLowerSection(Input.TouchEvent event) {
@@ -222,4 +208,12 @@ public class FractionManualScreen extends Screen{
                 event.y > y && event.y < y + height - 1);
     }
 
+    @Override public void pause() {}
+    @Override public void resume() {}
+    @Override public void dispose() {}
+
+    @Override public void androidBackButton() {
+        clear();
+        calculator.setScreen(new MainCalculatorScreen(calculator));
+    }
 }

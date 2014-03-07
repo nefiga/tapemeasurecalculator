@@ -159,8 +159,7 @@ public interface Button {
     }
 
     public static enum ManualFractions implements Button {
-        ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, HALF, QUARTER, EIGHTH, SIXTEENTH,
-        THIRTYSECOND, SIXTYFOURTH, BACK, CLEAR, ENTER;
+        ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, FRACTION, BACK, CLEAR, ENTER;
 
         @Override
         public void pressedButton() {
@@ -177,25 +176,10 @@ public interface Button {
                 case NINE:
                     String f = "";
                     f += ordinal();
-                    FractionManualScreen.addNumerator(f);
+                    FractionManualScreen.addNumber(f);
                     break;
-                case HALF:
-                    FractionManualScreen.addDenominator("/2");
-                    break;
-                case QUARTER:
-                    FractionManualScreen.addDenominator("/4");
-                    break;
-                case EIGHTH:
-                    FractionManualScreen.addDenominator("/8");
-                    break;
-                case SIXTEENTH:
-                    FractionManualScreen.addDenominator("/16");
-                    break;
-                case THIRTYSECOND:
-                    FractionManualScreen.addDenominator("/32");
-                    break;
-                case SIXTYFOURTH:
-                    FractionManualScreen.addDenominator("/64");
+                case FRACTION:
+                    FractionManualScreen.addForwardSlash();
                     break;
                 case BACK:
                     FractionManualScreen.backspace();
@@ -221,7 +205,7 @@ public interface Button {
         @Override
         public void pressedButton() {
             switch (this) {
-                case ONE:   System.out.println("one thirtysecond"); break;
+                case ONE:  break;
                 case THREE: break;
                 case FIVE:  break;
                 case SEVEN: break;
@@ -235,7 +219,7 @@ public interface Button {
                 case TWENTY_THREE:   break;
                 case TWENTY_FIVE:    break;
                 case TWENTY_SEVEN:   break;
-                case TWENTY_NINE:  System.out.println("twenty nine thirtyseconds");  break;
+                case TWENTY_NINE:   break;
                 case THIRTY_ONE:      break;
             }
         }
@@ -253,12 +237,12 @@ public interface Button {
             switch (this) {
                 case ONE:   break;
                 case THREE: break;
-                case FIVE: System.out.println("five sixteenths");  break;
+                case FIVE:  break;
                 case SEVEN: break;
                 case NINE:  break;
                 case ELEVEN:    break;
                 case THIRTEEN:  break;
-                case FIFTEEN:  System.out.println("fifteen sixteenths"); break;
+                case FIFTEEN:   break;
             }
         }
 
@@ -279,7 +263,7 @@ public interface Button {
                 case SEVEN_EIGHTHS:     break;
                 case ONE_QUARTER:   break;
                 case THREE_QUARTERS:    break;
-                case ONE_HALF: System.out.println("one half"); break;
+                case ONE_HALF:  break;
             }
         }
 

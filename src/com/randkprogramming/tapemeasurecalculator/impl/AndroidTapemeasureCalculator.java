@@ -75,7 +75,6 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
 
     public void setScreen(Screen screen) {
         if (screen == null) throw new IllegalArgumentException("Screen must not be null");
-        input.getTouchEvent();
         this.screen.pause();
         this.screen.dispose();
         screen.resume();

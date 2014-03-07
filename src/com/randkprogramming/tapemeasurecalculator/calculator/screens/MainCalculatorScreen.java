@@ -211,7 +211,6 @@ public class MainCalculatorScreen extends Screen {
 
         // If user touches equation screen...
         if (touchIsInBounds(event,0,0,800,300)) {
-
             if (event.type == TouchEvent.TOUCH_DOWN) {
                 calculator.setScreen(new HistoryScreen(calculator));
             }
