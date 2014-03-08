@@ -106,7 +106,7 @@ public class MainCalculatorScreen extends Screen {
                             (button.getIconPressed() == Assets.pressed_buttons_special[2] ||
                             button.getIconPressed() == Assets.pressed_buttons_special[3] ||
                             button.getIconPressed() == Assets.pressed_buttons_special[4])) {
-                        return;
+                        continue;
                     }
 
                     if(button.inBounds(event)) {

@@ -66,12 +66,13 @@ public class CalcHistory {
             return;
         }
 
-        Calculator c = AndroidFastRenderView.getCalculator();
-        c.setScreen(new MainCalculatorScreen(c));
         Equation e = CalcHistory.getHistoryAt(selectedIndex);
         CalcState.equation = e.copy();
         CalcState.equation.updateEquation();
         CalcState.paint.update(CalcState.equation.getEquation());
+        selectedIndex = -1;
+        Calculator c = AndroidFastRenderView.getCalculator();
+        c.setScreen(new MainCalculatorScreen(c));
     }
 
     public static void save() {

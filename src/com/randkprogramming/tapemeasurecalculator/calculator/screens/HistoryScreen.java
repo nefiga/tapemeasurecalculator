@@ -132,6 +132,7 @@ public class HistoryScreen extends Screen {
     @Override public void dispose() {}
     @Override public void androidBackButton() {
 
+        CalcHistory.selectedIndex = -1;
         calculator.setScreen(new MainCalculatorScreen(calculator));
     }
 
