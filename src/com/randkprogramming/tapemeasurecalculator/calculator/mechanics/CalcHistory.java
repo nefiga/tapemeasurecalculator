@@ -7,7 +7,7 @@ public class CalcHistory {
     private static final int MAX_ENTRIES = 10;
     private static LinkedList<Equation> history = new LinkedList<Equation>();
 
-    /** Adds an equation to the history. New equations get pushed to the front. */
+    /** Adds an equation to the history_screen. New equations get pushed to the front. */
     public static void add(Equation equation) {
 
         Equation historic = equation.copy();
@@ -17,7 +17,7 @@ public class CalcHistory {
         }
     }
 
-    /** Returns a copy of the history. */
+    /** Returns a copy of the history_screen. */
     public static LinkedList<Equation> getHistory() {
 
         LinkedList<Equation> result = new LinkedList<Equation>();
@@ -36,7 +36,7 @@ public class CalcHistory {
         return null;
     }
 
-    /** Returns a string representation of the current history. Used for debugging. */
+    /** Returns a string representation of the current history_screen. Used for debugging. */
     public static String print() {
 
         StringBuilder sb = new StringBuilder();

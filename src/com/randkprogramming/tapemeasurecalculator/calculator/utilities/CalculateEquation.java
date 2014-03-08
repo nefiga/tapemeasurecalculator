@@ -1,4 +1,8 @@
-package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
+package com.randkprogramming.tapemeasurecalculator.calculator.utilities;
+
+import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.CalcHistory;
+import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.CalcState;
+import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.Equation;
 
 public class CalculateEquation {
 
@@ -23,6 +27,7 @@ public class CalculateEquation {
             equation.setResult(answerDouble);
             historic.setResult(answerDouble);
             CalcHistory.add(historic);
+            CalcState.paint.update(CalcState.equation.getEquation());
         }
     }
 
@@ -35,18 +40,18 @@ public class CalculateEquation {
             double first = ParserConverter.parseNumber(equation.getNumbers().get(i));
             double second = ParserConverter.parseNumber(equation.getNumbers().get(i + 1));
 
-            switch(equation.getOperators().get(i)) {
-
-                case  TIMES: { if(!multAndDivide) continue; equation.getNumbers().set(i, "" + (first * second) + "\""); break; }
-                case DIVIDE: { if(!multAndDivide) continue; equation.getNumbers().set(i, "" + (first / second) + "\""); break; }
-                case  PLUS: { if(multAndDivide) continue; equation.getNumbers().set(i, "" + (first + second) + "\"" ); break; }
-                case MINUS: { if(multAndDivide) continue; equation.getNumbers().set(i, "" + (first - second) + "\"" ); break; }
-                default: { continue; }
-            }
-
-            equation.getNumbers().remove(i + 1);
-            equation.getOperators().remove(i);
-            i--;
+//            switch(equation.getOperators().get(i)) {
+//
+//                case  TIMES: { if(!multAndDivide) continue; equation.getNumbers().set(i, "" + (first * second) + "\""); break; }
+//                case DIVIDE: { if(!multAndDivide) continue; equation.getNumbers().set(i, "" + (first / second) + "\""); break; }
+//                case  PLUS: { if(multAndDivide) continue; equation.getNumbers().set(i, "" + (first + second) + "\"" ); break; }
+//                case MINUS: { if(multAndDivide) continue; equation.getNumbers().set(i, "" + (first - second) + "\"" ); break; }
+//                default: { continue; }
+//            }
+//
+//            equation.getNumbers().remove(i + 1);
+//            equation.getOperators().remove(i);
+//            i--;
         }
     }
 

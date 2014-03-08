@@ -38,7 +38,7 @@ public class HistoryScreen extends Screen {
 
         Graphics g = calculator.getGraphics();
         g.clear(0xffffff);
-        g.drawPixmap(Assets.history, 0, 0);
+        g.drawPixmap(Assets.history_screen, 0, 0);
 
         int i = 0;
         for(Equation equation : CalcHistory.getHistory()) {
@@ -88,13 +88,8 @@ public class HistoryScreen extends Screen {
             c.setScreen(new MainCalculatorScreen(c));
             CalcState.equation = e.copy();
             CalcState.equation.updateEquation();
+            CalcState.paint.update(CalcState.equation.getEquation());
         }
-    }
-
-    // Checks to see if your finger is within an area
-    public boolean touchIsInBounds(Input.TouchEvent event, int x, int y, int width, int height) {
-        return (event.x > x && event.x < x + width - 1 &&
-                event.y > y && event.y < y + height - 1);
     }
 
 }

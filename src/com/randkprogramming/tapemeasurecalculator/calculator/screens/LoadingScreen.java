@@ -1,5 +1,6 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.screens;
 
+import com.randkprogramming.tapemeasurecalculator.calculator.buttons.ButtonLayout;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Screen;
@@ -15,10 +16,7 @@ public class LoadingScreen extends Screen {
     public void update(float deltaTime) {
 
         Assets.loadImages();
-        MainCalculatorScreen.setupLayout();
-        FractionManualScreen.setupLayout();
-
-        // Load the main calculator screen
+        ButtonLayout.setupButtons();
         calculator.setScreen(new MainCalculatorScreen(calculator));
     }
 

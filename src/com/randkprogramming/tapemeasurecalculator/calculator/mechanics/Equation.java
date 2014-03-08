@@ -1,5 +1,8 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
+import com.randkprogramming.tapemeasurecalculator.calculator.buttons.Button;
+import com.randkprogramming.tapemeasurecalculator.calculator.utilities.ParserConverter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +16,7 @@ public class Equation {
     // Fields
     //----------------------------------
     private List<String> numbers = new ArrayList<String>();
-    private List<Button.Operator> operators = new ArrayList<Button.Operator>();
+    private List<Operator> operators = new ArrayList<Operator>();
     private Double result = null;
     private String equation = "";
 
@@ -21,7 +24,7 @@ public class Equation {
     // Getters
     //----------------------------------
     public List<String> getNumbers() { return this.numbers; }
-    public List<Button.Operator> getOperators() { return this.operators; }
+    public List<Operator> getOperators() { return this.operators; }
     public Double getResult() { return this.result; }
     public String getEquation() { return this.equation; }
 
@@ -29,7 +32,7 @@ public class Equation {
     // Setters
     //----------------------------------
     public void setNumbers(List<String> nums) { this.numbers = nums; }
-    public void setOperators(List<Button.Operator> ops) { this.operators = ops; }
+    public void setOperators(List<Operator> ops) { this.operators = ops; }
     public void setResult(Double d) { this.result = d; }
     public void setEquation(String s) { this.equation = s; }
 
@@ -39,7 +42,7 @@ public class Equation {
     public Equation() {
         clear();
     }
-    public Equation(List<String> numbs, List<Button.Operator> opers, Double answer) {
+    public Equation(List<String> numbs, List<Operator> opers, Double answer) {
         this.numbers = numbs;
         this.operators = opers;
         this.result = answer;
@@ -103,7 +106,7 @@ public class Equation {
     //----------------------------------
     // Get Last Operator
     //----------------------------------
-    public Button.Operator getLastOperator() {
+    public Operator getLastOperator() {
         if(operators.size() > 0) {
             return operators.get(operators.size()-1);
         }
@@ -113,7 +116,7 @@ public class Equation {
     //----------------------------------
     // Set Last Operator
     //----------------------------------
-    public void setLastOperator(Button.Operator op) {
+    public void setLastOperator(Operator op) {
         if(operators.size() > 0) {
             operators.set(operators.size()-1, op);
         }
@@ -138,8 +141,8 @@ public class Equation {
 
         boolean result = false;
         if(operators.size() > 0) {
-            Button.Operator mostRecentOp = operators.get(operators.size()-1);
-            result = mostRecentOp.equals(Button.Operator.TIMES) || mostRecentOp.equals(Button.Operator.DIVIDE);
+            Operator mostRecentOp = operators.get(operators.size()-1);
+            result = mostRecentOp.equals(Operator.TIMES) || mostRecentOp.equals(Operator.DIVIDE);
         }
         return result;
     }
@@ -223,8 +226,8 @@ public class Equation {
         List<String> cloneNums = new ArrayList<String>(numbers.size());
         for(String s : numbers) { cloneNums.add(s); }
 
-        List<Button.Operator> cloneOps = new ArrayList<Button.Operator>(operators.size());
-        for(Button.Operator op : operators) { cloneOps.add(op); }
+        List<Operator> cloneOps = new ArrayList<Operator>(operators.size());
+        for(Operator op : operators) { cloneOps.add(op); }
 
         Double cloneResult = null;
         if(result != null) {

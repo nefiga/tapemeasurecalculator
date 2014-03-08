@@ -1,4 +1,4 @@
-package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
+package com.randkprogramming.tapemeasurecalculator.calculator.utilities;
 
 /** A class for storing fractions and performing arithmetic operations on them.
  * @author Jay */

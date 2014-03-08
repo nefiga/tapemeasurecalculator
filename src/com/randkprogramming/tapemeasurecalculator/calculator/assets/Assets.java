@@ -1,41 +1,81 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.assets;
 
-import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.DisplayModes;
 import com.randkprogramming.tapemeasurecalculator.impl.AndroidFastRenderView;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Pixmap;
-import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.Button;
+
+import java.io.File;
 
 public class Assets {
 
-    public static Pixmap main_calculator;
+    public static Pixmap main_screen;
+    public static Pixmap fraction_screen;
+    public static Pixmap history_screen;
+
     public static Pixmap[] fractionOrDecimal = new Pixmap[2];
     public static Pixmap[] fractionPrecision = new Pixmap[3];
     public static Pixmap[] units = new Pixmap[2];
-    public static Pixmap history;
-    public static Pixmap thirtyseconds_screen;
-    public static Pixmap sixteenths_screen;
-    public static Pixmap manual_fraction_screen;
+
+    public static Pixmap[] pressed_buttons_numbers = new Pixmap[10];
+    public static Pixmap[] pressed_buttons_operators = new Pixmap[4];
+    public static Pixmap[] pressed_buttons_calculate = new Pixmap[6];
+    public static Pixmap[] pressed_buttons_special = new Pixmap[8];
+    public static Pixmap[] pressed_buttons_fractionScreen = new Pixmap[2];
 
     public static void loadImages() {
 
         Graphics g = AndroidFastRenderView.getCalculator().getGraphics();
-        main_calculator = g.newPixmap("square_colored.png", Graphics.PixmapFormat.RGB565);
-        thirtyseconds_screen = g.newPixmap("32nds_screen.png", Graphics.PixmapFormat.RGB565);
-        sixteenths_screen = g.newPixmap("16ths_screen.png", Graphics.PixmapFormat.RGB565);
-        manual_fraction_screen= g.newPixmap("fraction_screen.png", Graphics.PixmapFormat.RGB565);
 
-        fractionOrDecimal[0] = g.newPixmap("fraction_option.png", Graphics.PixmapFormat.RGB565);
-        fractionOrDecimal[1] = g.newPixmap("decimal_option.png", Graphics.PixmapFormat.RGB565);
+        main_screen = g.newPixmap("screens/main_screen.png", Graphics.PixmapFormat.RGB565);
+        fraction_screen = g.newPixmap("screens/fraction_screen.png", Graphics.PixmapFormat.RGB565);
+        history_screen = g.newPixmap("screens/history_screen.png", Graphics.PixmapFormat.RGB565);
 
-        fractionPrecision[0] = g.newPixmap("16ths.png", Graphics.PixmapFormat.RGB565);
-        fractionPrecision[1] = g.newPixmap("32nds.png", Graphics.PixmapFormat.RGB565);
-        fractionPrecision[2] = g.newPixmap("64ths.png", Graphics.PixmapFormat.RGB565);
+        fractionOrDecimal[0] = g.newPixmap("buttons/fraction_option.png", Graphics.PixmapFormat.RGB565);
+        fractionOrDecimal[1] = g.newPixmap("buttons/decimal_option.png", Graphics.PixmapFormat.RGB565);
 
-        units[0] = g.newPixmap("inches_only.png", Graphics.PixmapFormat.RGB565);
-        units[1] = g.newPixmap("feet_and_inches.png", Graphics.PixmapFormat.RGB565);
+        fractionPrecision[0] = g.newPixmap("buttons/16ths.png", Graphics.PixmapFormat.RGB565);
+        fractionPrecision[1] = g.newPixmap("buttons/32nds.png", Graphics.PixmapFormat.RGB565);
+        fractionPrecision[2] = g.newPixmap("buttons/64ths.png", Graphics.PixmapFormat.RGB565);
 
-        Assets.history = g.newPixmap("history.png", Graphics.PixmapFormat.RGB565);
+        units[0] = g.newPixmap("buttons/inches_only.png", Graphics.PixmapFormat.RGB565);
+        units[1] = g.newPixmap("buttons/feet_and_inches.png", Graphics.PixmapFormat.RGB565);
+
+        loadPressedButtons(g);
+    }
+
+    private static void loadPressedButtons(Graphics g) {
+
+        final Graphics.PixmapFormat format = Graphics.PixmapFormat.RGB565;
+
+        final String prefix = "buttons/pressed/";
+        final String suffix = "_pressed.png";
+
+        final String[] numbers = {"0","1","2","3","4","5","6","7","8","9"};
+        for(int i = 0; i < numbers.length; i++) {
+            pressed_buttons_numbers[i] = g.newPixmap(prefix + numbers[i] + suffix, format);
+        }
+
+        final String[] operators = {"plus","minus","divide","times"};
+        for(int i = 0; i < operators.length; i++) {
+            pressed_buttons_operators[i] = g.newPixmap(prefix + operators[i] + suffix, format);
+        }
+
+        final String[] calculate = {"fraction","decimal","equals","clear","backspace","feet"};
+        for(int i = 0; i < calculate.length; i++) {
+            pressed_buttons_calculate[i] = g.newPixmap(prefix + calculate[i] + suffix, format);
+        }
+
+        final String[] special = {"fraction_option","decimal_option","16ths","32nds","64ths",
+                "inches_only","feet_and_inches","info"};
+        for(int i = 0; i < special.length; i++) {
+            pressed_buttons_special[i] = g.newPixmap(prefix + special[i] + suffix, format);
+        }
+
+        final String[] fractionScreen = {"fraction_screen_slash","fraction_screen_enter"};
+        for(int i = 0; i < fractionScreen.length; i++) {
+            pressed_buttons_fractionScreen[i] = g.newPixmap(prefix + fractionScreen[i] + suffix, format);
+        }
+
     }
 
 }

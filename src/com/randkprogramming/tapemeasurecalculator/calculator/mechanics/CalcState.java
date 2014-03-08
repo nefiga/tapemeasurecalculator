@@ -51,7 +51,7 @@ public class CalcState {
     //  Add Operator
     //----------------------------------
     /** Tries to append an operator to the equation if the current state of the calculator will allow it */
-    public static void addOperator(Button.Operator op) {
+    public static void addOperator(Operator op) {
 
         if(equation.getEquation().length() >=  DIGIT_EQUATION_LIMIT) {
             return;
@@ -199,6 +199,11 @@ public class CalcState {
             paint.update(equation.getEquation());
         }
 
+    }
+
+    public static void clear() {
+        equation.clear();
+        paint.update(equation.getEquation());
     }
 
     //----------------------------------

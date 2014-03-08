@@ -13,11 +13,6 @@ public class TabInfoScreen extends Screen {
         super(calculator);
     }
 
-    public boolean touchIsInBounds(Input.TouchEvent event, int x, int y, int width, int height) {
-        return (event.x > x && event.x < x + width - 1 &&
-                event.y > y && event.y < y + height - 1);
-    }
-
     public void update(float deltaTime) {
     }
 

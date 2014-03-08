@@ -1,4 +1,7 @@
-package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
+package com.randkprogramming.tapemeasurecalculator.calculator.utilities;
+
+import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.CalcState;
+import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.DisplayModes;
 
 import java.text.DecimalFormat;
 

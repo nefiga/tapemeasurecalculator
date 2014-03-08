@@ -1,5 +1,7 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
+import com.randkprogramming.tapemeasurecalculator.calculator.utilities.Fraction;
+
 public class DisplayModes {
 
     //------------------------
