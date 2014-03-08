@@ -2,7 +2,6 @@ package com.randkprogramming.tapemeasurecalculator.calculator.screens;
 
 import android.graphics.Paint;
 import android.graphics.Typeface;
-//import com.google.ads.AdView;
 import com.randkprogramming.tapemeasurecalculator.calculator.assets.Assets;
 import com.randkprogramming.tapemeasurecalculator.calculator.buttons.Button;
 import com.randkprogramming.tapemeasurecalculator.calculator.buttons.ButtonLayout;
