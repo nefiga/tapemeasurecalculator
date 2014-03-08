@@ -237,5 +237,35 @@ public class Equation {
         return new Equation(cloneNums,cloneOps,cloneResult);
     }
 
+    //----------------------------------
+    //  Equals
+    //----------------------------------
+    @Override
+    public boolean equals(Object obj) {
+
+        if(obj == null) return false;
+        if( ! (obj instanceof Equation)) return false;
+        Equation other = (Equation) obj;
+
+        if(numbers.size() != other.numbers.size())
+            return false;
+
+        if(operators.size() != other.operators.size())
+            return false;
+
+        for(int i = 0; i < numbers.size(); i++) {
+            if ( ! numbers.get(i).equals(other.numbers.get(i))) {
+                return false;
+            }
+        }
+
+        for(int i = 0; i < operators.size(); i++) {
+            if ( ! operators.get(i).equals(other.operators.get(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 }

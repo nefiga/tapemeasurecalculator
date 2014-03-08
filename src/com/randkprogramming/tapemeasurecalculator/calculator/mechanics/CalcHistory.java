@@ -1,14 +1,24 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.mechanics;
 
+import com.randkprogramming.tapemeasurecalculator.calculator.screens.MainCalculatorScreen;
+import com.randkprogramming.tapemeasurecalculator.impl.AndroidFastRenderView;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
+
 import java.util.LinkedList;
 
 public class CalcHistory {
 
-    private static final int MAX_ENTRIES = 10;
+    public static final int MAX_ENTRIES = 10;
     private static LinkedList<Equation> history = new LinkedList<Equation>();
+    public static int selectedIndex = -1;
 
     /** Adds an equation to the history_screen. New equations get pushed to the front. */
     public static void add(Equation equation) {
+
+        // Prevent duplicates from showing up in the history
+        if(history.contains(equation)) {
+            return;
+        }
 
         Equation historic = equation.copy();
         history.addFirst(historic);
@@ -48,6 +58,29 @@ public class CalcHistory {
         }
         sb.append("\n");
         return sb.toString();
+    }
+
+    public static void enter() {
+
+        if(selectedIndex < 0 || selectedIndex > CalcHistory.MAX_ENTRIES) {
+            return;
+        }
+
+        Calculator c = AndroidFastRenderView.getCalculator();
+        c.setScreen(new MainCalculatorScreen(c));
+        Equation e = CalcHistory.getHistoryAt(selectedIndex);
+        CalcState.equation = e.copy();
+        CalcState.equation.updateEquation();
+        CalcState.paint.update(CalcState.equation.getEquation());
+    }
+
+    public static void save() {
+
+        if(selectedIndex < 0 || selectedIndex > CalcHistory.MAX_ENTRIES) {
+            return;
+        }
+
+        // Currently does nothing
     }
 
 }

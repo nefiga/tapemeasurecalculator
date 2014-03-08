@@ -15,30 +15,36 @@ public class Assets {
     public static Pixmap[] fractionOrDecimal = new Pixmap[2];
     public static Pixmap[] fractionPrecision = new Pixmap[3];
     public static Pixmap[] units = new Pixmap[2];
+    public static Pixmap[] history_screen_buttons = new Pixmap[2];
 
     public static Pixmap[] pressed_buttons_numbers = new Pixmap[10];
     public static Pixmap[] pressed_buttons_operators = new Pixmap[4];
     public static Pixmap[] pressed_buttons_calculate = new Pixmap[6];
     public static Pixmap[] pressed_buttons_special = new Pixmap[8];
     public static Pixmap[] pressed_buttons_fractionScreen = new Pixmap[2];
+    public static Pixmap[] pressed_buttons_historyScreen= new Pixmap[2];
 
     public static void loadImages() {
 
         Graphics g = AndroidFastRenderView.getCalculator().getGraphics();
+        final Graphics.PixmapFormat format = Graphics.PixmapFormat.RGB565;
 
-        main_screen = g.newPixmap("screens/main_screen.png", Graphics.PixmapFormat.RGB565);
-        fraction_screen = g.newPixmap("screens/fraction_screen.png", Graphics.PixmapFormat.RGB565);
-        history_screen = g.newPixmap("screens/history_screen.png", Graphics.PixmapFormat.RGB565);
+        main_screen = g.newPixmap("screens/main_screen.png", format);
+        fraction_screen = g.newPixmap("screens/fraction_screen.png", format);
+        history_screen = g.newPixmap("screens/history_screen.png", format);
 
-        fractionOrDecimal[0] = g.newPixmap("buttons/fraction_option.png", Graphics.PixmapFormat.RGB565);
-        fractionOrDecimal[1] = g.newPixmap("buttons/decimal_option.png", Graphics.PixmapFormat.RGB565);
+        fractionOrDecimal[0] = g.newPixmap("buttons/fraction_option.png", format);
+        fractionOrDecimal[1] = g.newPixmap("buttons/decimal_option.png", format);
 
-        fractionPrecision[0] = g.newPixmap("buttons/16ths.png", Graphics.PixmapFormat.RGB565);
-        fractionPrecision[1] = g.newPixmap("buttons/32nds.png", Graphics.PixmapFormat.RGB565);
-        fractionPrecision[2] = g.newPixmap("buttons/64ths.png", Graphics.PixmapFormat.RGB565);
+        fractionPrecision[0] = g.newPixmap("buttons/16ths.png", format);
+        fractionPrecision[1] = g.newPixmap("buttons/32nds.png", format);
+        fractionPrecision[2] = g.newPixmap("buttons/64ths.png", format);
 
-        units[0] = g.newPixmap("buttons/inches_only.png", Graphics.PixmapFormat.RGB565);
-        units[1] = g.newPixmap("buttons/feet_and_inches.png", Graphics.PixmapFormat.RGB565);
+        units[0] = g.newPixmap("buttons/inches_only.png", format);
+        units[1] = g.newPixmap("buttons/feet_and_inches.png", format);
+
+        history_screen_buttons[0] = g.newPixmap("buttons/history_save.png", format);
+        history_screen_buttons[1] = g.newPixmap("buttons/history_enter.png", format);
 
         loadPressedButtons(g);
     }
@@ -74,6 +80,11 @@ public class Assets {
         final String[] fractionScreen = {"fraction_screen_slash","fraction_screen_enter"};
         for(int i = 0; i < fractionScreen.length; i++) {
             pressed_buttons_fractionScreen[i] = g.newPixmap(prefix + fractionScreen[i] + suffix, format);
+        }
+
+        final String[] historyScreen = {"history_save","history_enter"};
+        for(int i = 0; i < historyScreen.length; i++) {
+            pressed_buttons_historyScreen[i] = g.newPixmap(prefix + historyScreen[i] + suffix, format);
         }
 
     }

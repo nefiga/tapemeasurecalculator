@@ -1,6 +1,7 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.buttons;
 
 import com.randkprogramming.tapemeasurecalculator.calculator.assets.Assets;
+import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.CalcHistory;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.CalcState;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.DisplayModes;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.Operator;
@@ -72,7 +73,11 @@ public interface ButtonAction {
                     break;
                 }
                 case DECIMAL_POINT: { CalcState.addDecimal(); break; }
-                case EQUALS: { CalculateEquation.solveEquation(CalcState.equation); break; }
+                case EQUALS: {
+                    CalculateEquation.solveEquation(CalcState.equation);
+                    CalcState.paint.update(CalcState.equation.getEquation());
+                    break;
+                }
                 case CLEAR: { CalcState.clear(); break; }
                 case BACKSPACE: { CalcState.backspace(); break; }
                 case FEET: { CalcState.addFeet(); break; }
@@ -181,6 +186,29 @@ public interface ButtonAction {
                 case ENTER:{ return Assets.pressed_buttons_fractionScreen[1]; }
             }
             return null;
+        }
+
+    }
+
+    //------------------------------
+    //  History Action
+    //------------------------------
+    public static enum HistoryAction implements ButtonAction {
+        SAVE, ENTER;
+
+        @Override
+        public void performAction() {
+            switch (this) {
+                case ENTER: { CalcHistory.enter(); break; }
+                case SAVE: {
+                    break;
+                }
+            }
+        }
+
+        @Override
+        public Pixmap getIconPressed() {
+            return Assets.pressed_buttons_historyScreen[ordinal()];
         }
 
     }

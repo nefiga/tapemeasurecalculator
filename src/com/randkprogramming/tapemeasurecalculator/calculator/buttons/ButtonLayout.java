@@ -8,11 +8,13 @@ public class ButtonLayout {
     /** Contains a list of buttons. The order shouldn't matter.*/
     public static List<Button> mainScreenButtons = new ArrayList<Button>();
     public static List<Button> fractionScreenButtons = new ArrayList<Button>();
+    public static List<Button> historyScreenButtons = new ArrayList<Button>();
 
     public static void setupButtons() {
 
         setupMainScreenButtons();
         setupFractionScreenButtons();
+        setupHistoryScreenButtons();
     }
 
     private static void setupMainScreenButtons() {
@@ -56,6 +58,12 @@ public class ButtonLayout {
 
         fractionScreenButtons.add(new Button(68,1055,663,140,34,1040,731,170,ButtonAction.ManualFractionAction.ENTER));
         fractionScreenButtons.add(new Button(617,475,115,405,583,460,183,435,ButtonAction.ManualFractionAction.FRACTION));
+    }
+
+    private static void setupHistoryScreenButtons() {
+
+        historyScreenButtons.add(new Button(90,102,280,80,60,85,340,114,ButtonAction.HistoryAction.SAVE));
+        historyScreenButtons.add(new Button(430,102,280,80,400,85,340,114,ButtonAction.HistoryAction.ENTER));
     }
 
 

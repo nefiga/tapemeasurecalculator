@@ -95,18 +95,20 @@ public class MainCalculatorScreen extends Screen {
      * @param event The event being fired. */
     private void checkTouchEvent(TouchEvent event) {
 
-        for(int i = 0; i < ButtonLayout.mainScreenButtons.size(); i++) {
+        switch(event.type) {
+            case TouchEvent.TOUCH_DOWN: {
+                for(int i = 0; i < ButtonLayout.mainScreenButtons.size(); i++) {
 
-            Button button = ButtonLayout.mainScreenButtons.get(i);
-
-            if(button.inBounds(event)) {
-                switch (event.type) {
-                    case TouchEvent.TOUCH_DOWN:    manager.onTouchDown(event, button); break;
-                    case TouchEvent.TOUCH_UP:      manager.onLift(event); break;
-                    case TouchEvent.TOUCH_DRAGGED: manager.onMovement(event); break;
+                    Button button = ButtonLayout.mainScreenButtons.get(i);
+                    if(button.inBounds(event)) {
+                        manager.onTouchDown(event, button);
+                        return;
+                    }
                 }
-                return; // Since no buttons overlap, we return
+                break;
             }
+            case TouchEvent.TOUCH_UP:      manager.onLift(event); break;
+            case TouchEvent.TOUCH_DRAGGED: manager.onMovement(event); break;
         }
 
         // If user touches equation screen...
