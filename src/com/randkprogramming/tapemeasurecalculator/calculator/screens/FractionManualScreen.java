@@ -99,13 +99,16 @@ public class FractionManualScreen extends Screen {
 
             Button button = ButtonLayout.fractionScreenButtons.get(i);
 
-            if(button.inBounds(event)) {
-                switch (event.type) {
-                    case Input.TouchEvent.TOUCH_DOWN:    manager.onTouchDown(event, button); break;
-                    case Input.TouchEvent.TOUCH_UP:      manager.onLift(event); break;
-                    case Input.TouchEvent.TOUCH_DRAGGED: manager.onMovement(event); break;
+            switch (event.type) {
+                case Input.TouchEvent.TOUCH_DOWN: {
+                    if(button.inBounds(event)) {
+                        manager.onTouchDown(event, button);
+                        return;
+                    }
+                    break;
                 }
-                return; // Since no buttons overlap, we return
+                case Input.TouchEvent.TOUCH_UP:      manager.onLift(event); break;
+                case Input.TouchEvent.TOUCH_DRAGGED: manager.onMovement(event); break;
             }
         }
     }

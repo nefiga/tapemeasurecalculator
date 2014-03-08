@@ -100,6 +100,15 @@ public class MainCalculatorScreen extends Screen {
                 for(int i = 0; i < ButtonLayout.mainScreenButtons.size(); i++) {
 
                     Button button = ButtonLayout.mainScreenButtons.get(i);
+
+                    // Don't press fraction precision button on decimal mode
+                    if(CalcState.fractionOrDecimal == DisplayModes.FractionOrDecimal.DECIMAL_OPTION &&
+                            (button.getIconPressed() == Assets.pressed_buttons_special[2] ||
+                            button.getIconPressed() == Assets.pressed_buttons_special[3] ||
+                            button.getIconPressed() == Assets.pressed_buttons_special[4])) {
+                        return;
+                    }
+
                     if(button.inBounds(event)) {
                         manager.onTouchDown(event, button);
                         return;
