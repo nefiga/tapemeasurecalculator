@@ -29,6 +29,10 @@ public class CalcState {
         if( ! s.contains("\"") && ! s.contains("/") && ! s.contains("Inches") &&
                 (! s.contains("Feet") || ! s.contains("."))) {
 
+            if(s.contains("\'") && s.contains(".")) {
+                return;
+            }
+
             if(equation.getEquation().length() < DIGIT_EQUATION_LIMIT && s.length() < DIGIT_LINE_LIMIT) {
 
                 s = s.replaceAll(" Feet","\'");
@@ -54,6 +58,11 @@ public class CalcState {
     public static void addOperator(Operator op) {
 
         if(equation.getEquation().length() >=  DIGIT_EQUATION_LIMIT) {
+            return;
+        }
+
+        // Limits them to only one operator for now.
+        if(equation.getOperators().size() >= 1) {
             return;
         }
 
@@ -89,6 +98,10 @@ public class CalcState {
 
             if(s.length() > 0 && ! s.contains("\'") && ! s.contains("\"") &&
                     ! s.contains("Feet") && ! s.contains("Inches")) {
+
+                if(s.contains(".") && ! Character.isDigit(s.charAt(s.length()-1))) {
+                    return;
+                }
 
                 equation.appendToLastNum("\'");
                 equation.updateEquation();

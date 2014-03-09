@@ -58,10 +58,10 @@ public class HistoryScreen extends Screen {
             return;
         }
 
-        Button save = ButtonLayout.historyScreenButtons.get(0);
+//        Button save = ButtonLayout.historyScreenButtons.get(0);
         Button enter = ButtonLayout.historyScreenButtons.get(1);
 
-        g.drawPixmap(Assets.history_screen_buttons[0], save.getX(), save.getY());
+//        g.drawPixmap(Assets.history_screen_buttons[0], save.getX(), save.getY());
         g.drawPixmap(Assets.history_screen_buttons[1], enter.getX(), enter.getY());
 
         for(Button b : manager.getPressedButtons().values()) {
@@ -117,10 +117,10 @@ public class HistoryScreen extends Screen {
     private static int[] yCoords = {212,319,425,532,639,746,853,959,1066,1173};
     public void checkBounds(Input.TouchEvent event) {
 
-        Button save = ButtonLayout.historyScreenButtons.get(0);
+//        Button save = ButtonLayout.historyScreenButtons.get(0);
         Button enter = ButtonLayout.historyScreenButtons.get(1);
 
-        checkButtonBounds(save,event);
+//        checkButtonBounds(save,event);
         checkButtonBounds(enter,event);
 
         for(int i = 0; i < 10; i++) {
