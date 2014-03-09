@@ -25,10 +25,10 @@ public class HistoryScreen extends Screen {
     public HistoryScreen(Calculator calculator) {
         super(calculator);
         paint.setTypeface(historyFont);
-        paint.setTextSize(75);
+        paint.setTextSize(50);
         answerPaint.setTypeface(historyFont);
         answerPaint.setColor(Color.RED);
-        answerPaint.setTextSize(75);
+        answerPaint.setTextSize(50);
     }
 
     @Override public void update(float deltaTime) {
