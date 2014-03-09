@@ -3,11 +3,11 @@ package com.randkprogramming.tapemeasurecalculator.impl;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.view.Window;
-import android.view.WindowManager;
 //import com.google.ads.AdSize;
 //import com.google.ads.AdView;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
@@ -23,6 +23,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     Input input;
     Screen screen;
     WakeLock wakeLock;
+
 //    private AdView adView;
 
     @Override
@@ -43,6 +44,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
 
         renderView = new AndroidFastRenderView(this, frameBuffer);
         graphics = new AndroidGraphics(getAssets(), frameBuffer);
+        AndroidSound.loadSounds(this);
         input = new AndroidInput(this, renderView, scaleX, scaleY);
         screen = getStartScreen();
         setContentView(renderView);
