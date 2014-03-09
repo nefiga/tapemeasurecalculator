@@ -41,9 +41,12 @@ public class MainCalculatorScreen extends Screen {
 //        printDebugStatements(deltaTime);
 
         List<TouchEvent> touchEvents = calculator.getInput().getTouchEvent();
-        for (TouchEvent event : touchEvents) {
+        for (int i = 0; i < touchEvents.size(); i++) {
 
-            checkTouchEvent(event);
+            TouchEvent event = touchEvents.get(i);
+            if(event != null) {
+                checkTouchEvent(event);
+            }
         }
     }
 

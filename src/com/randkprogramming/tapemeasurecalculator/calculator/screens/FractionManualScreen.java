@@ -87,9 +87,12 @@ public class FractionManualScreen extends Screen {
     @Override public void update(float deltaTime) {
 
         List<Input.TouchEvent> touchEvents = calculator.getInput().getTouchEvent();
-        for (Input.TouchEvent event : touchEvents) {
+        for (int i = 0; i < touchEvents.size(); i++) {
 
-            checkTouchEvent(event);
+            Input.TouchEvent event = touchEvents.get(i);
+            if(event != null) {
+                checkTouchEvent(event);
+            }
         }
     }
 

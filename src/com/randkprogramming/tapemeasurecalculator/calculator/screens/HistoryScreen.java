@@ -34,8 +34,12 @@ public class HistoryScreen extends Screen {
     @Override public void update(float deltaTime) {
 
         List<Input.TouchEvent> touchEvents = calculator.getInput().getTouchEvent();
-        for (Input.TouchEvent event : touchEvents) {
-            checkBounds(event);
+        for (int i = 0; i < touchEvents.size(); i++) {
+
+            Input.TouchEvent event = touchEvents.get(i);
+            if(event != null) {
+                checkBounds(event);
+            }
         }
     }
     @Override public void present(float deltaTime) {
@@ -73,9 +77,28 @@ public class HistoryScreen extends Screen {
         for(Equation equation : CalcHistory.getHistory()) {
 
             if( i < yCoords.length) {
-                g.drawString(equation.getString(), 30, yCoords[i] + 64, paint);
+
+                String result = " = " + ParserConverter.formatToString(equation.getResult());
+                int yOffset = 64;
+
+                if(equation.getString().length() < 28) {
+                    paint.setTextSize(50);
+                    answerPaint.setTextSize(50);
+                }
+                else if(equation.getString().length() < 40) {
+                    paint.setTextSize(36);
+                    answerPaint.setTextSize(36);
+                }
+                else {
+                    paint.setTextSize(25);
+                    answerPaint.setTextSize(25);
+                    yOffset -= 10;
+                }
+
                 float offset = paint.measureText(equation.getString());
-                g.drawString(" = " + ParserConverter.formatToString(equation.getResult()), 30 + offset, yCoords[i] + 64, answerPaint);
+                g.drawString(equation.getString(), 30, yCoords[i] + yOffset, paint);
+                g.drawString(result, 30 + offset, yCoords[i] + yOffset, answerPaint);
+
             }
             i++;
         }
