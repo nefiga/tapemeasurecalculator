@@ -30,7 +30,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 //        adView = new AdView(this, AdSize.BANNER, "a14ded47ad3779e");
 
