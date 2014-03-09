@@ -7,6 +7,7 @@ import com.randkprogramming.tapemeasurecalculator.calculator.assets.Assets;
 import com.randkprogramming.tapemeasurecalculator.calculator.buttons.Button;
 import com.randkprogramming.tapemeasurecalculator.calculator.buttons.ButtonLayout;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.*;
+import com.randkprogramming.tapemeasurecalculator.calculator.utilities.ParserConverter;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Input;
@@ -18,12 +19,16 @@ public class HistoryScreen extends Screen {
 
     private CalculatorInputManager manager = new CalculatorInputManager();
     private Paint paint = new Paint();
+    private Paint answerPaint = new Paint();
     private static final Typeface historyFont = Typeface.create("DEFAULT_BOLD", Typeface.BOLD);
 
     public HistoryScreen(Calculator calculator) {
         super(calculator);
         paint.setTypeface(historyFont);
         paint.setTextSize(50);
+        answerPaint.setTypeface(historyFont);
+        answerPaint.setColor(Color.RED);
+        answerPaint.setTextSize(50);
     }
 
     @Override public void update(float deltaTime) {
@@ -69,6 +74,8 @@ public class HistoryScreen extends Screen {
 
             if( i < yCoords.length) {
                 g.drawString(equation.getString(), 30, yCoords[i] + 64, paint);
+                float offset = paint.measureText(equation.getString());
+                g.drawString(" = " + ParserConverter.formatToString(equation.getResult()), 30 + offset, yCoords[i] + 64, answerPaint);
             }
             i++;
         }
