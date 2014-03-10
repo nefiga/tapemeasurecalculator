@@ -22,18 +22,14 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     Graphics graphics;
     Input input;
     Screen screen;
-    WakeLock wakeLock;
 
-//    private AdView adView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-//        adView = new AdView(this, AdSize.BANNER, "a14ded47ad3779e");
+//
 
         int frameBufferWidth = 800;
         int frameBufferHeight = 1280;
@@ -50,7 +46,6 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         setContentView(renderView);
 
         PowerManager powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(powerManager.FULL_WAKE_LOCK, "GLCalculator");
     }
 
     @Override
@@ -61,7 +56,6 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     @Override
     public void onResume() {
         super.onResume();
-        wakeLock.acquire();
         screen.resume();
         renderView.resume();
     }
@@ -69,7 +63,6 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     @Override
     public void onPause() {
         super.onPause();
-        wakeLock.release();
         renderView.pause();
         screen.pause();
 
