@@ -6,7 +6,7 @@ import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.CalcState
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.DisplayModes;
 import com.randkprogramming.tapemeasurecalculator.calculator.mechanics.Operator;
 import com.randkprogramming.tapemeasurecalculator.calculator.screens.FractionManualScreen;
-import com.randkprogramming.tapemeasurecalculator.calculator.screens.TabInfoScreen;
+import com.randkprogramming.tapemeasurecalculator.calculator.screens.InfoScreen;
 import com.randkprogramming.tapemeasurecalculator.calculator.utilities.CalculateEquation;
 import com.randkprogramming.tapemeasurecalculator.impl.AndroidFastRenderView;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
@@ -125,7 +125,7 @@ public interface ButtonAction {
                 // TODO: Make Info/Options Page!
                 case INFO: {
                     Calculator c = AndroidFastRenderView.getCalculator();
-                    c.setScreen(new TabInfoScreen(c));
+                    c.setScreen(new InfoScreen(c));
                     break;
                 }
             }

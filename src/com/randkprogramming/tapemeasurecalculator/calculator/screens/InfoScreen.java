@@ -1,30 +1,27 @@
 package com.randkprogramming.tapemeasurecalculator.calculator.screens;
 
-import android.graphics.Paint;
-import android.graphics.Typeface;
+import com.randkprogramming.tapemeasurecalculator.calculator.assets.Assets;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Calculator;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Graphics;
+import com.randkprogramming.tapemeasurecalculator.interfaces.Input;
 import com.randkprogramming.tapemeasurecalculator.interfaces.Screen;
 
-public class TabSettingScreen extends Screen{
+import java.util.List;
 
-    private Paint paint = new Paint();
-    private static final Typeface font = Typeface.create("DEFAULT_BOLD", Typeface.BOLD);
+public class InfoScreen extends Screen {
 
-    public TabSettingScreen(Calculator calculator) {
+    public InfoScreen(Calculator calculator) {
         super(calculator);
-        paint.setTypeface(font);
-        paint.setTextSize(40);
     }
 
-    public void update(float deltaTime) {}
+    public void update(float deltaTime) {
+    }
 
     public void present(float deltaTime) {
         Graphics g = calculator.getGraphics();
         g.clear(0xffffff);
-        g.drawString("SettingsScreen", 100, 100, paint);
+        g.drawPixmap(Assets.info_screen, 0, 0);
     }
-
     public void pause() {}
     public void resume() {}
     public void dispose() {}
