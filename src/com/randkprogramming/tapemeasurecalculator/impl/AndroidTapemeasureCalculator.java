@@ -29,7 +29,6 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-//
 
         int frameBufferWidth = 800;
         int frameBufferHeight = 1280;
