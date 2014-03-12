@@ -15,6 +15,14 @@ public class InfoScreen extends Screen {
     }
 
     public void update(float deltaTime) {
+        List<Input.TouchEvent> touchEvents = calculator.getInput().getTouchEvent();
+        for (int i = 0; i < touchEvents.size(); i++) {
+            Input.TouchEvent event = touchEvents.get(i);
+
+            if (i == Input.TouchEvent.TOUCH_DOWN) {
+                calculator.setScreen(new MainCalculatorScreen(calculator));
+            }
+        }
     }
 
     public void present(float deltaTime) {
