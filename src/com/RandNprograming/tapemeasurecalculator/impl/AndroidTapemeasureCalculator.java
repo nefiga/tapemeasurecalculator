@@ -22,7 +22,6 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     Screen screen;
     AdView adView;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +29,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         int frameBufferWidth = 800;
-        int frameBufferHeight = 1280;
+        int frameBufferHeight = 1380;
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth, frameBufferHeight, Bitmap.Config.RGB_565);
 
         float scaleX = (float)frameBufferWidth / getWindowManager().getDefaultDisplay().getWidth();
