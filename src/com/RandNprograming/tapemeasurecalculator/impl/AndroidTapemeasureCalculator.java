@@ -1,23 +1,26 @@
 package com.RandNprograming.tapemeasurecalculator.impl;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.os.PowerManager;
+import android.view.Gravity;
 import android.view.Window;
-//import com.google.ads.AdSize;
-//import com.google.ads.AdView;
+import android.view.WindowManager;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Calculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Graphics;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Input;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Screen;
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
 
 public abstract class AndroidTapemeasureCalculator extends Activity implements Calculator {
     AndroidFastRenderView renderView;
     Graphics graphics;
     Input input;
     Screen screen;
+    AdView adView;
 
 
     @Override
@@ -40,7 +43,28 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         screen = getStartScreen();
         setContentView(renderView);
 
-        PowerManager powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
+        // window manager preparation
+        WindowManager.LayoutParams windowParams = new WindowManager.LayoutParams();
+        windowParams.gravity = Gravity.BOTTOM;
+        windowParams.x = 0;
+        windowParams.y = 0;
+        windowParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        windowParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        windowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
+        windowParams.format = PixelFormat.TRANSLUCENT;
+        windowParams.windowAnimations = 0;
+
+        WindowManager wm = getWindowManager();
+// Create the adView
+        adView = new AdView(this, AdSize.BANNER, "ca-app-pub-5915229248659770/8234904641");
+
+// Initiate a generic request to load it with an ad
+        adView.loadAd(new AdRequest());
+
+// Add adView to WindowManager
+        wm.addView(adView, windowParams);
     }
 
     @Override
@@ -62,6 +86,14 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         screen.pause();
 
         if (isFinishing()) screen.dispose();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
     }
 
     public Input getInput() {return input;}
