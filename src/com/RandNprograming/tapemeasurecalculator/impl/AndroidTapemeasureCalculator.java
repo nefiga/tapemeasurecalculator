@@ -21,6 +21,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     Input input;
     Screen screen;
     AdView adView;
+    AdRequest adRequest;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,9 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         WindowManager wm = getWindowManager();
 // Create the adView
         adView = new AdView(this, AdSize.BANNER, "ca-app-pub-5915229248659770/8234904641");
+
+// Create test Ad
+        //adRequest.addTestDevice("18BA9818BE88801BAC31AF4B3A1B67F3");
 
 // Initiate a generic request to load it with an ad
         adView.loadAd(new AdRequest());
