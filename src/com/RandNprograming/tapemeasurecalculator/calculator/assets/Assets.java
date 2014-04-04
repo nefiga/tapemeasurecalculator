@@ -10,6 +10,7 @@ public class Assets {
     public static Pixmap fraction_screen;
     public static Pixmap history_screen;
     public static Pixmap info_screen;
+    public static Pixmap settings_screen;
 
     public static Pixmap[] fractionOrDecimal = new Pixmap[2];
     public static Pixmap[] fractionPrecision = new Pixmap[3];
@@ -21,7 +22,9 @@ public class Assets {
     public static Pixmap[] pressed_buttons_calculate = new Pixmap[6];
     public static Pixmap[] pressed_buttons_special = new Pixmap[8];
     public static Pixmap[] pressed_buttons_fractionScreen = new Pixmap[2];
-    public static Pixmap[] pressed_buttons_historyScreen= new Pixmap[2];
+    public static Pixmap[] pressed_buttons_historyScreen = new Pixmap[2];
+
+    public static Pixmap[] orderOfOperations = new Pixmap[2];
 
     public static void loadImages() {
 
@@ -32,6 +35,7 @@ public class Assets {
         fraction_screen = g.newPixmap("screens/fraction_screen.png", format);
         history_screen = g.newPixmap("screens/history_screen.png", format);
         info_screen = g.newPixmap("screens/info_screen.png", format);
+        settings_screen = g.newPixmap("screens/settings_screen.png", format);
 
         fractionOrDecimal[0] = g.newPixmap("buttons/fraction_option.png", format);
         fractionOrDecimal[1] = g.newPixmap("buttons/decimal_option.png", format);
@@ -45,6 +49,9 @@ public class Assets {
 
         history_screen_buttons[0] = g.newPixmap("buttons/history_save.png", format);
         history_screen_buttons[1] = g.newPixmap("buttons/history_enter.png", format);
+
+        orderOfOperations[0] = g.newPixmap("buttons/order_of_ops_on.png", format);
+        orderOfOperations[1] = g.newPixmap("buttons/order_of_ops_off.png", format);
 
         loadPressedButtons(g);
     }

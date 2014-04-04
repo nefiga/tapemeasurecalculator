@@ -1,28 +1,49 @@
 package com.RandNprograming.tapemeasurecalculator.calculator.screens;
 
-import android.graphics.Paint;
-import android.graphics.Typeface;
+import com.RandNprograming.tapemeasurecalculator.calculator.assets.Assets;
+import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.CalcState;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Calculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Graphics;
+import com.RandNprograming.tapemeasurecalculator.interfaces.Input;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Screen;
+
+import java.util.List;
 
 public class SettingScreen extends Screen{
 
-    private Paint paint = new Paint();
-    private static final Typeface font = Typeface.create("DEFAULT_BOLD", Typeface.BOLD);
-
     public SettingScreen(Calculator calculator) {
         super(calculator);
-        paint.setTypeface(font);
-        paint.setTextSize(40);
     }
 
-    public void update(float deltaTime) {}
+    public void update(float deltaTime) {
+
+        List<Input.TouchEvent> touchEvents = calculator.getInput().getTouchEvent();
+        for (int i = 0; i < touchEvents.size(); i++) {
+
+            Input.TouchEvent event = touchEvents.get(i);
+            if(event != null) {
+                checkBounds(event);
+            }
+        }
+    }
+
+    public void checkBounds(Input.TouchEvent event) {
+
+        if(touchIsInBounds(event,570,330,160,100)) {
+            if(event.type == Input.TouchEvent.TOUCH_DOWN)
+                CalcState.orderOfOps = !CalcState.orderOfOps;
+        }
+    }
 
     public void present(float deltaTime) {
         Graphics g = calculator.getGraphics();
         g.clear(0xffffff);
-        g.drawString("SettingsScreen", 100, 100, paint);
+        g.drawPixmap(Assets.settings_screen, 0, 0);
+
+        if(CalcState.orderOfOps)
+            g.drawPixmap(Assets.orderOfOperations[0], 20, 305);
+        else
+            g.drawPixmap(Assets.orderOfOperations[1], 20, 305);
     }
 
     public void pause() {}
