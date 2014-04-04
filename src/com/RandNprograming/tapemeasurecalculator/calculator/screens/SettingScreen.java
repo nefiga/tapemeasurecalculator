@@ -22,7 +22,6 @@ public class SettingScreen extends Screen{
     public void present(float deltaTime) {
         Graphics g = calculator.getGraphics();
         g.clear(0xffffff);
-        g.drawString("SettingsScreen", 100, 100, paint);
     }
 
     public void pause() {}

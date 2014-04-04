@@ -1,12 +1,14 @@
 package com.RandNprograming.tapemeasurecalculator.impl;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
+import com.RandNprograming.tapemeasurecalculator.R;
+import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.CalcState;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Calculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Graphics;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Input;
@@ -17,11 +19,13 @@ import com.google.ads.AdView;
 
 public abstract class AndroidTapemeasureCalculator extends Activity implements Calculator {
     AndroidFastRenderView renderView;
+    WindowManager.LayoutParams windowParams;
+    WindowManager wm;
+    SharedPreferences preferences = this.getSharedPreferences("com.RandNprograming.tapemeasurecalculator", Context.MODE_PRIVATE);
     Graphics graphics;
     Input input;
     Screen screen;
     AdView adView;
-    AdRequest adRequest;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,8 +37,8 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         int frameBufferHeight = 1380;
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth, frameBufferHeight, Bitmap.Config.RGB_565);
 
-        float scaleX = (float)frameBufferWidth / getWindowManager().getDefaultDisplay().getWidth();
-        float scaleY = (float)frameBufferHeight / getWindowManager().getDefaultDisplay().getHeight();
+        float scaleX = (float) frameBufferWidth / getWindowManager().getDefaultDisplay().getWidth();
+        float scaleY = (float) frameBufferHeight / getWindowManager().getDefaultDisplay().getHeight();
 
         renderView = new AndroidFastRenderView(this, frameBuffer);
         graphics = new AndroidGraphics(getAssets(), frameBuffer);
@@ -44,7 +48,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         setContentView(renderView);
 
         // window manager preparation
-        WindowManager.LayoutParams windowParams = new WindowManager.LayoutParams();
+        windowParams = new WindowManager.LayoutParams();
         windowParams.gravity = Gravity.BOTTOM;
         windowParams.x = 0;
         windowParams.y = 0;
@@ -56,7 +60,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         windowParams.format = PixelFormat.TRANSLUCENT;
         windowParams.windowAnimations = 0;
 
-        WindowManager wm = getWindowManager();
+        wm = getWindowManager();
 // Create the adView
         adView = new AdView(this, AdSize.BANNER, "ca-app-pub-5915229248659770/8234904641");
 
@@ -74,6 +78,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
 
     @Override
     public void onResume() {
+        CalcState.orderOfOps = preferences.getBoolean("order_of_ops", true);
         super.onResume();
         screen.resume();
         renderView.resume();
@@ -81,6 +86,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
 
     @Override
     public void onPause() {
+        preferences.edit().putBoolean("order_of_ops", CalcState.orderOfOps);
         super.onPause();
         renderView.pause();
         screen.pause();
@@ -96,9 +102,13 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         super.onDestroy();
     }
 
-    public Input getInput() {return input;}
+    public Input getInput() {
+        return input;
+    }
 
-    public Graphics getGraphics() {return graphics;}
+    public Graphics getGraphics() {
+        return graphics;
+    }
 
     public void setScreen(Screen screen) {
         if (screen == null) throw new IllegalArgumentException("Screen must not be null");
@@ -109,5 +119,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         screen.update(0);
     }
 
-    public Screen getCurrentScreen() {return screen;}
+    public Screen getCurrentScreen() {
+        return screen;
+    }
 }
