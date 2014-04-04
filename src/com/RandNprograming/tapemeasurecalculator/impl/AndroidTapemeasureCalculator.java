@@ -21,7 +21,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     AndroidFastRenderView renderView;
     WindowManager.LayoutParams windowParams;
     WindowManager wm;
-    SharedPreferences preferences = this.getSharedPreferences("com.RandNprograming.tapemeasurecalculator", Context.MODE_PRIVATE);
+    SharedPreferences preferences;
     Graphics graphics;
     Input input;
     Screen screen;
@@ -31,6 +31,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        preferences = this.getSharedPreferences("com.RandNprograming.tapemeasurecalculator", Context.MODE_PRIVATE);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         int frameBufferWidth = 800;
@@ -77,8 +78,16 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        screen.androidOptionButton();
+        return true;
+    }
+
+    @Override
     public void onResume() {
-        CalcState.orderOfOps = preferences.getBoolean("order_of_ops", true);
+        /*if (preferences.contains("order_of_ops")) {
+            CalcState.orderOfOps = preferences.getBoolean("order_of_ops", CalcState.orderOfOps);
+        }*/
         super.onResume();
         screen.resume();
         renderView.resume();
@@ -86,7 +95,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
 
     @Override
     public void onPause() {
-        preferences.edit().putBoolean("order_of_ops", CalcState.orderOfOps);
+       // preferences.edit().putBoolean("order_of_ops", CalcState.orderOfOps);
         super.onPause();
         renderView.pause();
         screen.pause();

@@ -33,6 +33,7 @@ public class InfoScreen extends Screen {
     public void pause() {}
     public void resume() {}
     public void dispose() {}
+    @Override public void androidOptionButton() {}
     public void androidBackButton() {
         calculator.setScreen(new MainCalculatorScreen(calculator));
     }
