@@ -17,6 +17,7 @@ public class CalcState {
     public static DisplayModes.DisplayUnits displayUnits = DisplayModes.DisplayUnits.FEET_AND_INCHES;
     public static Equation equation = new Equation();
     public static PaintEquation paint = new PaintEquation();
+    public static boolean orderOfOps = true;
 
     //----------------------------------
     //  Add Number
@@ -62,9 +63,9 @@ public class CalcState {
         }
 
         // Limits them to only one operator for now.
-        if(equation.getOperators().size() >= 1) {
-            return;
-        }
+//        if(equation.getOperators().size() >= 1) {
+//            return;
+//        }
 
         if (equation.isOperatorNext()) {
 
