@@ -144,7 +144,7 @@ public class FractionManualScreen extends Screen {
     @Override public void pause() {}
     @Override public void resume() {}
     @Override public void dispose() {}
-
+    @Override public void androidOptionButton() {}
     @Override public void androidBackButton() {
         clear();
         calculator.setScreen(new MainCalculatorScreen(calculator));

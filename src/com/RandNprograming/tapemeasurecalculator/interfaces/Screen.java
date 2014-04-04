@@ -20,4 +20,5 @@ public abstract class Screen {
     public abstract void resume();
     public abstract void dispose();
     public abstract void androidBackButton();
+    public abstract void androidOptionButton();
 }
