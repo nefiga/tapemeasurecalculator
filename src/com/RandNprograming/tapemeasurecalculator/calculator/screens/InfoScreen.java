@@ -1,6 +1,8 @@
 package com.RandNprograming.tapemeasurecalculator.calculator.screens;
 
+import android.app.Activity;
 import com.RandNprograming.tapemeasurecalculator.calculator.assets.Assets;
+import com.RandNprograming.tapemeasurecalculator.impl.AndroidTapemeasureCalculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Calculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Graphics;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Input;
@@ -30,11 +32,22 @@ public class InfoScreen extends Screen {
         g.clear(0xffffff);
         g.drawPixmap(Assets.info_screen, 0, 0);
     }
-    public void pause() {}
-    public void resume() {}
-    public void dispose() {}
-    @Override public void androidOptionButton() {}
-    public void androidBackButton() {
+
+    public void pause() {
+    }
+
+    public void resume() {
+    }
+
+    public void dispose() {
+    }
+
+    @Override
+    public void androidBackButton(AndroidTapemeasureCalculator activity) {
         calculator.setScreen(new MainCalculatorScreen(calculator));
+    }
+
+    @Override
+    public void androidOptionButton() {
     }
 }

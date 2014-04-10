@@ -32,6 +32,9 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         super.onCreate(savedInstanceState);
 
         preferences = this.getSharedPreferences("com.RandNprograming.tapemeasurecalculator", Context.MODE_PRIVATE);
+        if (preferences.contains("order_of_ops")) {
+            CalcState.orderOfOps = preferences.getBoolean("order_of_ops", CalcState.orderOfOps);
+        }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         int frameBufferWidth = 800;
@@ -74,7 +77,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
 
     @Override
     public void onBackPressed() {
-        screen.androidBackButton();
+        screen.androidBackButton(this);
     }
 
     @Override
@@ -85,9 +88,6 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
 
     @Override
     public void onResume() {
-        /*if (preferences.contains("order_of_ops")) {
-            CalcState.orderOfOps = preferences.getBoolean("order_of_ops", CalcState.orderOfOps);
-        }*/
         super.onResume();
         screen.resume();
         renderView.resume();
@@ -95,8 +95,8 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
 
     @Override
     public void onPause() {
-       // preferences.edit().putBoolean("order_of_ops", CalcState.orderOfOps);
         super.onPause();
+        preferences.edit().putBoolean("order_of_ops", CalcState.orderOfOps);
         renderView.pause();
         screen.pause();
 
@@ -106,6 +106,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     @Override
     public void onDestroy() {
         if (adView != null) {
+            adView.removeAllViews();
             adView.destroy();
         }
         super.onDestroy();

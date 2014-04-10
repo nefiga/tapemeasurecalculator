@@ -1,5 +1,6 @@
 package com.RandNprograming.tapemeasurecalculator.calculator.screens;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -8,6 +9,7 @@ import com.RandNprograming.tapemeasurecalculator.calculator.buttons.Button;
 import com.RandNprograming.tapemeasurecalculator.calculator.buttons.ButtonLayout;
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.*;
 import com.RandNprograming.tapemeasurecalculator.calculator.utilities.ParserConverter;
+import com.RandNprograming.tapemeasurecalculator.impl.AndroidTapemeasureCalculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Calculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Graphics;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Input;
@@ -161,7 +163,7 @@ public class HistoryScreen extends Screen {
     @Override public void resume() {}
     @Override public void dispose() {}
     @Override public void androidOptionButton() {}
-    @Override public void androidBackButton() {
+    @Override public void androidBackButton(AndroidTapemeasureCalculator activity) {
         CalcHistory.selectedIndex = -1;
         calculator.setScreen(new MainCalculatorScreen(calculator));
     }

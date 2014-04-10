@@ -1,8 +1,10 @@
 package com.RandNprograming.tapemeasurecalculator.calculator.screens;
 
+import android.app.Activity;
 import android.view.Menu;
 import com.RandNprograming.tapemeasurecalculator.calculator.buttons.Button;
 import com.RandNprograming.tapemeasurecalculator.calculator.buttons.ButtonLayout;
+import com.RandNprograming.tapemeasurecalculator.impl.AndroidTapemeasureCalculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Calculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Graphics;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Input.TouchEvent;
@@ -135,7 +137,12 @@ public class MainCalculatorScreen extends Screen {
     @Override public void pause() {}
     @Override public void resume() {}
     @Override public void dispose() {}
-    @Override public void androidBackButton() { System.exit(0); }
+    @Override public void androidBackButton(AndroidTapemeasureCalculator activity) {
+        activity.onPause();
+        activity.onDestroy();
+        System.out.println("Still going");
+        activity.finish();
+    }
     @Override
     public void androidOptionButton() {
         calculator.setScreen(new SettingScreen(calculator));

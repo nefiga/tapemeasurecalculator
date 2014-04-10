@@ -1,7 +1,9 @@
 package com.RandNprograming.tapemeasurecalculator.calculator.screens;
 
+import android.app.Activity;
 import com.RandNprograming.tapemeasurecalculator.calculator.assets.Assets;
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.CalcState;
+import com.RandNprograming.tapemeasurecalculator.impl.AndroidTapemeasureCalculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Calculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Graphics;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Input;
@@ -50,7 +52,7 @@ public class SettingScreen extends Screen{
     public void resume() {}
     public void dispose() {}
     @Override public void androidOptionButton() {}
-    public void androidBackButton() {
+    public void androidBackButton(AndroidTapemeasureCalculator activity) {
         calculator.setScreen(new MainCalculatorScreen(calculator));
     }
 }

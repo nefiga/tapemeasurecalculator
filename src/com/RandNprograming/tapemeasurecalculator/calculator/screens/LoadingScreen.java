@@ -1,6 +1,8 @@
 package com.RandNprograming.tapemeasurecalculator.calculator.screens;
 
+import android.app.Activity;
 import com.RandNprograming.tapemeasurecalculator.calculator.buttons.ButtonLayout;
+import com.RandNprograming.tapemeasurecalculator.impl.AndroidTapemeasureCalculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Calculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Graphics;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Screen;
@@ -25,6 +27,6 @@ public class LoadingScreen extends Screen {
     @Override public void resume() {}
     @Override public void dispose() {}
     @Override public void androidOptionButton() {}
-    @Override public void androidBackButton() {}
+    @Override public void androidBackButton(AndroidTapemeasureCalculator activity) {}
 
 }
