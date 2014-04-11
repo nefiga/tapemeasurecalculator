@@ -2,6 +2,7 @@ package com.RandNprograming.tapemeasurecalculator.calculator.utilities;
 
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.CalcHistory;
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.CalcState;
+import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.DisplayModes;
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.Equation;
 
 public class CalculateEquation {
@@ -28,6 +29,7 @@ public class CalculateEquation {
             String answer = equation.getNumbers().get(0);
             equation.clear();
             double answerDouble = ParserConverter.parseNumber(answer);
+
             equation.getNumbers().set(0, ParserConverter.formatToString(answerDouble));
             equation.setResult(answerDouble);
             historic.setResult(answerDouble);
@@ -46,7 +48,10 @@ public class CalculateEquation {
 
              switch(equation.getOperators().get(i)) {
 
-                 case  TIMES: { if(!multAndDivide) continue; equation.getNumbers().set(i, "" + (first * second) + "\""); break; }
+                 case  TIMES: { if(!multAndDivide) continue;
+                     if (CalcState.displayUnits == DisplayModes.DisplayUnits.FEET_AND_INCHES) equation.getNumbers().set(i, "" + (first * second / 12) + "\"");
+                     else equation.getNumbers().set(i, "" + (first * second) + "\"");
+                      break; }
                  case DIVIDE: { if(!multAndDivide) continue; equation.getNumbers().set(i, "" + (first / second) + "\""); break; }
                  case  PLUS: { if(multAndDivide) continue; equation.getNumbers().set(i, "" + (first + second) + "\"" ); break; }
                  case MINUS: { if(multAndDivide) continue; equation.getNumbers().set(i, "" + (first - second) + "\"" ); break; }

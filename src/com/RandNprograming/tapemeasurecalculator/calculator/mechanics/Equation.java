@@ -211,9 +211,9 @@ public class Equation {
         if( ! num.contains("\"") && Character.isDigit(num.charAt(num.length()-1)) ) {
 
             // Ignore adding the unit symbols for multiplications or divisions
-            if(mostRecentOperatorIsTimesOrDivide()) {
+           /* if(mostRecentOperatorIsTimesOrDivide()) {
                 return;
-            }
+            }*/
             appendToLastNum("\"");
         }
     }

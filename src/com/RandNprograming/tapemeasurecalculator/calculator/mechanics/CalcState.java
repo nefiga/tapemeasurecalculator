@@ -120,10 +120,10 @@ public class CalcState {
 
         if(equation.isOperatorNext() && equation.getNumbers().size() > 0) {
 
-            // Don't allow them to add unit symbols on multiplications or divisions
+            /*// Don't allow them to add unit symbols on multiplications or divisions
             if(equation.mostRecentOperatorIsTimesOrDivide()) {
                 return;
-            }
+            }*/
 
             String s = equation.getLastNumber();
 
