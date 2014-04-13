@@ -20,6 +20,7 @@ public interface ButtonAction {
     //-----------------------
     //  Number Actions
     //-----------------------
+
     public enum NumberAction implements ButtonAction {
         ZERO,ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE;
 

@@ -1,11 +1,11 @@
 package com.RandNprograming.tapemeasurecalculator.calculator.utilities;
 
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.CalcHistory;
-import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.CalcState;
-import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.DisplayModes;
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.Equation;
 
 public class CalculateEquation {
+
+    private static boolean measurementFeet;
 
     /** Figures the order of operation. Then solves the equation. The equation must end with numbers.
      * This method will do nothing if the equation ends with an operator. */
@@ -43,15 +43,16 @@ public class CalculateEquation {
 
          for (int i = 0; i < equation.getOperators().size(); i++) {
 
+             // Setting measurementFeet so the answer can be adjusted if needed
+             if (equation.getNumbers().get(i + 1).contains("\'") || equation.getNumbers().get(i + 1).contains("\"") ) measurementFeet = true;
+             else measurementFeet = false;
+
              double first = ParserConverter.parseNumber(equation.getNumbers().get(i));
              double second = ParserConverter.parseNumber(equation.getNumbers().get(i + 1));
 
              switch(equation.getOperators().get(i)) {
 
-                 case  TIMES: { if(!multAndDivide) continue;
-                     if (CalcState.displayUnits == DisplayModes.DisplayUnits.FEET_AND_INCHES) equation.getNumbers().set(i, "" + (first * second / 12) + "\"");
-                     else equation.getNumbers().set(i, "" + (first * second) + "\"");
-                      break; }
+                 case  TIMES: { if(!multAndDivide) continue; equation.getNumbers().set(i, timesWithMeasurement(first, second)); break; }
                  case DIVIDE: { if(!multAndDivide) continue; equation.getNumbers().set(i, "" + (first / second) + "\""); break; }
                  case  PLUS: { if(multAndDivide) continue; equation.getNumbers().set(i, "" + (first + second) + "\"" ); break; }
                  case MINUS: { if(multAndDivide) continue; equation.getNumbers().set(i, "" + (first - second) + "\"" ); break; }
@@ -67,12 +68,16 @@ public class CalculateEquation {
 
         for (int i = 0; i < equation.getOperators().size(); i++) {
 
+            // Setting measurementFeet so the answer can be adjusted if needed
+            if (equation.getNumbers().get(i + 1).contains("\'") || equation.getNumbers().get(i + 1).contains("\"") ) measurementFeet = true;
+            else measurementFeet = false;
+
             double first = ParserConverter.parseNumber(equation.getNumbers().get(i));
             double second = ParserConverter.parseNumber(equation.getNumbers().get(i + 1));
 
             switch(equation.getOperators().get(i)) {
 
-                case  TIMES: { equation.getNumbers().set(i, "" + (first * second) + "\""); break; }
+                case  TIMES: { equation.getNumbers().set(i, timesWithMeasurement(first, second)); break; }
                 case DIVIDE: { equation.getNumbers().set(i, "" + (first / second) + "\""); break; }
                 case  PLUS: { equation.getNumbers().set(i, "" + (first + second) + "\"" ); break; }
                 case MINUS: { equation.getNumbers().set(i, "" + (first - second) + "\"" ); break; }
@@ -85,4 +90,32 @@ public class CalculateEquation {
         }
     }
 
+    /**
+     * Multiplies the first number by the second. Adjust the answer if multiplying feet by feet.
+     * @param first First number in the equation
+     * @param second Second number in the equation
+     * @return Answer in a String format
+     */
+    private static String timesWithMeasurement(double first, double second) {
+        String measurement;
+        System.out.println(measurementFeet);
+        if (measurementFeet) measurement = "" + (first * second / 12) + "\"";
+        else measurement = "" + (first * second) + "\"";
+
+        return measurement;
+    }
+
+    // Don't think you need to do anything special when dividing. But not positive.
+    /*private static String divideWithMeasurement(double first, double second) {
+        String measurement = "";
+        switch (CalcState.calculateMeasurement) {
+            case DEFAULT:
+                measurement = "" + (first / second) + "\"";
+                break;
+            case FEET:
+                measurement = "" + (first / second) + "\"";
+                break;
+        }
+        return measurement;
+    }*/
 }

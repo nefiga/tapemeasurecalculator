@@ -208,7 +208,8 @@ public class Equation {
         if(numbers.size() == 0 || num.length() == 0)
             return;
 
-        if( ! num.contains("\"") && Character.isDigit(num.charAt(num.length()-1)) ) {
+        // Will only append " if the second number contains feet
+        if( ! num.contains("\"") && num.contains("\'") && Character.isDigit(num.charAt(num.length()-1)) ) {
 
             // Ignore adding the unit symbols for multiplications or divisions
            /* if(mostRecentOperatorIsTimesOrDivide()) {

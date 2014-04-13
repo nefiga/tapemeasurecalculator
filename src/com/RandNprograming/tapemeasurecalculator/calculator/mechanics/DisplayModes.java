@@ -43,4 +43,13 @@ public class DisplayModes {
         public DisplayUnits next() { return values()[(ordinal() + 1) % values().length]; }
     }
 
+    //--------------------
+    //  Calculate In Measurement
+    //--------------------
+    public static enum CalculateMeasurement {
+        DEFAULT, FEET;
+
+        public CalculateMeasurement next() { return values()[(ordinal() + 1) % values().length]; }
+    }
+
 }
