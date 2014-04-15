@@ -88,7 +88,9 @@ public class MainCalculatorScreen extends Screen {
         PaintEquation p = CalcState.paint;
         if(p.hasMultipleLines()) {
             for(int i = 0; i < 4; i++) {
-                g.drawString(p.getLines()[i],p.getXCoords()[i],yCoordsMultiple[i],p.getPaint());
+
+                String line = p.getLines()[i];
+                g.drawString(line,p.getXCoords()[i],yCoordsMultiple[i],p.getPaint());
             }
         }
         else {
