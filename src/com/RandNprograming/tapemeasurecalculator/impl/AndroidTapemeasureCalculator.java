@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.*;
-import com.RandNprograming.tapemeasurecalculator.R;
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.CalcState;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Calculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Graphics;

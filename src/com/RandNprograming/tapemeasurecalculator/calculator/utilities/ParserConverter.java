@@ -14,7 +14,7 @@ public class ParserConverter {
      * @param number The number that needs to be converted
      * @return The formatted result
      */
-    public static String formatToString(double number) {
+    public static String formatToString(double number, int unitDimension) {
 
         DisplayModes.FractionOrDecimal fractionOrDecimal = CalcState.fractionOrDecimal;
         DisplayModes.DisplayUnits units = CalcState.displayUnits;
@@ -29,7 +29,23 @@ public class ParserConverter {
             number *= -1;
         }
 
-        if(fractionOrDecimal == DisplayModes.FractionOrDecimal.DECIMAL_OPTION) {
+        if(unitDimension > 1) {
+            if(units == DisplayModes.DisplayUnits.FEET_AND_INCHES) {
+
+                double feet = convertToFeetWithDimensionality(number, unitDimension);
+                String n = df.format(feet);
+                text += n;
+                text += " ft";
+            }
+            else if(units == DisplayModes.DisplayUnits.INCHES_ONLY) {
+
+                String n = df.format(number);
+                text += n;
+                text += " in";
+            }
+            text += unitDimension;
+        }
+        else if(fractionOrDecimal == DisplayModes.FractionOrDecimal.DECIMAL_OPTION) {
 
             if(units == DisplayModes.DisplayUnits.FEET_AND_INCHES) {
                 number /= 12;
@@ -76,7 +92,23 @@ public class ParserConverter {
         return text;
     }
 
-    /** Converts a number from a string into a decimal number.
+    /**
+     * Converts a number from inches into feet according to the right dimensions. For example: 144 in^2
+     * would result in 1 ft^2. It divides the number by 12, x amount of times, where x is the dimension.
+     * @param number The number that needs to be converted into feet.
+     * @param dimension The dimensionality of the number. ft^3 is 3. in^2 is 2. just inches is 1, etc..
+     * @return The converted answer in feet.
+     */
+    private static double convertToFeetWithDimensionality(double number, int dimension) {
+
+        while (dimension > 0) {
+            number /= 12;
+            dimension--;
+        }
+        return number;
+    }
+
+    /** Converts a number from a string into a decimal number (result is in inches as a decimal).
      * This will take into account decimals, fractions, feet, and inches.
      * Format depends on fractionPrecision mode and display option. Examples are:
      * 4' 7 8/9"  4.353 Feet  3 7/8"  5.26 Inches   All of these are valid numbers.
@@ -102,13 +134,43 @@ public class ParserConverter {
                 if(read.length() > 0) {
 
                     // If the next letter is an F, then assume it is going to say Feet
-                    if(s.length() >= i+1 && s.charAt(i+1) == 'F') {
+                    if(s.length() > i+1 && s.charAt(i+1) == 'F') {
                         value += Double.parseDouble(read) * 12;
                         i += 4; // Skip the word Feet
                     }
-                    else if(s.length() >= i+1 && s.charAt(i+1) == 'I') {
+                    else if(s.length() > i+1 && s.charAt(i+1) == 'I') {
                         value += Double.parseDouble(read);
                         i += 6; // Skip the word Inches
+                    }
+                    // If the next letter is lowercase f, then assume it is going to say ft2, or ft3 (with a dimension)
+                    else if(s.length() > i+1 && s.charAt(i+1) == 'f') {
+
+                        value += Double.parseDouble(read);
+                        i += 2; // Skip the word ft
+
+                        // Find the dimension
+                        String dim = "";
+                        while(s.length() > i && ! Character.isSpaceChar(s.charAt(i))) {
+                            dim += s.charAt(i);
+                            i++;
+                        }
+                        int dimension = Integer.parseInt(dim);
+
+                        // Multiply by 12 for every dimension
+                        while(dimension > 0) {
+                            value += 12;
+                            dimension--;
+                        }
+                    }
+                    else if(s.length() > i+1 && s.charAt(i+1) == 'i') {
+
+                        value += Double.parseDouble(read);
+                        i += 2; // Skip the word in
+
+                        // Skip the dimension number
+                        while(s.length() > i && !Character.isSpaceChar(s.charAt(i))) {
+                            i++;
+                        }
                     }
                     else {
                         value += Double.parseDouble(read);

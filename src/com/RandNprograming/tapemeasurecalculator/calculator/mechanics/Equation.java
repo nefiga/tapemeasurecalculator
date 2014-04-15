@@ -19,6 +19,7 @@ public class Equation {
     private List<Operator> operators = new ArrayList<Operator>();
     private Double result = null;
     private String equation = "";
+    private int unitDimension = 0;
 
     //----------------------------------
     // Getters
@@ -27,6 +28,7 @@ public class Equation {
     public List<Operator> getOperators() { return this.operators; }
     public Double getResult() { return this.result; }
     public String getEquation() { return this.equation; }
+    public int getUnitDimension() { return this.unitDimension; }
 
     //----------------------------------
     // Setters
@@ -35,6 +37,7 @@ public class Equation {
     public void setOperators(List<Operator> ops) { this.operators = ops; }
     public void setResult(Double d) { this.result = d; }
     public void setEquation(String s) { this.equation = s; }
+    public void setUnitDimension(int unitDimension) { this.unitDimension = unitDimension; }
 
     //----------------------------------
     // Constructors
@@ -73,6 +76,7 @@ public class Equation {
         this.result = null;
         this.numbers.add("");
         this.equation = "";
+        this.unitDimension = 0;
     }
 
     //----------------------------------
@@ -191,7 +195,7 @@ public class Equation {
             if(result == null) {
                 result = ParserConverter.parseNumber(numbers.get(0));
             }
-            numbers.set(0, ParserConverter.formatToString(result));
+            numbers.set(0, ParserConverter.formatToString(result, getUnitDimension()));
             updateEquation();
         }
     }

@@ -2,10 +2,10 @@ package com.RandNprograming.tapemeasurecalculator.calculator.utilities;
 
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.CalcHistory;
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.Equation;
+import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.Operator;
 
 public class CalculateEquation {
 
-    private static boolean measurementFeet;
 
     /** Figures the order of operation. Then solves the equation. The equation must end with numbers.
      * This method will do nothing if the equation ends with an operator. */
@@ -19,18 +19,19 @@ public class CalculateEquation {
             Equation historic = equation.copy();
 
             if(orderOfOps) {
-                calculateWithOrder(equation, true);
-                calculateWithOrder(equation, false);
+                calculate(equation,true,true);
+                calculate(equation,true,false);
             }
             else {
-                calculateWithoutOrder(equation);
+                calculate(equation,false,true);
             }
 
             String answer = equation.getNumbers().get(0);
             equation.clear();
             double answerDouble = ParserConverter.parseNumber(answer);
+            equation.setUnitDimension(countUnits(answer));
 
-            equation.getNumbers().set(0, ParserConverter.formatToString(answerDouble));
+            equation.getNumbers().set(0, ParserConverter.formatToString(answerDouble, equation.getUnitDimension()));
             equation.setResult(answerDouble);
             historic.setResult(answerDouble);
             CalcHistory.add(historic);
@@ -39,83 +40,86 @@ public class CalculateEquation {
 
     /** Runs through numbers and operators and performs multiplication and division and shifts
      * them to the left each time an operation happens. */
-     private static void calculateWithOrder(Equation equation, boolean multAndDivide)    {
-
-         for (int i = 0; i < equation.getOperators().size(); i++) {
-
-             // Setting measurementFeet so the answer can be adjusted if needed
-             if (equation.getNumbers().get(i + 1).contains("\'") || equation.getNumbers().get(i + 1).contains("\"") ) measurementFeet = true;
-             else measurementFeet = false;
-
-             double first = ParserConverter.parseNumber(equation.getNumbers().get(i));
-             double second = ParserConverter.parseNumber(equation.getNumbers().get(i + 1));
-
-             switch(equation.getOperators().get(i)) {
-
-                 case  TIMES: { if(!multAndDivide) continue; equation.getNumbers().set(i, timesWithMeasurement(first, second)); break; }
-                 case DIVIDE: { if(!multAndDivide) continue; equation.getNumbers().set(i, "" + (first / second) + "\""); break; }
-                 case  PLUS: { if(multAndDivide) continue; equation.getNumbers().set(i, "" + (first + second) + "\"" ); break; }
-                 case MINUS: { if(multAndDivide) continue; equation.getNumbers().set(i, "" + (first - second) + "\"" ); break; }
-                 default: { continue; }
-             }
-
-             equation.getNumbers().remove(i + 1);
-             equation.getOperators().remove(i);
-             i--;
-         }
-     }
-     private static void calculateWithoutOrder(Equation equation) {
+    private static void calculate(Equation equation, boolean orderOfOps, boolean multAndDivide) {
 
         for (int i = 0; i < equation.getOperators().size(); i++) {
 
-            // Setting measurementFeet so the answer can be adjusted if needed
-            if (equation.getNumbers().get(i + 1).contains("\'") || equation.getNumbers().get(i + 1).contains("\"") ) measurementFeet = true;
-            else measurementFeet = false;
+            Operator operator = equation.getOperators().get(i);
 
-            double first = ParserConverter.parseNumber(equation.getNumbers().get(i));
-            double second = ParserConverter.parseNumber(equation.getNumbers().get(i + 1));
+            String str1 = equation.getNumbers().get(i);
+            String str2 = equation.getNumbers().get(i + 1);
 
-            switch(equation.getOperators().get(i)) {
+            double first = ParserConverter.parseNumber(str1);
+            double second = ParserConverter.parseNumber(str2);
 
-                case  TIMES: { equation.getNumbers().set(i, timesWithMeasurement(first, second)); break; }
-                case DIVIDE: { equation.getNumbers().set(i, "" + (first / second) + "\""); break; }
-                case  PLUS: { equation.getNumbers().set(i, "" + (first + second) + "\"" ); break; }
-                case MINUS: { equation.getNumbers().set(i, "" + (first - second) + "\"" ); break; }
-                default: { continue; }
+            double answer = 0;
+            int unitCount1 = 0; // Number of units that the first number has (ft^2 would be 2, in^3 would be 3, etc..)
+            int unitCount2 = 0;
+
+            if(operator == Operator.TIMES || operator == Operator.DIVIDE) {
+
+                if(orderOfOps && !multAndDivide) {
+                    continue;
+                }
+
+                unitCount1 += countUnits(str1);
+                unitCount2 += countUnits(str2);
+
+                if(operator == Operator.TIMES) {
+                    answer = first * second;
+                }
+                else if(operator == Operator.DIVIDE) {
+                    answer = first / second;
+                }
+            }
+            else if(operator == Operator.PLUS || operator == Operator.MINUS) {
+
+                if(orderOfOps && multAndDivide) {
+                    continue;
+                }
+                if(operator == Operator.PLUS) {
+                    answer = first + second;
+                }
+                else if(operator == Operator.MINUS) {
+                    answer = first - second;
+                }
+            }
+            else {
+                continue;
             }
 
+            if(unitCount1 + unitCount2 <= 1) {
+                equation.getNumbers().set(i, answer + "\"");
+            }
+            else {
+                if(operator == Operator.TIMES)
+                    equation.getNumbers().set(i, answer + " in" + (unitCount1 + unitCount2));
+                else if(operator == Operator.DIVIDE)
+                    equation.getNumbers().set(i, answer + " in" + (unitCount1 - unitCount2));
+            }
             equation.getNumbers().remove(i + 1);
             equation.getOperators().remove(i);
             i--;
         }
     }
 
-    /**
-     * Multiplies the first number by the second. Adjust the answer if multiplying feet by feet.
-     * @param first First number in the equation
-     * @param second Second number in the equation
-     * @return Answer in a String format
-     */
-    private static String timesWithMeasurement(double first, double second) {
-        String measurement;
-        System.out.println(measurementFeet);
-        if (measurementFeet) measurement = "" + (first * second / 12) + "\"";
-        else measurement = "" + (first * second) + "\"";
+    private static int countUnits(String str) {
 
-        return measurement;
-    }
+        int result = 0;
 
-    // Don't think you need to do anything special when dividing. But not positive.
-    /*private static String divideWithMeasurement(double first, double second) {
-        String measurement = "";
-        switch (CalcState.calculateMeasurement) {
-            case DEFAULT:
-                measurement = "" + (first / second) + "\"";
-                break;
-            case FEET:
-                measurement = "" + (first / second) + "\"";
-                break;
+        if(str.contains("ft")) {
+            int pos = str.indexOf("ft");
+            result += Integer.parseInt(str.substring(pos + 2));
         }
-        return measurement;
-    }*/
+        else if(str.contains("in")) {
+            int pos = str.indexOf("in");
+            result += Integer.parseInt(str.substring(pos + 2));
+        }
+        else if(str.contains("\'") || str.contains("\"")) {
+            result++;
+        }
+
+        return result;
+
+    }
 }
