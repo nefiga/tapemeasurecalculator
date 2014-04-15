@@ -1,6 +1,8 @@
 package com.RandNprograming.tapemeasurecalculator.calculator.utilities;
 
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.CalcHistory;
+import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.CalcState;
+import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.DisplayModes;
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.Equation;
 
 public class CalculateEquation {
@@ -98,8 +100,7 @@ public class CalculateEquation {
      */
     private static String timesWithMeasurement(double first, double second) {
         String measurement;
-        System.out.println(measurementFeet);
-        if (measurementFeet) measurement = "" + (first * second / 12) + "\"";
+        if (measurementFeet && CalcState.displayUnits == DisplayModes.DisplayUnits.FEET_AND_INCHES) measurement = "" + (first * second / 12) + "\"";
         else measurement = "" + (first * second) + "\"";
 
         return measurement;
