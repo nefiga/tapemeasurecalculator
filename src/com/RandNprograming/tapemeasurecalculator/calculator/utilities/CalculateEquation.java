@@ -53,7 +53,7 @@ public class CalculateEquation {
              switch(equation.getOperators().get(i)) {
 
                  case  TIMES: { if(!multAndDivide) continue; equation.getNumbers().set(i, timesWithMeasurement(first, second)); break; }
-                 case DIVIDE: { if(!multAndDivide) continue; equation.getNumbers().set(i, "" + (first / second) + "\""); break; }
+                 case DIVIDE: { if(!multAndDivide) continue; equation.getNumbers().set(i, divideWithMeasurement(first, second)); break; }
                  case  PLUS: { if(multAndDivide) continue; equation.getNumbers().set(i, "" + (first + second) + "\"" ); break; }
                  case MINUS: { if(multAndDivide) continue; equation.getNumbers().set(i, "" + (first - second) + "\"" ); break; }
                  default: { continue; }
@@ -78,7 +78,7 @@ public class CalculateEquation {
             switch(equation.getOperators().get(i)) {
 
                 case  TIMES: { equation.getNumbers().set(i, timesWithMeasurement(first, second)); break; }
-                case DIVIDE: { equation.getNumbers().set(i, "" + (first / second) + "\""); break; }
+                case DIVIDE: { equation.getNumbers().set(i, divideWithMeasurement(first, second)); break; }
                 case  PLUS: { equation.getNumbers().set(i, "" + (first + second) + "\"" ); break; }
                 case MINUS: { equation.getNumbers().set(i, "" + (first - second) + "\"" ); break; }
                 default: { continue; }
@@ -106,16 +106,12 @@ public class CalculateEquation {
     }
 
     // Don't think you need to do anything special when dividing. But not positive.
-    /*private static String divideWithMeasurement(double first, double second) {
-        String measurement = "";
-        switch (CalcState.calculateMeasurement) {
-            case DEFAULT:
-                measurement = "" + (first / second) + "\"";
-                break;
-            case FEET:
-                measurement = "" + (first / second) + "\"";
-                break;
-        }
+    private static String divideWithMeasurement(double first, double second) {
+        String measurement;
+        System.out.println(measurementFeet);
+        if (measurementFeet) measurement = "" + (first * second * 12) + "\"";
+        else measurement = "" + (first * second) + "\"";
+
         return measurement;
-    }*/
+    }
 }
