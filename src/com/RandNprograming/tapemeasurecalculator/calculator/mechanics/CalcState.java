@@ -7,6 +7,11 @@ package com.RandNprograming.tapemeasurecalculator.calculator.mechanics;
 /** This class is used to keep track of and to change the current state of the calculator. */
 public class CalcState {
 
+    public static final int NONE = 1;
+    public static final int INCHES = 2;
+    public static final int FEET = 3;
+    public static int measurement = NONE;
+
     //----------------------------------
     // Fields
     //----------------------------------
@@ -70,6 +75,7 @@ public class CalcState {
 
         if (equation.isOperatorNext()) {
 
+            measurement = NONE;
             equation.convertUnitsToSymbols();
             equation.verifyUnits();
             equation.getOperators().add(op);
@@ -136,6 +142,55 @@ public class CalcState {
                 equation.updateEquation();
                 paint.update(equation.getEquation());
             }
+        }
+    }
+
+    //------------------------------
+    //  Cycles Through What Kind Of Measurement The Number Will Be
+    //------------------------------
+    public static void cycleLastNumberMeasurement() {
+        String lastNumber = equation.getLastNumber();
+        switch (measurement) {
+            case NONE:
+                System.out.println(lastNumber);
+                if (lastNumber.contains("\"") && lastNumber.charAt(lastNumber.length() - 1) == '\"') {
+                    lastNumber = lastNumber.substring(0, lastNumber.length() - 1);
+                }
+                /*else if (lastNumber.contains("Inches") && lastNumber.charAt(lastNumber.length() - 1) == 's') {
+                    lastNumber = lastNumber.substring(0, lastNumber.length() - 6);
+                }*/
+                equation.setLastNumber(lastNumber);
+                measurement = FEET;
+                addFeet();
+                break;
+            case INCHES:
+                System.out.println(lastNumber);
+                /*if (lastNumber.contains("Inches") && lastNumber.charAt(lastNumber.length() - 1) == 's') {
+                    lastNumber = lastNumber.substring(0, lastNumber.length()- 6);
+                }
+                else if(lastNumber.contains("Feet") && lastNumber.charAt(lastNumber.length() - 1) == 't') {
+                    lastNumber = lastNumber.substring(0, lastNumber.length()- 4);
+                }*/
+                if (lastNumber.contains("\"") || lastNumber.contains("\'") && lastNumber.charAt(lastNumber.length() - 1) == '\'' || lastNumber.charAt(lastNumber.length() - 1) == '\"') {
+                    lastNumber = lastNumber.substring(0, lastNumber.length()-1);
+                }
+                equation.setLastNumber(lastNumber);
+                measurement = NONE;
+                equation.updateEquation();
+                paint.update(equation.getEquation());
+                break;
+            case FEET:
+                System.out.println(lastNumber);
+                if (lastNumber.contains("\'") && lastNumber.charAt(lastNumber.length() - 1) == '\'') {
+                    lastNumber = lastNumber.substring(0, lastNumber.length() - 1);
+                }
+                /*else if (lastNumber.contains("Feet") && lastNumber.charAt(lastNumber.length() - 1) == 't') {
+                    lastNumber = lastNumber.substring(0, lastNumber.length() - 4);
+                }*/
+                equation.setLastNumber(lastNumber);
+                measurement = INCHES;
+                addInches();
+                break;
         }
     }
 

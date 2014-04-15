@@ -81,7 +81,7 @@ public interface ButtonAction {
                 }
                 case CLEAR: { CalcState.clear(); break; }
                 case BACKSPACE: { CalcState.backspace(); break; }
-                case FEET: { CalcState.addFeet(); break; }
+                case FEET: { CalcState.cycleLastNumberMeasurement(); break; }
             }
         }
 
