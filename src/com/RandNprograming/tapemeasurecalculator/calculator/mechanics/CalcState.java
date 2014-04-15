@@ -150,29 +150,20 @@ public class CalcState {
     //------------------------------
     public static void cycleLastNumberMeasurement() {
         String lastNumber = equation.getLastNumber();
+        int i = lastNumber.length()-1;
+
         switch (measurement) {
             case NONE:
-                System.out.println(lastNumber);
-                if (lastNumber.contains("\"") && lastNumber.charAt(lastNumber.length() - 1) == '\"') {
-                    lastNumber = lastNumber.substring(0, lastNumber.length() - 1);
+                if (lastNumber.contains("\"") && lastNumber.charAt(i) == '\"') {
+                    lastNumber = lastNumber.substring(0, i);
                 }
-                /*else if (lastNumber.contains("Inches") && lastNumber.charAt(lastNumber.length() - 1) == 's') {
-                    lastNumber = lastNumber.substring(0, lastNumber.length() - 6);
-                }*/
                 equation.setLastNumber(lastNumber);
                 measurement = FEET;
                 addFeet();
                 break;
             case INCHES:
-                System.out.println(lastNumber);
-                /*if (lastNumber.contains("Inches") && lastNumber.charAt(lastNumber.length() - 1) == 's') {
-                    lastNumber = lastNumber.substring(0, lastNumber.length()- 6);
-                }
-                else if(lastNumber.contains("Feet") && lastNumber.charAt(lastNumber.length() - 1) == 't') {
-                    lastNumber = lastNumber.substring(0, lastNumber.length()- 4);
-                }*/
-                if (lastNumber.contains("\"") || lastNumber.contains("\'") && lastNumber.charAt(lastNumber.length() - 1) == '\'' || lastNumber.charAt(lastNumber.length() - 1) == '\"') {
-                    lastNumber = lastNumber.substring(0, lastNumber.length()-1);
+                if (lastNumber.contains("\"") || lastNumber.contains("\'") && lastNumber.charAt(i) == '\'' || lastNumber.charAt(i) == '\"') {
+                    lastNumber = lastNumber.substring(0, i);
                 }
                 equation.setLastNumber(lastNumber);
                 measurement = NONE;
@@ -180,13 +171,9 @@ public class CalcState {
                 paint.update(equation.getEquation());
                 break;
             case FEET:
-                System.out.println(lastNumber);
-                if (lastNumber.contains("\'") && lastNumber.charAt(lastNumber.length() - 1) == '\'') {
-                    lastNumber = lastNumber.substring(0, lastNumber.length() - 1);
+                if (lastNumber.contains("\'") && lastNumber.charAt(i) == '\'') {
+                    lastNumber = lastNumber.substring(0, i);
                 }
-                /*else if (lastNumber.contains("Feet") && lastNumber.charAt(lastNumber.length() - 1) == 't') {
-                    lastNumber = lastNumber.substring(0, lastNumber.length() - 4);
-                }*/
                 equation.setLastNumber(lastNumber);
                 measurement = INCHES;
                 addInches();
@@ -231,6 +218,10 @@ public class CalcState {
 
                 int i = num.length()-1;
 
+                // Resets measurement if the char being removed is feet or inches symbol
+                // Resets measurement if the char being removed is feet or inches symbol
+                if (num.charAt(i) == '\'' || num.charAt(i) == '\"') measurement = NONE;
+
                 // Ignore trailing spaces
                 while(i > 0 && Character.isSpaceChar(num.charAt(i))) {
                     i--;
@@ -272,6 +263,7 @@ public class CalcState {
     }
 
     public static void clear() {
+        measurement = NONE;
         equation.clear();
         paint.update(equation.getEquation());
     }
