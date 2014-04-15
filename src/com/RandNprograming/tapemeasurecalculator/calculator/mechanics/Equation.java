@@ -212,13 +212,13 @@ public class Equation {
         if(numbers.size() == 0 || num.length() == 0)
             return;
 
-        // Will only append " if the second number contains feet
-        if( ! num.contains("\"") && num.contains("\'") && Character.isDigit(num.charAt(num.length()-1)) ) {
+        if( ! num.contains("ft") && ! num.contains("in") &&
+            ! num.contains("\"") && num.contains("'") && Character.isDigit(num.charAt(num.length()-1)) ) {
 
             // Ignore adding the unit symbols for multiplications or divisions
-           /* if(mostRecentOperatorIsTimesOrDivide()) {
+            if(mostRecentOperatorIsTimesOrDivide()) {
                 return;
-            }*/
+            }
             appendToLastNum("\"");
         }
     }

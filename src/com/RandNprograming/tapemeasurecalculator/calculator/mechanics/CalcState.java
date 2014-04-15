@@ -75,16 +75,10 @@ public class CalcState {
 
         if (equation.isOperatorNext()) {
 
-            String num = equation.getLastNumber();
-            int i = num.length()-1;
-
-            // Automatically adds "\"" if no units are specified.
-            if (num.charAt(i) != '\'' && num.charAt(i) != '\"') equation.appendToLastNum("\"");
-
             measurement = NONE;
             equation.convertUnitsToSymbols();
-            equation.verifyUnits();
             equation.getOperators().add(op);
+            equation.verifyUnits();
             equation.getNumbers().add("");
         }
         else {
@@ -111,7 +105,8 @@ public class CalcState {
             String s = equation.getLastNumber();
 
             if(s.length() > 0 && ! s.contains("\'") && ! s.contains("\"") &&
-                    ! s.contains("Feet") && ! s.contains("Inches")) {
+                    ! s.contains("Feet") && ! s.contains("Inches") &&
+                    ! s.contains("ft") && ! s.contains("in")) {
 
                 if(s.contains(".") && ! Character.isDigit(s.charAt(s.length()-1))) {
                     return;
@@ -142,7 +137,8 @@ public class CalcState {
 
             if(s.length() > 0 && ! s.contains("\"") &&
                     ! s.substring(s.length() - 1).equals("\'") &&
-                    ! s.contains("Feet") && ! s.contains("Inches")) {
+                    ! s.contains("Feet") && ! s.contains("Inches") &&
+                    ! s.contains("ft") && ! s.contains("in")) {
 
                 equation.appendToLastNum("\"");
                 equation.updateEquation();
@@ -208,7 +204,7 @@ public class CalcState {
 
         String s = equation.getLastNumber();
 
-        if ( ! s.contains(".") && ! s.contains("\'") && ! s.contains("\"")) {
+        if ( ! s.contains(".") && ! s.contains("\'") && ! s.contains("\"") && ! s.contains("ft") && ! s.contains("in")) {
 
             s = s.replaceAll(" Feet","");
             s = s.replaceAll(" Inches","");
@@ -245,7 +241,6 @@ public class CalcState {
                 //  Removes the unit sign also resets measurement, if the last char is feet or inches symbol
                 if(num.charAt(i) == '\'' || num.charAt(i) == '\"') {
                     measurement = NONE;
-                    i--;
                 }
 
                 // Special case for  0.  then remove the zero as well
@@ -255,6 +250,13 @@ public class CalcState {
 
                 // Remove entire fraction by going back until you find a space.
                 if(num.contains("/")) {
+                    while(i > 0 && ! Character.isSpaceChar(num.charAt(i))) {
+                        i--;
+                    }
+                }
+
+                // Remove entire word of dimensional units by going back until you find a space.
+                if(num.contains("ft") || num.contains("in")) {
                     while(i > 0 && ! Character.isSpaceChar(num.charAt(i))) {
                         i--;
                     }
