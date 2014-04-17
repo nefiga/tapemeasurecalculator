@@ -73,7 +73,7 @@ public class Assets {
             pressed_buttons_operators[i] = g.newPixmap(prefix + operators[i] + suffix, format);
         }
 
-        final String[] calculate = {"fraction","decimal","equals","clear","backspace","feet"};
+        final String[] calculate = {"fraction","decimal","equals","clear","backspace","ft_in"};
         for(int i = 0; i < calculate.length; i++) {
             pressed_buttons_calculate[i] = g.newPixmap(prefix + calculate[i] + suffix, format);
         }
