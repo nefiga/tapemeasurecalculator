@@ -154,6 +154,7 @@ public class CalcState {
         String num = equation.getLastNumber();
         int i = num.length()-1;
 
+        if (i < 0) return;
         if (num.contains("/")) return;
 
         switch (measurement) {
