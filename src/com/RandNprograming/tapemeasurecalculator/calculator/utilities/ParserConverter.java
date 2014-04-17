@@ -29,7 +29,11 @@ public class ParserConverter {
             number *= -1;
         }
 
-        if(unitDimension > 1) {
+        if(unitDimension == 0) {
+            String n = df.format(number);
+            text += n;
+        }
+        else if(unitDimension > 1) {
             if(units == DisplayModes.DisplayUnits.FEET_AND_INCHES) {
 
                 double feet = convertToFeetWithDimensionality(number, unitDimension);
@@ -146,7 +150,7 @@ public class ParserConverter {
                     else if(s.length() > i+1 && s.charAt(i+1) == 'f') {
 
                         value += Double.parseDouble(read);
-                        i += 2; // Skip the word ft
+                        i += 3; // Skip the word ft
 
                         // Find the dimension
                         String dim = "";
@@ -158,14 +162,14 @@ public class ParserConverter {
 
                         // Multiply by 12 for every dimension
                         while(dimension > 0) {
-                            value += 12;
+                            value *= 12;
                             dimension--;
                         }
                     }
                     else if(s.length() > i+1 && s.charAt(i+1) == 'i') {
 
                         value += Double.parseDouble(read);
-                        i += 2; // Skip the word in
+                        i += 3; // Skip the word in
 
                         // Skip the dimension number
                         while(s.length() > i && !Character.isSpaceChar(s.charAt(i))) {
