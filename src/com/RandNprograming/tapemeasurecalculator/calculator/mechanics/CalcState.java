@@ -159,15 +159,67 @@ public class CalcState {
     }
 
     public static void cycleFeet() {
-        if (feet == NORMAL) feet = SQUARED;
-        else if (feet == SQUARED) feet = CUBED;
-        else if (feet == CUBED) feet = NORMAL;
+
+        String s = equation.getLastNumber();
+
+        if(s.length() != 0 && s.contains("\'") && s.charAt(s.length()-1) != '\'') {
+            return;
+        }
+
+        if (feet == NORMAL && s.contains("\'")) {
+
+            feet = SQUARED;
+            s = s.replaceAll("\'"," ft2");
+            equation.setLastNumber(s);
+        }
+        else if (feet == SQUARED && s.contains("ft2")) {
+
+            feet = CUBED;
+            s = s.replaceAll(" ft2"," ft3");
+            equation.setLastNumber(s);
+        }
+        else if (feet == CUBED && s.contains("ft3")) {
+
+            feet = NORMAL;
+            s = s.replaceAll(" ft3","\'");
+            equation.setLastNumber(s);
+        }
+        else {
+            addFeet();
+        }
+
+        equation.updateEquation();
+        paint.update(equation.getEquation());
     }
 
     public static void cycleInches() {
-        if (inches == NORMAL) inches = SQUARED;
-        else if (inches == SQUARED) inches = CUBED;
-        else if (inches == CUBED) inches = NORMAL;
+
+        String s = equation.getLastNumber();
+
+        if (inches == NORMAL && s.contains("\"") && ! s.contains("\'") && ! s.contains("/")) {
+
+            inches = SQUARED;
+            s = s.replaceAll("\""," in2");
+            equation.setLastNumber(s);
+        }
+        else if (inches == SQUARED && s.contains("in2")) {
+
+            inches = CUBED;
+            s = s.replaceAll(" in2"," in3");
+            equation.setLastNumber(s);
+        }
+        else if (inches == CUBED && s.contains("in3")) {
+
+            inches = NORMAL;
+            s = s.replaceAll(" in3","\"");
+            equation.setLastNumber(s);
+        }
+        else {
+            addInches();
+        }
+
+        equation.updateEquation();
+        paint.update(equation.getEquation());
     }
 
     //----------------------------------
@@ -215,11 +267,8 @@ public class CalcState {
                     i--;
                 }
 
-                //  Removes the unit sign also resets measurement, if the last char is feet or inches symbol
-                if (num.charAt(i) == '\'' || num.charAt(i) == '\"') {
-                    inches = NORMAL;
-                    feet = NORMAL;
-                }
+                inches = NORMAL;
+                feet = NORMAL;
 
                 // Special case for  0.  then remove the zero as well
                 if (num.charAt(i) == '.' && num.length() == 2 && num.charAt(i - 1) == '0') {
