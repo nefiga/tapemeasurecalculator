@@ -77,8 +77,8 @@ public class CalcState {
 
             measurement = NONE;
             equation.convertUnitsToSymbols();
-            equation.verifyUnits();
             equation.getOperators().add(op);
+            equation.verifyUnits();
             equation.getNumbers().add("");
         }
         else {
@@ -105,7 +105,8 @@ public class CalcState {
             String s = equation.getLastNumber();
 
             if(s.length() > 0 && ! s.contains("\'") && ! s.contains("\"") &&
-                    ! s.contains("Feet") && ! s.contains("Inches")) {
+                    ! s.contains("Feet") && ! s.contains("Inches") &&
+                    ! s.contains("ft") && ! s.contains("in")) {
 
                 if(s.contains(".") && ! Character.isDigit(s.charAt(s.length()-1))) {
                     return;
@@ -136,7 +137,8 @@ public class CalcState {
 
             if(s.length() > 0 && ! s.contains("\"") &&
                     ! s.substring(s.length() - 1).equals("\'") &&
-                    ! s.contains("Feet") && ! s.contains("Inches")) {
+                    ! s.contains("Feet") && ! s.contains("Inches") &&
+                    ! s.contains("ft") && ! s.contains("in")) {
 
                 equation.appendToLastNum("\"");
                 equation.updateEquation();
@@ -146,35 +148,48 @@ public class CalcState {
     }
 
     //------------------------------
-    //  Cycles Through What Kind Of Measurement The Number Will Be
+    //  Cycles Through What unit The Number is
     //------------------------------
-    public static void cycleLastNumberMeasurement() {
-        String lastNumber = equation.getLastNumber();
-        int i = lastNumber.length()-1;
+    public static void cycleUnits() {
+        String num = equation.getLastNumber();
+        int i = num.length()-1;
+
+        if (num.contains("/")) return;
 
         switch (measurement) {
             case NONE:
-                if (lastNumber.contains("\"") && lastNumber.charAt(i) == '\"') {
-                    lastNumber = lastNumber.substring(0, i);
+                // Will skip straight to inches, if num contain "\'" before the last number.
+                if (num.contains("\'") && num.charAt(i) != '\'') {
+                    if (num.contains("\"") && num.charAt(i) == '\"') {
+                        num = num.substring(0, i);
+                    }
+                    equation.setLastNumber(num);
+                    measurement = INCHES;
+                    addInches();
+                    break;
                 }
-                equation.setLastNumber(lastNumber);
+
+                if (num.contains("\"") && num.charAt(i) == '\"') {
+                    num = num.substring(0, i);
+                }
+                equation.setLastNumber(num);
                 measurement = FEET;
                 addFeet();
                 break;
             case INCHES:
-                if (lastNumber.contains("\"") || lastNumber.contains("\'") && lastNumber.charAt(i) == '\'' || lastNumber.charAt(i) == '\"') {
-                    lastNumber = lastNumber.substring(0, i);
+                if (num.contains("\"") || num.contains("\'") && num.charAt(i) == '\'' || num.charAt(i) == '\"') {
+                    num = num.substring(0, i);
                 }
-                equation.setLastNumber(lastNumber);
+                equation.setLastNumber(num);
                 measurement = NONE;
                 equation.updateEquation();
                 paint.update(equation.getEquation());
                 break;
             case FEET:
-                if (lastNumber.contains("\'") && lastNumber.charAt(i) == '\'') {
-                    lastNumber = lastNumber.substring(0, i);
+                if (num.contains("\'") && num.charAt(i) == '\'') {
+                    num = num.substring(0, i);
                 }
-                equation.setLastNumber(lastNumber);
+                equation.setLastNumber(num);
                 measurement = INCHES;
                 addInches();
                 break;
@@ -189,7 +204,7 @@ public class CalcState {
 
         String s = equation.getLastNumber();
 
-        if ( ! s.contains(".") && ! s.contains("\'") && ! s.contains("\"")) {
+        if ( ! s.contains(".") && ! s.contains("\'") && ! s.contains("\"") && ! s.contains("ft") && ! s.contains("in")) {
 
             s = s.replaceAll(" Feet","");
             s = s.replaceAll(" Inches","");
@@ -218,17 +233,14 @@ public class CalcState {
 
                 int i = num.length()-1;
 
-                // Resets measurement if the char being removed is feet or inches symbol
-                // Resets measurement if the char being removed is feet or inches symbol
-                if (num.charAt(i) == '\'' || num.charAt(i) == '\"') measurement = NONE;
-
                 // Ignore trailing spaces
                 while(i > 0 && Character.isSpaceChar(num.charAt(i))) {
                     i--;
                 }
 
-                if(num.contains("\'") && num.charAt(i) == '"') {
-                    i--;
+                //  Removes the unit sign also resets measurement, if the last char is feet or inches symbol
+                if(num.charAt(i) == '\'' || num.charAt(i) == '\"') {
+                    measurement = NONE;
                 }
 
                 // Special case for  0.  then remove the zero as well
@@ -238,6 +250,13 @@ public class CalcState {
 
                 // Remove entire fraction by going back until you find a space.
                 if(num.contains("/")) {
+                    while(i > 0 && ! Character.isSpaceChar(num.charAt(i))) {
+                        i--;
+                    }
+                }
+
+                // Remove entire word of dimensional units by going back until you find a space.
+                if(num.contains("ft") || num.contains("in")) {
                     while(i > 0 && ! Character.isSpaceChar(num.charAt(i))) {
                         i--;
                     }
@@ -282,7 +301,4 @@ public class CalcState {
             paint.update(equation.getEquation());
         }
     }
-
-
-
 }

@@ -1,6 +1,5 @@
 package com.RandNprograming.tapemeasurecalculator.calculator.screens;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -80,7 +79,7 @@ public class HistoryScreen extends Screen {
 
             if( i < yCoords.length) {
 
-                String result = " = " + ParserConverter.formatToString(equation.getResult());
+                String result = " = " + ParserConverter.formatToString(equation.getResult(), equation.getUnitDimension());
                 int yOffset = 64;
 
                 if(equation.getString().length() < 28) {
