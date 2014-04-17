@@ -19,7 +19,7 @@ public class Assets {
 
     public static Pixmap[] pressed_buttons_numbers = new Pixmap[10];
     public static Pixmap[] pressed_buttons_operators = new Pixmap[4];
-    public static Pixmap[] pressed_buttons_calculate = new Pixmap[6];
+    public static Pixmap[] pressed_buttons_calculate = new Pixmap[7];
     public static Pixmap[] pressed_buttons_special = new Pixmap[8];
     public static Pixmap[] pressed_buttons_fractionScreen = new Pixmap[2];
     public static Pixmap[] pressed_buttons_historyScreen = new Pixmap[2];
@@ -73,7 +73,7 @@ public class Assets {
             pressed_buttons_operators[i] = g.newPixmap(prefix + operators[i] + suffix, format);
         }
 
-        final String[] calculate = {"fraction","decimal","equals","clear","backspace","ft_in"};
+        final String[] calculate = {"fraction","decimal","equals","clear","backspace","feet","inches"};
         for(int i = 0; i < calculate.length; i++) {
             pressed_buttons_calculate[i] = g.newPixmap(prefix + calculate[i] + suffix, format);
         }

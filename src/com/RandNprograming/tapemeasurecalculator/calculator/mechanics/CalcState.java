@@ -196,6 +196,16 @@ public class CalcState {
         }
     }
 
+    public static void cycleFeet() {
+
+
+    }
+
+    public static void cycleInches() {
+
+
+    }
+
     //----------------------------------
     //  Add Decimal
     //----------------------------------

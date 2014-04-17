@@ -94,7 +94,43 @@ public class MainCalculatorScreen extends Screen {
             }
         }
         else {
-            g.drawString(equation,p.getXCoords()[0],180,p.getPaint());
+
+            float xPos = p.getXCoords()[0];
+            String s = equation;
+
+            while(s.contains("ft") || s.contains("in")) {
+
+                int ftIndex = equation.indexOf("ft");
+                int inIndex = equation.indexOf("in");
+
+                int index;
+
+                // Find out which comes first, ft or in
+                if(ftIndex < 0) {
+                    index = inIndex;
+                }
+                else if(inIndex < 0) {
+                    index = ftIndex;
+                }
+                else {
+                    index = ftIndex < inIndex ? inIndex : ftIndex;
+                }
+
+                // skip the word ft, or in
+                index += 2;
+
+                String first = equation.substring(0,index);
+                String exponent = equation.substring(index,index+1);
+                s = equation.substring(index+1);
+
+                g.drawString(first,xPos,180,p.getPaint());
+
+                xPos += p.getPaint().measureText(first);
+
+                g.drawString(exponent,xPos,180 - p.getPaint().getTextSize()/3,p.getPaint());
+            }
+
+            g.drawString(s,xPos,180,p.getPaint());
         }
     }
 

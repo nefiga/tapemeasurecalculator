@@ -55,7 +55,7 @@ public interface ButtonAction {
     //  Calculate Actions
     //----------------------
     public enum CalculateAction implements ButtonAction {
-        FRACTION, DECIMAL_POINT, EQUALS, CLEAR, BACKSPACE, FEET;
+        FRACTION, DECIMAL_POINT, EQUALS, CLEAR, BACKSPACE, FEET, INCHES;
 
         @Override
         public void performAction() {
@@ -82,7 +82,8 @@ public interface ButtonAction {
                 }
                 case CLEAR: { CalcState.clear(); break; }
                 case BACKSPACE: { CalcState.backspace(); break; }
-                case FEET: { CalcState.cycleUnits(); break; }
+                case FEET: { CalcState.cycleFeet(); break; }
+                case INCHES: { CalcState.cycleInches(); break; }
             }
         }
 
