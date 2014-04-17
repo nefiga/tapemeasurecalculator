@@ -82,8 +82,8 @@ public interface ButtonAction {
                 }
                 case CLEAR: { CalcState.clear(); break; }
                 case BACKSPACE: { CalcState.backspace(); break; }
-                case FEET: { CalcState.addFeet(); break; }
-                case INCHES: { CalcState.addInches(); break; }
+                case FEET: { CalcState.cycleFeet(); break; }
+                case INCHES: { CalcState.cycleInches(); break; }
             }
         }
 
