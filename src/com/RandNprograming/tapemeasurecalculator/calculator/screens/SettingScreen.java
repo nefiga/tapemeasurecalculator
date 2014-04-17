@@ -1,6 +1,5 @@
 package com.RandNprograming.tapemeasurecalculator.calculator.screens;
 
-import android.app.Activity;
 import com.RandNprograming.tapemeasurecalculator.calculator.assets.Assets;
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.CalcState;
 import com.RandNprograming.tapemeasurecalculator.impl.AndroidTapemeasureCalculator;

@@ -21,6 +21,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     WindowManager.LayoutParams windowParams;
     WindowManager wm;
     SharedPreferences preferences;
+    SharedPreferences.Editor editor;
     Graphics graphics;
     Input input;
     Screen screen;
@@ -31,6 +32,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         super.onCreate(savedInstanceState);
 
         preferences = this.getSharedPreferences("com.RandNprograming.tapemeasurecalculator", Context.MODE_PRIVATE);
+        editor = preferences.edit();
         if (preferences.contains("order_of_ops")) {
             CalcState.orderOfOps = preferences.getBoolean("order_of_ops", CalcState.orderOfOps);
         }
@@ -95,7 +97,8 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     @Override
     public void onPause() {
         super.onPause();
-        preferences.edit().putBoolean("order_of_ops", CalcState.orderOfOps);
+        editor.putBoolean("order_of_ops", CalcState.orderOfOps);
+        editor.commit();
         renderView.pause();
         screen.pause();
 

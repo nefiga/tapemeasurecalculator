@@ -142,7 +142,6 @@ public class MainCalculatorScreen extends Screen {
     @Override public void androidBackButton(AndroidTapemeasureCalculator activity) {
         activity.onPause();
         activity.onDestroy();
-        System.out.println("Still going");
         activity.finish();
     }
     @Override

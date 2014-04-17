@@ -20,7 +20,6 @@ public class CalcState {
     public static DisplayModes.FractionOrDecimal fractionOrDecimal = DisplayModes.FractionOrDecimal.FRACTION_OPTION;
     public static DisplayModes.FractionPrecision fractionPrecision = DisplayModes.FractionPrecision.SIXTEENTH;
     public static DisplayModes.DisplayUnits displayUnits = DisplayModes.DisplayUnits.FEET_AND_INCHES;
-    public static DisplayModes.CalculateMeasurement calculateMeasurement = DisplayModes.CalculateMeasurement.DEFAULT;
     public static Equation equation = new Equation();
     public static PaintEquation paint = new PaintEquation();
     public static boolean orderOfOps = true;
