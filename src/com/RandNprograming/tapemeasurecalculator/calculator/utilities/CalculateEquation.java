@@ -38,6 +38,7 @@ public class CalculateEquation {
                 equation.getNumbers().set(0, ParserConverter.formatToString(answerDouble, equation.getUnitDimension()));
                 equation.setResult(answerDouble);
                 historic.setResult(answerDouble);
+                historic.setUnitDimension(equation.getUnitDimension());
                 CalcHistory.add(historic);
             }
             catch (DimensionalErrorException e) {
@@ -108,7 +109,7 @@ public class CalculateEquation {
         }
     }
 
-    private static String formatAnswerWithUnits(double unformattedAnswer, Operator operator, int unitCount1, int unitCount2) {
+    public static String formatAnswerWithUnits(double unformattedAnswer, Operator operator, int unitCount1, int unitCount2) {
 
         String formattedAnswer = "" + unformattedAnswer;
 
