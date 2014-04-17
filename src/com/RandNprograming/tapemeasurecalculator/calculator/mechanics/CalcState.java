@@ -34,7 +34,7 @@ public class CalcState {
         String s = equation.getLastNumber();
 
         if( ! s.contains("\"") && ! s.contains("/") && ! s.contains("Inches") &&
-                (! s.contains("Feet") || ! s.contains("."))) {
+                (! s.contains("Feet") || ! s.contains(".")) && !s.contains("ft")) {
 
             if(s.contains("\'") && s.contains(".")) {
                 return;
