@@ -11,6 +11,7 @@ public class Assets {
     public static Pixmap history_screen;
     public static Pixmap info_screen;
     public static Pixmap settings_screen;
+    public static Pixmap error_screen;
 
     public static Pixmap[] fractionOrDecimal = new Pixmap[2];
     public static Pixmap[] fractionPrecision = new Pixmap[3];
@@ -36,6 +37,7 @@ public class Assets {
         history_screen = g.newPixmap("screens/history_screen.png", format);
         info_screen = g.newPixmap("screens/info_screen.png", format);
         settings_screen = g.newPixmap("screens/settings_screen.png", format);
+        error_screen = g.newPixmap("screens/error_screen.png", format);
 
         fractionOrDecimal[0] = g.newPixmap("buttons/fraction_option.png", format);
         fractionOrDecimal[1] = g.newPixmap("buttons/decimal_option.png", format);

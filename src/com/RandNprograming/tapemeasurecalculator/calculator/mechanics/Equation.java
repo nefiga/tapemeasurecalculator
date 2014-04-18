@@ -217,10 +217,6 @@ public class Equation {
         if( ! num.contains("ft") && ! num.contains("in") &&
             ! num.contains("\"") && num.contains("'") && Character.isDigit(num.charAt(num.length()-1)) ) {
 
-            // Ignore adding the unit symbols for multiplications or divisions
-            if(mostRecentOperatorIsTimesOrDivide()) {
-                return;
-            }
             appendToLastNum("\"");
         }
     }
