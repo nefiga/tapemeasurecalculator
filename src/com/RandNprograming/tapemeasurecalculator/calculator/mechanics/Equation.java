@@ -135,6 +135,7 @@ public class Equation {
         // Replace words with corresponding symbols
         setLastNumber(getLastNumber().replaceAll(" Feet", "\'"));
         setLastNumber(getLastNumber().replaceAll(" Inches", "\""));
+        setLastNumber(getLastNumber().replaceAll(",", ""));
     }
 
     //----------------------------------

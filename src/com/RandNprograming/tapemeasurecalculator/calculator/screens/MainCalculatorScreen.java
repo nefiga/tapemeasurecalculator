@@ -90,7 +90,45 @@ public class MainCalculatorScreen extends Screen {
             for(int i = 0; i < 4; i++) {
 
                 String line = p.getLines()[i];
-                g.drawString(line,p.getXCoords()[i],yCoordsMultiple[i],p.getPaint());
+
+                float xPos = p.getXCoords()[i];
+                String s = line;
+
+                while(s.contains("ft") || s.contains("in")) {
+
+                    int ftIndex = s.indexOf("ft");
+                    int inIndex = s.indexOf("in");
+
+                    int index;
+
+                    // Find out which comes first, ft or in
+                    if(ftIndex < 0) {
+                        index = inIndex;
+                    }
+                    else if(inIndex < 0) {
+                        index = ftIndex;
+                    }
+                    else {
+                        index = ftIndex < inIndex ? ftIndex : inIndex;
+                    }
+
+                    // skip the word ft, or in
+                    index += 2;
+
+                    String first = s.substring(0,index);
+                    String exponent = s.substring(index,index+1);
+                    s = s.substring(index+1);
+
+                    g.drawString(first,xPos,yCoordsMultiple[i],p.getPaint());
+
+                    xPos += p.getPaint().measureText(first);
+
+                    g.drawString(exponent,xPos,yCoordsMultiple[i] - p.getPaint().getTextSize()/3,p.getPaint());
+
+                    xPos += p.getPaint().measureText(exponent);
+                }
+
+                g.drawString(s,xPos,yCoordsMultiple[i],p.getPaint());
             }
         }
         else {
@@ -100,8 +138,8 @@ public class MainCalculatorScreen extends Screen {
 
             while(s.contains("ft") || s.contains("in")) {
 
-                int ftIndex = equation.indexOf("ft");
-                int inIndex = equation.indexOf("in");
+                int ftIndex = s.indexOf("ft");
+                int inIndex = s.indexOf("in");
 
                 int index;
 
@@ -113,21 +151,23 @@ public class MainCalculatorScreen extends Screen {
                     index = ftIndex;
                 }
                 else {
-                    index = ftIndex < inIndex ? inIndex : ftIndex;
+                    index = ftIndex < inIndex ? ftIndex : inIndex;
                 }
 
                 // skip the word ft, or in
                 index += 2;
 
-                String first = equation.substring(0,index);
-                String exponent = equation.substring(index,index+1);
-                s = equation.substring(index+1);
+                String first = s.substring(0,index);
+                String exponent = s.substring(index,index+1);
+                s = s.substring(index+1);
 
                 g.drawString(first,xPos,180,p.getPaint());
 
                 xPos += p.getPaint().measureText(first);
 
                 g.drawString(exponent,xPos,180 - p.getPaint().getTextSize()/3,p.getPaint());
+
+                xPos += p.getPaint().measureText(exponent);
             }
 
             g.drawString(s,xPos,180,p.getPaint());
