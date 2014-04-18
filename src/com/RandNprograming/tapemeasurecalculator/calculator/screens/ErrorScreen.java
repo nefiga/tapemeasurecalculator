@@ -1,7 +1,6 @@
 package com.RandNprograming.tapemeasurecalculator.calculator.screens;
 
 import com.RandNprograming.tapemeasurecalculator.calculator.assets.Assets;
-import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.CalcState;
 import com.RandNprograming.tapemeasurecalculator.impl.AndroidTapemeasureCalculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Calculator;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Graphics;
@@ -10,48 +9,55 @@ import com.RandNprograming.tapemeasurecalculator.interfaces.Screen;
 
 import java.util.List;
 
-public class SettingScreen extends Screen{
+public class ErrorScreen extends Screen {
 
-    public SettingScreen(Calculator calculator) {
+    public ErrorScreen(Calculator calculator) {
         super(calculator);
     }
 
+    @Override
     public void update(float deltaTime) {
 
         List<Input.TouchEvent> touchEvents = calculator.getInput().getTouchEvent();
         for (int i = 0; i < touchEvents.size(); i++) {
-
             Input.TouchEvent event = touchEvents.get(i);
-            if(event != null) {
-                checkBounds(event);
+
+            if (i == Input.TouchEvent.TOUCH_DOWN && touchIsInBounds(event,80,800,620,100)) {
+                calculator.setScreen(new MainCalculatorScreen(calculator));
             }
         }
     }
 
-    public void checkBounds(Input.TouchEvent event) {
-
-        if(touchIsInBounds(event,570,330,160,100)) {
-            if(event.type == Input.TouchEvent.TOUCH_DOWN)
-                CalcState.orderOfOps = !CalcState.orderOfOps;
-        }
-    }
-
+    @Override
     public void present(float deltaTime) {
         Graphics g = calculator.getGraphics();
         g.clear(0xffffff);
-        g.drawPixmap(Assets.settings_screen, 0, 0);
-
-        if(CalcState.orderOfOps)
-            g.drawPixmap(Assets.orderOfOperations[0], 20, 305);
-        else
-            g.drawPixmap(Assets.orderOfOperations[1], 20, 305);
+        g.drawPixmap(Assets.error_screen, 0, 0);
     }
 
-    public void pause() {}
-    public void resume() {}
-    public void dispose() {}
-    @Override public void androidOptionButton() {}
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    @Override
     public void androidBackButton(AndroidTapemeasureCalculator activity) {
-        calculator.setScreen(new MainCalculatorScreen(calculator));
+
     }
+
+    @Override
+    public void androidOptionButton() {
+
+    }
+
 }

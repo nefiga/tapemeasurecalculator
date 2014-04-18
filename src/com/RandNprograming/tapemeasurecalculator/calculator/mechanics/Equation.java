@@ -45,10 +45,11 @@ public class Equation {
     public Equation() {
         clear();
     }
-    public Equation(List<String> numbs, List<Operator> opers, Double answer) {
+    public Equation(List<String> numbs, List<Operator> opers, Double answer, int unitDimension) {
         this.numbers = numbs;
         this.operators = opers;
         this.result = answer;
+        this.unitDimension = unitDimension;
         updateEquation();
     }
 
@@ -134,6 +135,7 @@ public class Equation {
         // Replace words with corresponding symbols
         setLastNumber(getLastNumber().replaceAll(" Feet", "\'"));
         setLastNumber(getLastNumber().replaceAll(" Inches", "\""));
+        setLastNumber(getLastNumber().replaceAll(",", ""));
     }
 
     //----------------------------------
@@ -215,10 +217,6 @@ public class Equation {
         if( ! num.contains("ft") && ! num.contains("in") &&
             ! num.contains("\"") && num.contains("'") && Character.isDigit(num.charAt(num.length()-1)) ) {
 
-            // Ignore adding the unit symbols for multiplications or divisions
-            if(mostRecentOperatorIsTimesOrDivide()) {
-                return;
-            }
             appendToLastNum("\"");
         }
     }
@@ -239,7 +237,9 @@ public class Equation {
             cloneResult = Double.valueOf(result);
         }
 
-        return new Equation(cloneNums,cloneOps,cloneResult);
+        int cloneDimension = unitDimension;
+
+        return new Equation(cloneNums,cloneOps,cloneResult,cloneDimension);
     }
 
     //----------------------------------
@@ -256,6 +256,9 @@ public class Equation {
             return false;
 
         if(operators.size() != other.operators.size())
+            return false;
+
+        if(unitDimension != other.unitDimension)
             return false;
 
         for(int i = 0; i < numbers.size(); i++) {

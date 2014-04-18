@@ -26,8 +26,8 @@ public class ButtonLayout {
                 new ButtonAction[]{ButtonAction.NumberAction.SEVEN, ButtonAction.NumberAction.EIGHT, ButtonAction.NumberAction.NINE, ButtonAction.OperatorAction.MINUS},
                 new ButtonAction[]{ButtonAction.NumberAction.FOUR, ButtonAction.NumberAction.FIVE, ButtonAction.NumberAction.SIX, ButtonAction.OperatorAction.PLUS},
                 new ButtonAction[]{ButtonAction.NumberAction.ONE, ButtonAction.NumberAction.TWO, ButtonAction.NumberAction.THREE, ButtonAction.CalculateAction.FEET},
-                new ButtonAction[]{ButtonAction.CalculateAction.DECIMAL_POINT, ButtonAction.NumberAction.ZERO, ButtonAction.CalculateAction.FRACTION, ButtonAction.CalculateAction.EQUALS},
-                new ButtonAction[]{ButtonAction.SpecialAction.FRACTION_OR_DECIMAL, ButtonAction.SpecialAction.FRACTION_PRECISION, ButtonAction.SpecialAction.DISPLAY_UNITS, ButtonAction.SpecialAction.INFO},
+                new ButtonAction[]{ButtonAction.CalculateAction.DECIMAL_POINT, ButtonAction.NumberAction.ZERO, ButtonAction.CalculateAction.FRACTION, ButtonAction.CalculateAction.INCHES},
+                new ButtonAction[]{ButtonAction.SpecialAction.FRACTION_OR_DECIMAL, ButtonAction.SpecialAction.FRACTION_PRECISION, ButtonAction.SpecialAction.DISPLAY_UNITS, ButtonAction.CalculateAction.EQUALS},
         };
 
         for(int row = 0; row < y.length; row++) {

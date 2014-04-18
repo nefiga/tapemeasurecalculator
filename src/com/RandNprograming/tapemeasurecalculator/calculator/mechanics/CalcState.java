@@ -4,13 +4,13 @@ package com.RandNprograming.tapemeasurecalculator.calculator.mechanics;
 // Calculator State Class
 //----------------------------------
 
-/** This class is used to keep track of and to change the current state of the calculator. */
+/**
+ * This class is used to keep track of and to change the current state of the calculator.
+ */
 public class CalcState {
 
-    public static final int NONE = 1;
-    public static final int INCHES = 2;
-    public static final int FEET = 3;
-    public static int measurement = NONE;
+    public static final int NORMAL = 0, SQUARED = 1, CUBED = 2;
+    private static int inches = NORMAL, feet = NORMAL;
 
     //----------------------------------
     // Fields
@@ -20,7 +20,6 @@ public class CalcState {
     public static DisplayModes.FractionOrDecimal fractionOrDecimal = DisplayModes.FractionOrDecimal.FRACTION_OPTION;
     public static DisplayModes.FractionPrecision fractionPrecision = DisplayModes.FractionPrecision.SIXTEENTH;
     public static DisplayModes.DisplayUnits displayUnits = DisplayModes.DisplayUnits.FEET_AND_INCHES;
-    public static DisplayModes.CalculateMeasurement calculateMeasurement = DisplayModes.CalculateMeasurement.DEFAULT;
     public static Equation equation = new Equation();
     public static PaintEquation paint = new PaintEquation();
     public static boolean orderOfOps = true;
@@ -28,23 +27,26 @@ public class CalcState {
     //----------------------------------
     //  Add Number
     //----------------------------------
-    /** Tries to append a number to the equation if the current state of the calculator will allow it */
+
+    /**
+     * Tries to append a number to the equation if the current state of the calculator will allow it
+     */
     public static void addNumber(int n) {
 
         String s = equation.getLastNumber();
 
-        if( ! s.contains("\"") && ! s.contains("/") && ! s.contains("Inches") &&
-                (! s.contains("Feet") || ! s.contains("."))) {
+        if (!s.contains("\"") && !s.contains("/") && !s.contains("Inches") &&
+                (!s.contains("Feet") || !s.contains(".")) && !s.contains("ft")) {
 
-            if(s.contains("\'") && s.contains(".")) {
+            if (s.contains("\'") && s.contains(".")) {
                 return;
             }
 
-            if(equation.getEquation().length() < DIGIT_EQUATION_LIMIT && s.length() < DIGIT_LINE_LIMIT) {
+            if (equation.getEquation().length() < DIGIT_EQUATION_LIMIT && s.length() < DIGIT_LINE_LIMIT) {
 
-                s = s.replaceAll(" Feet","\'");
+                s = s.replaceAll(" Feet", "\'");
 
-                if(s.length() > 0 && (s.substring(s.length() - 1).equals("\'"))) {
+                if (s.length() > 0 && (s.substring(s.length() - 1).equals("\'"))) {
                     s += " ";
                 }
 
@@ -61,10 +63,13 @@ public class CalcState {
     //----------------------------------
     //  Add Operator
     //----------------------------------
-    /** Tries to append an operator to the equation if the current state of the calculator will allow it */
+
+    /**
+     * Tries to append an operator to the equation if the current state of the calculator will allow it
+     */
     public static void addOperator(Operator op) {
 
-        if(equation.getEquation().length() >=  DIGIT_EQUATION_LIMIT) {
+        if (equation.getEquation().length() >= DIGIT_EQUATION_LIMIT) {
             return;
         }
 
@@ -75,13 +80,13 @@ public class CalcState {
 
         if (equation.isOperatorNext()) {
 
-            measurement = NONE;
+            feet = NORMAL;
+            inches = NORMAL;
             equation.convertUnitsToSymbols();
             equation.getOperators().add(op);
             equation.verifyUnits();
             equation.getNumbers().add("");
-        }
-        else {
+        } else {
             equation.setLastOperator(op);
         }
 
@@ -92,10 +97,13 @@ public class CalcState {
     //----------------------------------
     //  Add Feet
     //----------------------------------
-    /** Tries to append a feet symbol (apostrophe) to the equation if possible. */
+
+    /**
+     * Tries to append a feet symbol (apostrophe) to the equation if possible.
+     */
     public static void addFeet() {
 
-        if(equation.isOperatorNext() && equation.getNumbers().size() > 0) {
+        if (equation.isOperatorNext() && equation.getNumbers().size() > 0) {
 
             // Don't allow them to add unit symbols on multiplications or divisions
             /*if(equation.mostRecentOperatorIsTimesOrDivide()) {
@@ -104,11 +112,11 @@ public class CalcState {
 
             String s = equation.getLastNumber();
 
-            if(s.length() > 0 && ! s.contains("\'") && ! s.contains("\"") &&
-                    ! s.contains("Feet") && ! s.contains("Inches") &&
-                    ! s.contains("ft") && ! s.contains("in")) {
+            if (s.length() > 0 && !s.contains("\'") && !s.contains("\"") &&
+                    !s.contains("Feet") && !s.contains("Inches") &&
+                    !s.contains("ft") && !s.contains("in")) {
 
-                if(s.contains(".") && ! Character.isDigit(s.charAt(s.length()-1))) {
+                if (s.contains(".") && !Character.isDigit(s.charAt(s.length() - 1))) {
                     return;
                 }
 
@@ -123,10 +131,13 @@ public class CalcState {
     //----------------------------------
     //  Add Inches
     //----------------------------------
-    /** Tries to add an inches symbol (double quotes) to the equation if possible. */
+
+    /**
+     * Tries to add an inches symbol (double quotes) to the equation if possible.
+     */
     public static void addInches() {
 
-        if(equation.isOperatorNext() && equation.getNumbers().size() > 0) {
+        if (equation.isOperatorNext() && equation.getNumbers().size() > 0) {
 
             /*// Don't allow them to add unit symbols on multiplications or divisions
             if(equation.mostRecentOperatorIsTimesOrDivide()) {
@@ -135,10 +146,10 @@ public class CalcState {
 
             String s = equation.getLastNumber();
 
-            if(s.length() > 0 && ! s.contains("\"") &&
-                    ! s.substring(s.length() - 1).equals("\'") &&
-                    ! s.contains("Feet") && ! s.contains("Inches") &&
-                    ! s.contains("ft") && ! s.contains("in")) {
+            if (s.length() > 0 && !s.contains("\"") &&
+                    !s.substring(s.length() - 1).equals("\'") &&
+                    !s.contains("Feet") && !s.contains("Inches") &&
+                    !s.contains("ft") && !s.contains("in")) {
 
                 equation.appendToLastNum("\"");
                 equation.updateEquation();
@@ -147,67 +158,85 @@ public class CalcState {
         }
     }
 
-    //------------------------------
-    //  Cycles Through What unit The Number is
-    //------------------------------
-    public static void cycleUnits() {
-        String num = equation.getLastNumber();
-        int i = num.length()-1;
+    public static void cycleFeet() {
 
-        if (num.contains("/")) return;
+        String s = equation.getLastNumber();
 
-        switch (measurement) {
-            case NONE:
-                // Will skip straight to inches, if num contain "\'" before the last number.
-                if (num.contains("\'") && num.charAt(i) != '\'') {
-                    if (num.contains("\"") && num.charAt(i) == '\"') {
-                        num = num.substring(0, i);
-                    }
-                    equation.setLastNumber(num);
-                    measurement = INCHES;
-                    addInches();
-                    break;
-                }
-
-                if (num.contains("\"") && num.charAt(i) == '\"') {
-                    num = num.substring(0, i);
-                }
-                equation.setLastNumber(num);
-                measurement = FEET;
-                addFeet();
-                break;
-            case INCHES:
-                if (num.contains("\"") || num.contains("\'") && num.charAt(i) == '\'' || num.charAt(i) == '\"') {
-                    num = num.substring(0, i);
-                }
-                equation.setLastNumber(num);
-                measurement = NONE;
-                equation.updateEquation();
-                paint.update(equation.getEquation());
-                break;
-            case FEET:
-                if (num.contains("\'") && num.charAt(i) == '\'') {
-                    num = num.substring(0, i);
-                }
-                equation.setLastNumber(num);
-                measurement = INCHES;
-                addInches();
-                break;
+        if(s.length() != 0 && s.contains("\'") && s.charAt(s.length()-1) != '\'') {
+            return;
         }
+
+        if (feet == NORMAL && s.contains("\'")) {
+
+            feet = SQUARED;
+            s = s.replaceAll("\'"," ft2");
+            equation.setLastNumber(s);
+        }
+        else if (feet == SQUARED && s.contains("ft2")) {
+
+            feet = CUBED;
+            s = s.replaceAll(" ft2"," ft3");
+            equation.setLastNumber(s);
+        }
+        else if (feet == CUBED && s.contains("ft3")) {
+
+            feet = NORMAL;
+            s = s.replaceAll(" ft3","\'");
+            equation.setLastNumber(s);
+        }
+        else {
+            addFeet();
+        }
+
+        equation.updateEquation();
+        paint.update(equation.getEquation());
+    }
+
+    public static void cycleInches() {
+
+        String s = equation.getLastNumber();
+
+        if (inches == NORMAL && s.contains("\"") && ! s.contains("\'") && ! s.contains("/")) {
+
+            inches = SQUARED;
+            s = s.replaceAll("\""," in2");
+            equation.setLastNumber(s);
+        }
+        else if (inches == SQUARED && s.contains("in2")) {
+
+            inches = CUBED;
+            s = s.replaceAll(" in2"," in3");
+            equation.setLastNumber(s);
+        }
+        else if (inches == CUBED && s.contains("in3")) {
+
+            inches = NORMAL;
+            s = s.replaceAll(" in3","\"");
+            equation.setLastNumber(s);
+        }
+        else {
+            addInches();
+        }
+
+        equation.updateEquation();
+        paint.update(equation.getEquation());
     }
 
     //----------------------------------
     //  Add Decimal
     //----------------------------------
-    /** Adds a decimal to the equation if possible. */
+
+    /**
+     * Adds a decimal to the equation if possible.
+     */
     public static void addDecimal() {
 
         String s = equation.getLastNumber();
 
-        if ( ! s.contains(".") && ! s.contains("\'") && ! s.contains("\"") && ! s.contains("ft") && ! s.contains("in")) {
+        if (!s.contains(".") && !s.contains("\'") && !s.contains("\"") && !s.contains("ft") && !s.contains("in")) {
 
-            s = s.replaceAll(" Feet","");
-            s = s.replaceAll(" Inches","");
+            s = s.replaceAll(" Feet", "");
+            s = s.replaceAll(" Inches", "");
 
             if (s.length() == 0) {
                 s = "0";
@@ -224,55 +253,52 @@ public class CalcState {
     //----------------------------------
     public static void backspace() {
 
-        if(equation.getNumbers().size() > 0) {
+        if (equation.getNumbers().size() > 0) {
 
             equation.setResult(null);
             equation.convertUnitsToSymbols();
             String num = equation.getLastNumber();
-            if(num.length() > 0) {
+            if (num.length() > 0) {
 
-                int i = num.length()-1;
+                int i = num.length() - 1;
 
                 // Ignore trailing spaces
-                while(i > 0 && Character.isSpaceChar(num.charAt(i))) {
+                while (i > 0 && Character.isSpaceChar(num.charAt(i))) {
                     i--;
                 }
 
-                //  Removes the unit sign also resets measurement, if the last char is feet or inches symbol
-                if(num.charAt(i) == '\'' || num.charAt(i) == '\"') {
-                    measurement = NONE;
-                }
+                inches = NORMAL;
+                feet = NORMAL;
 
                 // Special case for  0.  then remove the zero as well
-                if(num.charAt(i) == '.' && num.length() == 2 && num.charAt(i-1) == '0') {
+                if (num.charAt(i) == '.' && num.length() == 2 && num.charAt(i - 1) == '0') {
                     i--;
                 }
 
                 // Remove entire fraction by going back until you find a space.
-                if(num.contains("/")) {
-                    while(i > 0 && ! Character.isSpaceChar(num.charAt(i))) {
+                if (num.contains("/")) {
+                    while (i > 0 && !Character.isSpaceChar(num.charAt(i))) {
                         i--;
                     }
                 }
 
                 // Remove entire word of dimensional units by going back until you find a space.
-                if(num.contains("ft") || num.contains("in")) {
-                    while(i > 0 && ! Character.isSpaceChar(num.charAt(i))) {
+                if (num.contains("ft") || num.contains("in")) {
+                    while (i > 0 && !Character.isSpaceChar(num.charAt(i))) {
                         i--;
                     }
                 }
 
                 // Remove extra spaces
-                while(i > 0 && Character.isSpaceChar(num.charAt(i-1))) {
+                while (i > 0 && Character.isSpaceChar(num.charAt(i - 1))) {
                     i--;
                 }
 
-                equation.setLastNumber(num.substring(0,i));
-            }
-            else {
-                if(equation.getOperators().size() > 0) {
-                    equation.getNumbers().remove(equation.getNumbers().size()-1);
-                    equation.getOperators().remove(equation.getOperators().size()-1);
+                equation.setLastNumber(num.substring(0, i));
+            } else {
+                if (equation.getOperators().size() > 0) {
+                    equation.getNumbers().remove(equation.getNumbers().size() - 1);
+                    equation.getOperators().remove(equation.getOperators().size() - 1);
                 }
             }
             equation.updateEquation();
@@ -282,7 +308,8 @@ public class CalcState {
     }
 
     public static void clear() {
-        measurement = NONE;
+        inches = NORMAL;
+        feet = NORMAL;
         equation.clear();
         paint.update(equation.getEquation());
     }
@@ -290,10 +317,10 @@ public class CalcState {
     //----------------------------------
     //  Add Fraction
     //----------------------------------
-    public static void addFraction(String fraction){
+    public static void addFraction(String fraction) {
 
-        if(fraction.length() > 0) {
-            if(equation.getLastNumber().length() > 0) {
+        if (fraction.length() > 0) {
+            if (equation.getLastNumber().length() > 0) {
                 equation.appendToLastNum("  ");
             }
             equation.appendToLastNum(fraction + "\"");
