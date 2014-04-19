@@ -5,7 +5,6 @@ import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.CalcState;
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.Equation;
 import com.RandNprograming.tapemeasurecalculator.calculator.mechanics.Operator;
 import com.RandNprograming.tapemeasurecalculator.calculator.screens.ErrorScreen;
-import com.RandNprograming.tapemeasurecalculator.calculator.screens.MainCalculatorScreen;
 import com.RandNprograming.tapemeasurecalculator.impl.AndroidFastRenderView;
 
 public class CalculateEquation {
