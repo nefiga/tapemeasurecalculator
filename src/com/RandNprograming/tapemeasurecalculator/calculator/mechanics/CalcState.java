@@ -355,7 +355,17 @@ public class CalcState {
     public static void addFraction(String fraction) {
 
         if (fraction.length() > 0) {
+
+            String lastNum = equation.getLastNumber();
+
+            // Remove inches symbol to allow adding a fraction if a fraction isn't already there.
+            if( lastNum.contains("\"") && ! lastNum.contains("/") ) {
+                lastNum = lastNum.replaceAll("\"","");
+                equation.setLastNumber(lastNum);
+            }
+
             if (equation.getLastNumber().length() > 0) {
+
                 equation.appendToLastNum("  ");
             }
             equation.appendToLastNum(fraction + "\"");

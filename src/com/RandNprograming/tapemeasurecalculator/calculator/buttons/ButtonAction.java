@@ -66,7 +66,7 @@ public interface ButtonAction {
                     String lastNum = CalcState.equation.getLastNumber();
 
                     // Only allow pressing fraction in certain cases...
-                    if( ! lastNum.contains("\"") && ! lastNum.contains("/") && ! lastNum.contains(".") &&
+                    if( ! lastNum.contains("/") && ! lastNum.contains(".") &&
                         ! lastNum.contains("Feet") && ! lastNum.contains("Inches") &&
                         ! lastNum.contains("ft") && ! lastNum.contains("in")) {
                         Calculator c = AndroidFastRenderView.getCalculator();
