@@ -261,6 +261,10 @@ public class Equation {
         if(unitDimension != other.unitDimension)
             return false;
 
+        if(Double.compare(result, other.result) != 0) {
+            return false;
+        }
+
         for(int i = 0; i < numbers.size(); i++) {
             if ( ! numbers.get(i).equals(other.numbers.get(i))) {
                 return false;
