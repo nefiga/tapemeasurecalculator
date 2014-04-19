@@ -116,8 +116,10 @@ public class CalcState {
                     !s.contains("Feet") && !s.contains("Inches") &&
                     !s.contains("ft") && !s.contains("in")) {
 
-                if (s.contains(".") && !Character.isDigit(s.charAt(s.length() - 1))) {
-                    return;
+                // Remove trailing period if there are no digits after it
+                if (s.contains(".") && s.charAt(s.length() - 1) == '.') {
+                    s = s.substring(0,s.length()-1);
+                    equation.setLastNumber(s);
                 }
 
                 equation.appendToLastNum("\'");
@@ -145,6 +147,12 @@ public class CalcState {
                     !s.substring(s.length() - 1).equals("\'") &&
                     !s.contains("Feet") && !s.contains("Inches") &&
                     !s.contains("ft") && !s.contains("in")) {
+
+                // Remove trailing period if there are no digits after it
+                if (s.contains(".") && s.charAt(s.length() - 1) == '.') {
+                    s = s.substring(0,s.length()-1);
+                    equation.setLastNumber(s);
+                }
 
                 equation.appendToLastNum("\"");
                 equation.updateEquation();
