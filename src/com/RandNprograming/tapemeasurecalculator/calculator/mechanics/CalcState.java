@@ -334,6 +334,19 @@ public class CalcState {
                 if (equation.getOperators().size() > 0) {
                     equation.getNumbers().remove(equation.getNumbers().size() - 1);
                     equation.getOperators().remove(equation.getOperators().size() - 1);
+
+                    if(equation.getLastNumber().contains("ft2")) {
+                        feet = SQUARED;
+                    }
+                    else if(equation.getLastNumber().contains("ft3")) {
+                        feet = CUBED;
+                    }
+                    else if(equation.getLastNumber().contains("in2")) {
+                        inches = SQUARED;
+                    }
+                    else if(equation.getLastNumber().contains("in3")) {
+                        inches = CUBED;
+                    }
                 }
             }
             equation.updateEquation();
