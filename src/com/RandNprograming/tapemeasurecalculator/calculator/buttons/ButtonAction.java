@@ -198,15 +198,13 @@ public interface ButtonAction {
     //  History Action
     //------------------------------
     public static enum HistoryAction implements ButtonAction {
-        SAVE, ENTER;
+        USE_EQUATION, USE_ANSWER;
 
         @Override
         public void performAction() {
             switch (this) {
-                case ENTER: { CalcHistory.enter(); break; }
-                case SAVE: {
-                    break;
-                }
+                case USE_EQUATION: { CalcHistory.useEquation(); break; }
+                case USE_ANSWER: { CalcHistory.useAnswer(); break; }
             }
         }
 

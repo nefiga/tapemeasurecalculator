@@ -1,6 +1,7 @@
 package com.RandNprograming.tapemeasurecalculator.calculator.mechanics;
 
 import com.RandNprograming.tapemeasurecalculator.calculator.screens.MainCalculatorScreen;
+import com.RandNprograming.tapemeasurecalculator.calculator.utilities.ParserConverter;
 import com.RandNprograming.tapemeasurecalculator.impl.AndroidFastRenderView;
 import com.RandNprograming.tapemeasurecalculator.interfaces.Calculator;
 
@@ -60,14 +61,32 @@ public class CalcHistory {
         return sb.toString();
     }
 
-    public static void enter() {
+    public static void useEquation() {
 
         if(selectedIndex < 0 || selectedIndex > CalcHistory.MAX_ENTRIES) {
             return;
         }
 
-        Equation e = CalcHistory.getHistoryAt(selectedIndex);
-        CalcState.equation = e.copy();
+        Equation h = CalcHistory.getHistoryAt(selectedIndex);
+        Equation e = CalcState.equation;
+
+        if(e.isOperatorNext()) {
+            CalcState.equation = h.copy();
+        }
+        else {
+
+            for(int i = 0; i < h.getNumbers().size(); i++) {
+
+                CalcState.equation.setLastNumber(h.getNumbers().get(i));
+
+                if(h.getOperators().size() > i) {
+                    CalcState.addOperator(h.getOperators().get(i));
+                }
+
+            }
+
+        }
+
         CalcState.equation.updateEquation();
         CalcState.paint.update(CalcState.equation.getEquation());
         selectedIndex = -1;
@@ -75,13 +94,27 @@ public class CalcHistory {
         c.setScreen(new MainCalculatorScreen(c));
     }
 
-    public static void save() {
+    public static void useAnswer() {
 
         if(selectedIndex < 0 || selectedIndex > CalcHistory.MAX_ENTRIES) {
             return;
         }
 
-        // Currently does nothing
+        Equation h = CalcHistory.getHistoryAt(selectedIndex);
+
+        if(CalcState.equation.isOperatorNext()) {
+            CalcState.clear();
+        }
+
+        String result = ParserConverter.formatToString(h.getResult(), h.getUnitDimension());
+        CalcState.equation.setLastNumber(result);
+
+        CalcState.equation.updateEquation();
+        CalcState.paint.update(CalcState.equation.getEquation());
+        selectedIndex = -1;
+        Calculator c = AndroidFastRenderView.getCalculator();
+        c.setScreen(new MainCalculatorScreen(c));
+
     }
 
 }

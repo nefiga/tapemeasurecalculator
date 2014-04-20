@@ -59,11 +59,11 @@ public class HistoryScreen extends Screen {
             return;
         }
 
-//        Button save = ButtonLayout.historyScreenButtons.get(0);
-        Button enter = ButtonLayout.historyScreenButtons.get(1);
+        Button use_equation = ButtonLayout.historyScreenButtons.get(0);
+        Button use_answer = ButtonLayout.historyScreenButtons.get(1);
 
-//        g.drawPixmap(Assets.history_screen_buttons[0], save.getX(), save.getY());
-        g.drawPixmap(Assets.history_screen_buttons[1], enter.getX(), enter.getY());
+        g.drawPixmap(Assets.history_screen_buttons[0], use_equation.getX(), use_equation.getY());
+        g.drawPixmap(Assets.history_screen_buttons[1], use_answer.getX(), use_answer.getY());
 
         for(Button b : manager.getPressedButtons().values()) {
             if(b.isPressedDown()) {
@@ -112,21 +112,21 @@ public class HistoryScreen extends Screen {
         }
 
         int highlight = Color.argb(64,0,0,255);
-        g.drawRect(20,yCoords[CalcHistory.selectedIndex],762,96,highlight);
+        g.drawRect(20,yCoords[CalcHistory.selectedIndex],762,106,highlight);
     }
 
-    private static int[] yCoords = {212,319,425,532,639,746,853,959,1066,1173};
+    private static int[] yCoords = {207,313,419,525,631,737,843,949,1055,1161};
     public void checkBounds(Input.TouchEvent event) {
 
-//        Button save = ButtonLayout.historyScreenButtons.get(0);
-        Button enter = ButtonLayout.historyScreenButtons.get(1);
+        Button use_equation = ButtonLayout.historyScreenButtons.get(0);
+        Button use_answer = ButtonLayout.historyScreenButtons.get(1);
 
-//        checkButtonBounds(save,event);
-        checkButtonBounds(enter,event);
+        checkButtonBounds(use_equation,event);
+        checkButtonBounds(use_answer,event);
 
         for(int i = 0; i < 10; i++) {
 
-            if(touchIsInBounds(event, 0, yCoords[i], 800, 95) && event.type == Input.TouchEvent.TOUCH_DOWN) {
+            if(touchIsInBounds(event, 0, yCoords[i], 800, 106) && event.type == Input.TouchEvent.TOUCH_DOWN) {
                 selectEquation(i);
             }
         }
