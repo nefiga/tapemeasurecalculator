@@ -62,9 +62,8 @@ public class ButtonLayout {
 
     private static void setupHistoryScreenButtons() {
 
-        historyScreenButtons.add(new Button(90,102,280,80,60,85,340,114,ButtonAction.HistoryAction.SAVE));
-//        historyScreenButtons.add(new Button(430,102,280,80,400,85,340,114,ButtonAction.HistoryAction.ENTER));
-        historyScreenButtons.add(new Button(260,102,280,80,230,85,340,114,ButtonAction.HistoryAction.ENTER));
+        historyScreenButtons.add(new Button(90,102,280,80,60,85,340,114,ButtonAction.HistoryAction.USE_EQUATION));
+        historyScreenButtons.add(new Button(430,102,280,80,400,85,340,114,ButtonAction.HistoryAction.USE_ANSWER));
     }
 
 

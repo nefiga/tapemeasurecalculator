@@ -116,8 +116,10 @@ public class CalcState {
                     !s.contains("Feet") && !s.contains("Inches") &&
                     !s.contains("ft") && !s.contains("in")) {
 
-                if (s.contains(".") && !Character.isDigit(s.charAt(s.length() - 1))) {
-                    return;
+                // Remove trailing period if there are no digits after it
+                if (s.contains(".") && s.charAt(s.length() - 1) == '.') {
+                    s = s.substring(0,s.length()-1);
+                    equation.setLastNumber(s);
                 }
 
                 equation.appendToLastNum("\'");
@@ -139,17 +141,18 @@ public class CalcState {
 
         if (equation.isOperatorNext() && equation.getNumbers().size() > 0) {
 
-            /*// Don't allow them to add unit symbols on multiplications or divisions
-            if(equation.mostRecentOperatorIsTimesOrDivide()) {
-                return;
-            }*/
-
             String s = equation.getLastNumber();
 
             if (s.length() > 0 && !s.contains("\"") &&
                     !s.substring(s.length() - 1).equals("\'") &&
                     !s.contains("Feet") && !s.contains("Inches") &&
                     !s.contains("ft") && !s.contains("in")) {
+
+                // Remove trailing period if there are no digits after it
+                if (s.contains(".") && s.charAt(s.length() - 1) == '.') {
+                    s = s.substring(0,s.length()-1);
+                    equation.setLastNumber(s);
+                }
 
                 equation.appendToLastNum("\"");
                 equation.updateEquation();
@@ -162,9 +165,25 @@ public class CalcState {
 
         String s = equation.getLastNumber();
 
-        if(s.length() != 0 && s.contains("\'") && s.charAt(s.length()-1) != '\'') {
+        if(s.contains("\'") && s.charAt(s.length()-1) != '\'') {
             return;
         }
+
+        // Replace inches with feet if it is the last one (like how the operators do, they replace eachother)
+        if( ! s.contains("/") && s.contains("\"") && s.charAt(s.length()-1) == '\"') {
+            inches = NORMAL;
+            s = s.replaceAll("\"","");
+        }
+        else if(s.contains(" in2") && s.substring(s.length() - 4).equals(" in2")) {
+            inches = NORMAL;
+            s = s.replaceAll(" in2","");
+        }
+        else if(s.contains(" in3") && s.substring(s.length() - 4).equals(" in3")) {
+            inches = NORMAL;
+            s = s.replaceAll(" in3","");
+        }
+
+        equation.setLastNumber(s);
 
         if (feet == NORMAL && s.contains("\'")) {
 
@@ -195,6 +214,22 @@ public class CalcState {
     public static void cycleInches() {
 
         String s = equation.getLastNumber();
+
+        // Replace foot with inches if it is the last one (kind of how the operators do the same thing, they replace eachother)
+        if(s.contains("'") && s.charAt(s.length()-1) == '\'') {
+            feet = NORMAL;
+            s = s.replaceAll("\'","");
+        }
+        else if(s.contains(" ft2") && s.substring(s.length() - 4).equals(" ft2")) {
+            feet = NORMAL;
+            s = s.replaceAll(" ft2","");
+        }
+        else if(s.contains(" ft3") && s.substring(s.length() - 4).equals(" ft3")) {
+            feet = NORMAL;
+            s = s.replaceAll(" ft3","");
+        }
+
+        equation.setLastNumber(s);
 
         if (inches == NORMAL && s.contains("\"") && ! s.contains("\'") && ! s.contains("/")) {
 
@@ -299,6 +334,19 @@ public class CalcState {
                 if (equation.getOperators().size() > 0) {
                     equation.getNumbers().remove(equation.getNumbers().size() - 1);
                     equation.getOperators().remove(equation.getOperators().size() - 1);
+
+                    if(equation.getLastNumber().contains("ft2")) {
+                        feet = SQUARED;
+                    }
+                    else if(equation.getLastNumber().contains("ft3")) {
+                        feet = CUBED;
+                    }
+                    else if(equation.getLastNumber().contains("in2")) {
+                        inches = SQUARED;
+                    }
+                    else if(equation.getLastNumber().contains("in3")) {
+                        inches = CUBED;
+                    }
                 }
             }
             equation.updateEquation();
@@ -320,7 +368,17 @@ public class CalcState {
     public static void addFraction(String fraction) {
 
         if (fraction.length() > 0) {
+
+            String lastNum = equation.getLastNumber();
+
+            // Remove inches symbol to allow adding a fraction if a fraction isn't already there.
+            if( lastNum.contains("\"") && ! lastNum.contains("/") ) {
+                lastNum = lastNum.replaceAll("\"","");
+                equation.setLastNumber(lastNum);
+            }
+
             if (equation.getLastNumber().length() > 0) {
+
                 equation.appendToLastNum("  ");
             }
             equation.appendToLastNum(fraction + "\"");

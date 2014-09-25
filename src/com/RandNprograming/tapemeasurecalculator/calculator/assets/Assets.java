@@ -49,8 +49,8 @@ public class Assets {
         units[0] = g.newPixmap("buttons/inches_only.png", format);
         units[1] = g.newPixmap("buttons/feet_and_inches.png", format);
 
-        history_screen_buttons[0] = g.newPixmap("buttons/history_save.png", format);
-        history_screen_buttons[1] = g.newPixmap("buttons/history_enter.png", format);
+        history_screen_buttons[0] = g.newPixmap("buttons/history_use_equation.png", format);
+        history_screen_buttons[1] = g.newPixmap("buttons/history_use_answer.png", format);
 
         orderOfOperations[0] = g.newPixmap("buttons/order_of_ops_on.png", format);
         orderOfOperations[1] = g.newPixmap("buttons/order_of_ops_off.png", format);
@@ -91,7 +91,7 @@ public class Assets {
             pressed_buttons_fractionScreen[i] = g.newPixmap(prefix + fractionScreen[i] + suffix, format);
         }
 
-        final String[] historyScreen = {"history_save","history_enter"};
+        final String[] historyScreen = {"history_use_equation","history_use_answer"};
         for(int i = 0; i < historyScreen.length; i++) {
             pressed_buttons_historyScreen[i] = g.newPixmap(prefix + historyScreen[i] + suffix, format);
         }

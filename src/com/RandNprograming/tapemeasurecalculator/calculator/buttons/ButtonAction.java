@@ -66,7 +66,8 @@ public interface ButtonAction {
                     String lastNum = CalcState.equation.getLastNumber();
 
                     // Only allow pressing fraction in certain cases...
-                    if( ! lastNum.contains("\"") && ! lastNum.contains("/") && ! lastNum.contains(".") &&
+                    if( ! lastNum.contains("/") && ! lastNum.contains(".") &&
+                        ! lastNum.contains("Feet") && ! lastNum.contains("Inches") &&
                         ! lastNum.contains("ft") && ! lastNum.contains("in")) {
                         Calculator c = AndroidFastRenderView.getCalculator();
                         c.setScreen(new FractionManualScreen(c));
@@ -197,15 +198,13 @@ public interface ButtonAction {
     //  History Action
     //------------------------------
     public static enum HistoryAction implements ButtonAction {
-        SAVE, ENTER;
+        USE_EQUATION, USE_ANSWER;
 
         @Override
         public void performAction() {
             switch (this) {
-                case ENTER: { CalcHistory.enter(); break; }
-                case SAVE: {
-                    break;
-                }
+                case USE_EQUATION: { CalcHistory.useEquation(); break; }
+                case USE_ANSWER: { CalcHistory.useAnswer(); break; }
             }
         }
 
