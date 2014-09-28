@@ -35,7 +35,7 @@ public class SettingScreen extends Screen {
                 CalcState.orderOfOps = !CalcState.orderOfOps;
         }
 
-        if (touchIsInBounds(event, 570, 330, 300, 100)) {
+        if (touchIsInBounds(event, 570, 520, 160, 100)) {
             if (event.type == Input.TouchEvent.TOUCH_DOWN)
                 CalcState.displayTapeImage = !CalcState.displayTapeImage;
         }
@@ -51,12 +51,10 @@ public class SettingScreen extends Screen {
         else
             g.drawPixmap(Assets.orderOfOperations[1], 20, 305);
 
-        g.drawPixmap(Assets.toggleTapeMeasureBackground, 20, 410);
-
         if (CalcState.displayTapeImage)
-            g.drawPixmap(Assets.toggleTapeMeasureButton[0], 20, 445);
+            g.drawPixmap(Assets.toggleTapeMeasureButton[0], 20, 497);
         else
-            g.drawPixmap(Assets.toggleTapeMeasureButton[1], 20, 445);
+            g.drawPixmap(Assets.toggleTapeMeasureButton[1], 20, 497);
     }
 
     public void pause() {
