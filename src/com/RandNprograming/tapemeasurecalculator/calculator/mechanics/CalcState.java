@@ -23,6 +23,8 @@ public class CalcState {
     public static Equation equation = new Equation();
     public static PaintEquation paint = new PaintEquation();
     public static boolean orderOfOps = true;
+    public static boolean displayingAnswer = false;
+    public static boolean displayTapeImage = false;
 
     //----------------------------------
     //  Add Number
@@ -51,6 +53,7 @@ public class CalcState {
                 }
 
                 s += n;
+                displayingAnswer = false;
                 equation.setLastNumber(s);
                 equation.updateEquation();
                 paint.update(equation.getEquation());
@@ -82,6 +85,7 @@ public class CalcState {
 
             feet = NORMAL;
             inches = NORMAL;
+            displayingAnswer = false;
             equation.convertUnitsToSymbols();
             equation.getOperators().add(op);
             equation.verifyUnits();
@@ -277,6 +281,7 @@ public class CalcState {
                 s = "0";
             }
 
+            displayTapeImage = false;
             equation.setLastNumber(s + ".");
             equation.updateEquation();
             paint.update(equation.getEquation());
@@ -349,6 +354,7 @@ public class CalcState {
                     }
                 }
             }
+            displayingAnswer = false;
             equation.updateEquation();
             paint.update(equation.getEquation());
         }
@@ -358,6 +364,7 @@ public class CalcState {
     public static void clear() {
         inches = NORMAL;
         feet = NORMAL;
+        displayingAnswer = false;
         equation.clear();
         paint.update(equation.getEquation());
     }
@@ -381,6 +388,7 @@ public class CalcState {
 
                 equation.appendToLastNum("  ");
             }
+            displayingAnswer = false;
             equation.appendToLastNum(fraction + "\"");
             equation.updateEquation();
             paint.update(equation.getEquation());
