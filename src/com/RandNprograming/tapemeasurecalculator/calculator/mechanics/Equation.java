@@ -1,6 +1,5 @@
 package com.RandNprograming.tapemeasurecalculator.calculator.mechanics;
 
-import com.RandNprograming.tapemeasurecalculator.calculator.buttons.Button;
 import com.RandNprograming.tapemeasurecalculator.calculator.utilities.ParserConverter;
 
 import java.util.ArrayList;
@@ -59,6 +58,8 @@ public class Equation {
     public String getString() {
         return this.equation;
     }
+
+
 
     //----------------------------------
     // Set Result

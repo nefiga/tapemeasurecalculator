@@ -1,6 +1,5 @@
 package com.RandNprograming.tapemeasurecalculator.interfaces;
 
-import android.app.Activity;
 import com.RandNprograming.tapemeasurecalculator.impl.AndroidTapemeasureCalculator;
 
 public abstract class Screen {

@@ -26,6 +26,8 @@ public class Assets {
     public static Pixmap[] pressed_buttons_historyScreen = new Pixmap[2];
 
     public static Pixmap[] orderOfOperations = new Pixmap[2];
+    public static Pixmap[] toggleTapeMeasureButton = new Pixmap[2];
+    public static Pixmap toggleTapeMeasureBackground;
 
     public static void loadImages() {
 

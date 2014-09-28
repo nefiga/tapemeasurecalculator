@@ -36,6 +36,9 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
         if (preferences.contains("order_of_ops")) {
             CalcState.orderOfOps = preferences.getBoolean("order_of_ops", CalcState.orderOfOps);
         }
+        if (preferences.contains("display_tape_image")) {
+            CalcState.displayTapeImage = preferences.getBoolean("display_tape_image", CalcState.displayTapeImage);
+        }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         int frameBufferWidth = 800;
@@ -98,6 +101,7 @@ public abstract class AndroidTapemeasureCalculator extends Activity implements C
     public void onPause() {
         super.onPause();
         editor.putBoolean("order_of_ops", CalcState.orderOfOps);
+        editor.putBoolean("display_tape_image", CalcState.displayTapeImage);
         editor.commit();
         renderView.pause();
         screen.pause();

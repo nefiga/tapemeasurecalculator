@@ -78,6 +78,7 @@ public interface ButtonAction {
                 case DECIMAL_POINT: { CalcState.addDecimal(); break; }
                 case EQUALS: {
                     CalculateEquation.solveEquation(CalcState.equation, CalcState.orderOfOps);
+                    CalcState.displayingAnswer = true;
                     CalcState.paint.update(CalcState.equation.getEquation());
                     break;
                 }
