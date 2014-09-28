@@ -2,7 +2,6 @@ package com.RandNprograming.tapemeasurecalculator.calculator.screens;
 
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import com.RandNprograming.tapemeasurecalculator.calculator.buttons.Button;
 import com.RandNprograming.tapemeasurecalculator.calculator.buttons.ButtonLayout;
 import com.RandNprograming.tapemeasurecalculator.impl.AndroidTapemeasureCalculator;
@@ -77,31 +76,6 @@ public class MainCalculatorScreen extends Screen {
         g.drawPixmap(Assets.units[CalcState.displayUnits.ordinal()], 434, 1135);
 
         drawPressedButtons(g);
-        drawSettingsText(g);
-    }
-
-    public void drawSettingsText(Graphics g) {
-
-        Paint p = new Paint();
-        p.setTextSize(25);
-
-        int x = 40;
-        int y = 250;
-
-        p.setTypeface(Typeface.create("MONOSPACE", Typeface.NORMAL));
-
-        p.setColor(Color.BLACK);
-        String text = "Order of Ops: ";
-        g.drawString(text,x,y,p);
-
-        if(CalcState.orderOfOps) {
-            p.setARGB(0xFF,0x00,0xB5,0x15);
-        }
-        else {
-            p.setARGB(0xFF,0xE0,0x00,0x1A);
-        }
-
-        g.drawString(CalcState.orderOfOps ? "ON" : "OFF", x + p.measureText(text), y, p);
     }
 
     private void drawTapeImage(Graphics g) {
