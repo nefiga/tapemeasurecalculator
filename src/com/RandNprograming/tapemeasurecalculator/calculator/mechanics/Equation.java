@@ -60,6 +60,8 @@ public class Equation {
         return this.equation;
     }
 
+
+
     //----------------------------------
     // Set Result
     //----------------------------------
