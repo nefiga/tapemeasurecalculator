@@ -1,4 +1,7 @@
-140 px - Full image height
+All of these pixels are relative to the tape helper image.
+It's not the actual pixel on the screen, depends on where it's displayed.
+
+140 px - Full image height (doesn't include 7px border at bottom)
 760 px - Full image width
 
 Distance between center points of each line...

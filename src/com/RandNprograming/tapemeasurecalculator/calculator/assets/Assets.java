@@ -27,6 +27,7 @@ public class Assets {
 
     public static Pixmap[] orderOfOperations = new Pixmap[2];
     public static Pixmap[] toggleTapeMeasureButton = new Pixmap[2];
+    public static Pixmap tapeMeasureHelper;
 
     public static void loadImages() {
 
@@ -58,6 +59,8 @@ public class Assets {
 
         toggleTapeMeasureButton[0] = g.newPixmap("buttons/tape_measure_option_on.png", format);
         toggleTapeMeasureButton[1] = g.newPixmap("buttons/tape_measure_option_off.png", format);
+
+        tapeMeasureHelper = g.newPixmap("tape_measure_helper.png", format);
 
         loadPressedButtons(g);
     }
