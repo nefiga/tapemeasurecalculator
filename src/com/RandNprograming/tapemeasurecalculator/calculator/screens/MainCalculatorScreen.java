@@ -21,7 +21,7 @@ public class MainCalculatorScreen extends Screen {
     //--------------------------
     private CalculatorInputManager manager = new CalculatorInputManager();
     private float debugTimer = 0;
-    private final int LEFT_INCH = 20, RIGHT_INCH = 780;
+    private final int LEFT_INCH = 75, RIGHT_INCH = 725;
     Paint paint;
 
     //--------------------------
@@ -30,6 +30,7 @@ public class MainCalculatorScreen extends Screen {
     public MainCalculatorScreen(Calculator calculator) {
         super(calculator);
         paint = new Paint();
+        paint.setTextSize(34);
     }
 
     public void printDebugStatements(float deltaTime) {
@@ -65,7 +66,9 @@ public class MainCalculatorScreen extends Screen {
         g.clear(0xffffff);
         g.drawPixmap(Assets.main_screen, 0, 0);
 
-        if (CalcState.displayTapeImage && CalcState.displayingAnswer) drawTapeImage(g);
+        if (CalcState.displayTapeImage && CalcState.displayingAnswer) {
+            drawTapeImage(g);
+        }
 
         drawEquation(g);
 
@@ -79,21 +82,24 @@ public class MainCalculatorScreen extends Screen {
     }
 
     private void drawTapeImage(Graphics g) {
-        // Draw tape measure image here
+
+        g.drawPixmap(Assets.tapeMeasureHelper, 20, 30);
 
         int number = CalcState.equation.getResult().intValue();
         double decimal = CalcState.equation.getResult() - number;
-        int lineX = 100 + (int) (400 * decimal);
+
+        int lineX = LEFT_INCH + (int) (648 * decimal);
         String leftInch = "", rightInch = "";
-        int inchOffset = (int) paint.measureText(leftInch) /2;
         leftInch += number;
         number++;
         rightInch += number;
+        int leftInchOffset = (int) paint.measureText(leftInch) /2;
+        int rightInchOffset = (int) paint.measureText(rightInch) /2;
 
-        g.drawLine(lineX, 100, lineX, 200, Color.RED);
-        g.drawLine(lineX + 1, 100, lineX + 1, 200, Color.RED);
-        g.drawString(leftInch, LEFT_INCH - inchOffset, 200, paint);
-        g.drawString(rightInch, RIGHT_INCH - inchOffset, 200, paint);
+        g.drawLine(lineX, 30, lineX, 170, Color.RED);
+        g.drawLine(lineX + 1, 30, lineX + 1, 170, Color.RED);
+        g.drawString(leftInch, LEFT_INCH - leftInchOffset, 157, paint);
+        g.drawString(rightInch, RIGHT_INCH - rightInchOffset, 157, paint);
     }
 
     public void drawPressedButtons(Graphics g) {
@@ -190,7 +196,7 @@ public class MainCalculatorScreen extends Screen {
                 xPos += p.getPaint().measureText(exponent);
             }
 
-            if (CalcState.displayTapeImage && CalcState.displayingAnswer) g.drawString(s, xPos, 220, p.getPaint());
+            if (CalcState.displayTapeImage && CalcState.displayingAnswer) g.drawString(s, xPos, 245, p.getPaint());
             else g.drawString(s, xPos, 180, p.getPaint());
         }
     }
