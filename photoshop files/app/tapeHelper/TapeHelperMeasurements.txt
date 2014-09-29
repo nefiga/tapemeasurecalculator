@@ -1,0 +1,42 @@
+140 px - Full image height
+760 px - Full image width
+
+Distance between center points of each line...
+======================
+Inches - 648 px
+Halves - 324 px
+Fourths - 162 px
+Eighths - 81 px
+Sixteenths - 40.5 px
+
+
+Marker lines  -  X-Position (center point of each line in pixels)
+===============================
+below 1/6th - 15.5 px
+0 - 56 px
+1/16 - 96.5 px
+1/8  - 137 px
+3/16 - 177.5 px
+1/4  - 218 px
+5/16 - 258.5 px
+3/8  - 299 px
+7/16 - 339.5 px
+1/2  - 380 px
+9/16 - 420.5 px
+5/8  - 461 px
+11/16 - 501.5 px
+3/4   - 542 px
+13/16 - 582.5 px
+7/8   - 623 px
+15/16 - 663.5 px
+1  - 704 px
+above 1/16th - 744.5 px
+
+
+Y-Positions (bottom point of each line in pixels)
+============
+1/16 - 32 px
+1/8 - 48 px
+1/4 - 64 px
+1/2 - 80 px
+1 - 96 px
