@@ -36,9 +36,9 @@ public class Fraction {
 	
 	/**
 	 * @param decimal The decimal you want to convert.
-	 * @param precision Rounds the answer to the closest given fraction.
+	 * @param precision Rounds the displayingAnswer to the closest given fraction.
 	 *      e.g. if you give 1/16 as the round value you will get
-	 *           an answer that is a multiple of 1/16 in simple reduced form.
+	 *           an displayingAnswer that is a multiple of 1/16 in simple reduced form.
 	 * @return The resulting fraction in reduced form.
 	 * @throws Fraction.ZeroDenominatorException if the denominator of the round parameter you provide is 0.
 	 */

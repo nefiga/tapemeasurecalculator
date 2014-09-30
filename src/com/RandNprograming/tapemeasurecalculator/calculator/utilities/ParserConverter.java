@@ -101,7 +101,7 @@ public class ParserConverter {
      * would result in 1 ft^2. It divides the number by 12, x amount of times, where x is the dimension.
      * @param number The number that needs to be converted into feet.
      * @param dimension The dimensionality of the number. ft^3 is 3. in^2 is 2. just inches is 1, etc..
-     * @return The converted answer in feet.
+     * @return The converted displayingAnswer in feet.
      */
     private static double convertToFeetWithDimensionality(double number, int dimension) {
 

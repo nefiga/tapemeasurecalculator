@@ -9,7 +9,7 @@ import com.RandNprograming.tapemeasurecalculator.impl.AndroidFastRenderView;
 
 public class CalculateEquation {
 
-    public static class DimensionalErrorException extends Exception{};
+    public static class DimensionalErrorException extends Exception{}
 
     /** Figures the order of operation. Then solves the equation. The equation must end with numbers.
      * This method will do nothing if the equation ends with an operator. */
@@ -42,6 +42,7 @@ public class CalculateEquation {
                 historic.setResult(answerDouble);
                 historic.setUnitDimension(equation.getUnitDimension());
                 CalcHistory.add(historic);
+                CalcState.displayingAnswer = true;
             }
             catch (DimensionalErrorException e) {
                 CalcState.equation = historic;

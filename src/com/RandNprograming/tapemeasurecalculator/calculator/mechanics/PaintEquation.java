@@ -7,11 +7,11 @@ import java.util.Scanner;
 
 public class PaintEquation {
 
-    private static final int BIG_FONT = 75;
-    private static final int SMALL_FONT = 50;
+    public static final int BIG_FONT = 75;
+    public static final int SMALL_FONT = 50;
 
     private static final int BIG_FONT_THRESHOLD = 15; // Number of digits allowed before changing to small font
-    private static final int SMALL_FONT_THRESHOLD = 26; // Number of digits allowed before moving to next line
+    private static final int SMALL_FONT_THRESHOLD = 22; // Number of digits allowed before moving to next line
 
     private Paint paint = new Paint();
     private boolean multipleLines = false;

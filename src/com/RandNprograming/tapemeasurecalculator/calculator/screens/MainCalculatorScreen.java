@@ -65,8 +65,9 @@ public class MainCalculatorScreen extends Screen {
 
         g.clear(0xffffff);
         g.drawPixmap(Assets.main_screen, 0, 0);
+        g.drawPixmap(Assets.menu_button, 710, 35);
 
-        if (CalcState.displayTapeImage && CalcState.displayingAnswer) {
+        if (CalcState.displayTapeImage && CalcState.displayingAnswer && !CalcState.paint.hasMultipleLines()) {
             drawTapeImage(g);
         }
 
@@ -82,6 +83,8 @@ public class MainCalculatorScreen extends Screen {
     }
 
     private void drawTapeImage(Graphics g) {
+
+        if (CalcState.equation.getResult() == null) return;
 
         g.drawPixmap(Assets.tapeMeasureHelper, 20, 30);
 
@@ -117,6 +120,13 @@ public class MainCalculatorScreen extends Screen {
 
         String equation = CalcState.equation.getString();
         PaintEquation p = CalcState.paint;
+
+        if (CalcState.displayTapeImage && CalcState.displayingAnswer && p.hasMultipleLines()) {
+            g.drawString("Error!", 350, 160, paint);
+            g.drawString("Answer is to large for tape measure", 130, 195, paint);
+            return;
+        }
+
         if (p.hasMultipleLines()) {
             for (int i = 0; i < 4; i++) {
 
@@ -187,11 +197,13 @@ public class MainCalculatorScreen extends Screen {
                 String exponent = s.substring(index, index + 1);
                 s = s.substring(index + 1);
 
-                g.drawString(first, xPos, 180, p.getPaint());
+                if (CalcState.displayTapeImage && CalcState.displayingAnswer)g.drawString(first, xPos, 260, p.getPaint());
+                else g.drawString(first, xPos, 180, p.getPaint());
 
                 xPos += p.getPaint().measureText(first);
 
-                g.drawString(exponent, xPos, 180 - p.getPaint().getTextSize() / 3, p.getPaint());
+                if (CalcState.displayTapeImage && CalcState.displayingAnswer)g.drawString(exponent, xPos, 260 - p.getPaint().getTextSize() / 3, p.getPaint());
+                else g.drawString(exponent, xPos, 180 - p.getPaint().getTextSize() / 3, p.getPaint());
 
                 xPos += p.getPaint().measureText(exponent);
             }
@@ -239,10 +251,13 @@ public class MainCalculatorScreen extends Screen {
         }
 
         // If user touches equation screen...
-        if (touchIsInBounds(event, 0, 0, 800, 300)) {
+        if (touchIsInBounds(event, 0, 0, 680, 300)) {
             if (event.type == TouchEvent.TOUCH_DOWN) {
                 calculator.setScreen(new HistoryScreen(calculator));
             }
+        }
+        if (touchIsInBounds(event, 710, 35, 65, 133)) {
+            calculator.setScreen(new SettingScreen(calculator));
         }
     }
 

@@ -15,7 +15,7 @@ public class CalcState {
     //----------------------------------
     // Fields
     //----------------------------------
-    public static final int DIGIT_LINE_LIMIT = 28;
+    public static final int DIGIT_LINE_LIMIT = 22;
     public static final int DIGIT_EQUATION_LIMIT = 120;
     public static DisplayModes.FractionOrDecimal fractionOrDecimal = DisplayModes.FractionOrDecimal.FRACTION_OPTION;
     public static DisplayModes.FractionPrecision fractionPrecision = DisplayModes.FractionPrecision.SIXTEENTH;
@@ -94,6 +94,7 @@ public class CalcState {
             equation.setLastOperator(op);
         }
 
+        displayingAnswer = false;
         equation.updateEquation();
         paint.update(equation.getEquation());
     }
@@ -281,7 +282,7 @@ public class CalcState {
                 s = "0";
             }
 
-            displayTapeImage = false;
+            displayingAnswer = false;
             equation.setLastNumber(s + ".");
             equation.updateEquation();
             paint.update(equation.getEquation());
